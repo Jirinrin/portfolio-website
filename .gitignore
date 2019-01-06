@@ -11,6 +11,9 @@
 # production
 /build
 
+# large photoshop files
+/ps
+
 # misc
 .DS_Store
 .env.local

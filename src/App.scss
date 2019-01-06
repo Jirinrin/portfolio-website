@@ -1,0 +1,12 @@
+$background-url: url("./assets/background-semidarkgray.jpg");
+
+html {
+  background-image: $background-url;
+  background-color: #282c34;
+  background-repeat: repeat repeat;
+  background-size: cover;
+}
+
+// #main {
+//   margin-top: 6rem;
+// }
