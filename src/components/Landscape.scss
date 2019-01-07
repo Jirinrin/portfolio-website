@@ -16,25 +16,19 @@
 
     &.landscape-object {
       z-index: 13;
-      
-      transition: transform 2s ease;
+      transition: transform 1s ease, filter 0.5s ease;
 
       &:hover {
-        // animation: boing 2s infinite ease-in-out;
-
-        // @keyframes boing {
-        //   50% {
-        //     opacity: 1;
-        //     transform: scaleY(1.1);
-        //   }
-        // }
+        cursor: pointer;
+        transition: filter 0.5s ease;
+        filter: sepia(4);
       }
     }
 
     &#shining-effect {
       z-index: 10;
-      opacity: 0.9;
-      animation: shine 7s infinite ease;
+      opacity: 0.85;
+      animation: shine 5s infinite ease;
 
       @keyframes shine {
         50% {

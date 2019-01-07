@@ -44,11 +44,13 @@ class Landscape extends Component {
         };
       }),
       transformOrigin: 'center bottom'
-    });
+    }, this.initializeHoverEffects);
 
     objectsReference.forEach(obj => {
       document.querySelector(`#${obj.name}`)
     });
+
+    this.updateAnimations();
   }
 
   componentDidUpdate(oldProps) {
@@ -64,6 +66,38 @@ class Landscape extends Component {
         }))
       })
     }
+    this.updateAnimations(true);
+  }
+
+  initializeHoverEffects() {
+    // const styleSheet = document.styleSheets[1];
+    const style = document.createElement('style');
+    this.state.objects.forEach(obj => {
+      const css = `#${obj.name}:hover {
+        animation-name: ${obj.name}-boing; 
+        animation-timing-function: ease-in-out; 
+        animation-duration: 0.5s; 
+        animation-iteration-count: infinite;
+      }`;
+      style.appendChild(document.createTextNode(css));
+
+    })
+    console.log(style);
+    document.querySelector('.Landscape').appendChild(style);
+  }
+
+  updateAnimations(firstDelelete=false) {
+    const styleSheet = document.styleSheets[0];
+    console.log(document.styleSheets);
+
+    this.state.objects.forEach((obj, i) => {
+      if (firstDelelete) styleSheet.deleteRule(i);
+      const keyframes = 
+        `@keyframes ${obj.name}-boing {
+          50% { transform: scale(${this.props.scaleFactor}, ${this.props.scaleFactor * 1.1}) }
+        }`;
+      styleSheet.insertRule(keyframes, i);
+    });
   }
 
   render() { 
@@ -81,6 +115,7 @@ class Landscape extends Component {
                  top: obj.top - (obj.yOffset || 0),
                  transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
                  transformOrigin: this.state.transformOrigin,
+                 
                }}
           />
         )}
