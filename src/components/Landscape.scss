@@ -70,3 +70,35 @@
 #landscape-variant-container {
   z-index: 13;
 }
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  color: rgb(223, 223, 223);
+  z-index: 14;
+  padding: 30px;
+  background-color: rgb(29, 29, 29);
+  border-radius: 10px;
+}
+
+.tooltip-enter, {
+  opacity: 0;
+  filter: blur(40px);
+}
+
+.tooltip-enter-active {
+  opacity: 1;
+  transition: all 500ms ease;
+  filter: blur(0);
+}
+
+.tooltip-exit {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.tooltip-exit-active {
+  opacity: 0;
+  transition: all 500ms ease;
+  filter: blur(40px);
+}
