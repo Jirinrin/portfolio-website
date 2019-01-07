@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
+import {CANVAS_WIDTH} from './LandscapeContainer';
+
 const BOOK_HEIGHT = 35;
 const BOOK_WIDTH = 215;
 const BOOK_BASE_LEFT = 3690;
 const BOOK_BASE_BOTTOM = 4300;
+
+const TOOLTIP_FONT_SIZE = 1;
+const TOOLTIP_PADDING = 1.1;
 
 const objectsReference = [
   ['awards-cup',        2811,  3594, 'Awards'],
@@ -86,21 +91,46 @@ class Landscape extends Component {
     }
   }
 
+  getTooltipFontSize = () => `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`;
+  getTooltipPaddingX = () => `${(TOOLTIP_PADDING - TOOLTIP_FONT_SIZE / 2) / this.props.scaleFactor}rem`;
+  getTooltipPaddingY = () => `${TOOLTIP_PADDING / this.props.scaleFactor}rem`;
+
   showTooltip = (e) => {
     const target = e.target.id ? e.target : e.target.parentNode;
+    console.log(target.id);
 
+    const test = document.getElementById("text-test");
+    test.style.fontSize = this.getTooltipFontSize();
+    test.style.padding = this.getTooltipPaddingX();
+    test.innerHTML = target.name;
+    const width = test.clientWidth + 1;
+    let extraStyles = {};
+    let left = parseInt(target.style.left) + (target.clientWidth - width) / 2 + 'px';
+    if (parseInt(target.style.left) + width > CANVAS_WIDTH) 
+      left = `calc(${CANVAS_WIDTH - width}px - ${this.getTooltipPaddingY()} * 1.5)`;
+    if (parseInt(target.style.left) <= (width - target.clientWidth) / 2) {
+      left = `calc(${this.getTooltipPaddingX()} * 1)`;
+      if (left[0] === 'c') {
+        extraStyles = {
+          width: `calc(${CANVAS_WIDTH}px - ${this.getTooltipPaddingY()} * 2.5)`,
+          whiteSpace: 'normal',
+          lineHeight: 'normal'
+        }
+      }
+    }
+
+    console.log({...(true && extraStyles)});
+    
     this.setState({
       showTooltip: true,
       tooltip: {
-        contents: target.name,
-        left: target.style.left,
-        top: parseInt(target.style.top) - target.naturalHeight * 0.6,
-        fontSize: + 1 / this.props.scaleFactor + 'rem'
+        contents: target.name || (target.id === 'book-stack' && 'Projects'),
+        left,
+        top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(TOOLTIP_FONT_SIZE+TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
+        extraStyles
       }
     });
   }
-  
-  
 
   hideTooltip = () => this.setState({showTooltip: false});
 
@@ -180,12 +210,16 @@ class Landscape extends Component {
               style={{
                 left: tooltip && tooltip.left,
                 top: tooltip && tooltip.top,
-                fontSize: tooltip && tooltip.fontSize
+                fontSize: `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`,
+                padding:  `${this.getTooltipPaddingY()} ${this.getTooltipPaddingX()}`,
+                ...(tooltip && tooltip.extraStyles)
               }}
             >
               {tooltip && tooltip.contents}
             </p>
           </CSSTransition>
+
+          <div id="text-test"/>
         </div>
       </div>
     );
