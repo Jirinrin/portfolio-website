@@ -13,6 +13,7 @@ const objectsReference = [
   ['jiri-soul',         2103, 4330],
   ['octopus-tree',      1321, 4205],
   ['spiral-tower',      4238, 2760],
+  // ['spiral-tower',      4190, 2718],
   ['technology-forest', 0,    3919],
   ['book-stack',        BOOK_BASE_LEFT, BOOK_BASE_BOTTOM] // x until: 3890 or sth; y is variable, until 4320
 ];
@@ -23,7 +24,9 @@ class Landscape extends Component {
   state = {
     objects: [],
     bookStack: [],
-    transformOrigin: 'left top'
+    transformOrigin: 'left top',
+    toolTip: null,
+    popupMessage: null
   };
 
   componentWillMount() {
@@ -123,6 +126,46 @@ class Landscape extends Component {
     });
   }
 
+  handleObjectClick = (e) => {
+    const id = e.target.id || e.target.parentNode.id;
+    switch (id) {
+      case 'awards-cup':
+        this.popupMessage('Awards still under construction')
+        return;
+      case 'future-building':
+      case 'hobby-heap':
+      case 'jiri-soul':
+      case 'octopus-tree':
+      case 'spiral-tower':
+      case 'technology-forest':
+        this.popupScreen(id);
+        return;
+      case 'book-stack':
+        this.slideToScreen(id);
+        return;
+      default:
+        throw new Error('id of the thing you clicked on seems invalid');
+    }
+  }
+
+  showToolTip = () => {
+    return;
+  }
+
+  hideToolTip = () => {
+    return;
+  }
+
+  popupMessage = (popupMessage) => this.setState({popupMessage});
+
+  popupScreen = (message) => {
+    return;
+  }
+
+  slideToScreen = (screenName) => {
+    return;
+  }
+
   render() { 
     return (      
       // niet zo handig met 2x classname landscape
@@ -139,7 +182,8 @@ class Landscape extends Component {
               top:  obj.naturalTop  * this.props.scaleFactor - (obj.yOffset || 0),
               transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
               transformOrigin: this.state.transformOrigin,
-            }
+            },
+            onClick: this.handleObjectClick
           }
           
           if (obj.name === 'book-stack') {

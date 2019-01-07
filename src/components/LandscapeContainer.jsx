@@ -23,6 +23,7 @@ class LandscapeContainer extends Component {
     this.setState({scaleFactor: this.calculateScaleFactor(e.target.innerWidth)});
   }
 
+  // calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / 4961;
   calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / 5000;
 
   render() { 
