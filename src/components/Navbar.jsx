@@ -12,24 +12,25 @@ class Navbar extends Component {
   };
 
   componentWillMount() {
-    this.setState({
-      yOffset: this.calculateY(),
-      scale: this.calculateTransform()
-    });
+    this.updateScrollParams()
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll);
   }
-
+  
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
   }
+  
+  onScroll = (e) => this.updateScrollParams(e.pageY);
+  
+  updateScrollParams = (scroll) => {
+    const yOffset = this.calculateY(scroll);
 
-  onScroll = (e) => {
     this.setState({
-      yOffset: this.calculateY(e.pageY),
-      scale: this.calculateTransform()
+      yOffset,
+      scale: this.calculateTransform(yOffset)
     });
   }
 
@@ -38,8 +39,9 @@ class Navbar extends Component {
     return offset <= 0 ? 0 : offset;
   }
 
-  calculateTransform = () => {
-    const scale = mapRange(BASE_Y_OFFSET - this.state.yOffset, 0, 500, BASE_SCALE, 1);
+  calculateTransform = (yOffset) => {
+    const scale = mapRange(BASE_Y_OFFSET - yOffset, 0, 500, BASE_SCALE, 1);
+    console.log(yOffset);
     
     // scroll / BASE_Y_OFFSET;
     return scale <= 1 ? 1 : scale;
