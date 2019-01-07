@@ -8,7 +8,6 @@ const enhancer = composeEnhancers(
   applyMiddleware(ReduxThunk)
 );
 
-console.log(reducer);
 const store = createStore(reducer, enhancer);
 
 export default store;

@@ -5,6 +5,11 @@ html {
   background-color: #282c34;
   background-repeat: repeat repeat;
   background-size: cover;
+  overflow-x: hidden;
+}
+
+h2 {
+  display: none;
 }
 
 // #main {

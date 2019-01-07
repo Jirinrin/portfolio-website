@@ -1,0 +1,55 @@
+.Landscape {
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+
+  img {
+    margin: 0;
+    position: absolute;
+
+    &.full-width-landscape {
+      width: 100%;
+      left: 0;
+      top: 0;
+    }
+
+    &.landscape-object {
+      z-index: 13;
+      
+      transition: transform 2s ease;
+
+      &:hover {
+        // animation: boing 2s infinite ease-in-out;
+
+        // @keyframes boing {
+        //   50% {
+        //     opacity: 1;
+        //     transform: scaleY(1.1);
+        //   }
+        // }
+      }
+    }
+
+    &#shining-effect {
+      z-index: 10;
+      opacity: 0.9;
+      animation: shine 7s infinite ease;
+
+      @keyframes shine {
+        50% {
+          opacity: 1;
+          transform: bottom center scale(1.1, 1.1);
+        }
+      }
+    }
+
+    &#jiri-head {
+      mix-blend-mode: multiply;
+      opacity: 0.68;
+      z-index: 11;
+    }
+
+    &#landscape-1 {z-index: 12}
+  }
+}
