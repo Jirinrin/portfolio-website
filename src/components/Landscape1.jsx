@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 const BOOK_HEIGHT = 35;
 const BOOK_WIDTH = 215;
-const BOOK_BASE_LEFT = 3660;
-const BOOK_BASE_BOTTOM = 4320;
+const BOOK_BASE_LEFT = 3690;
+const BOOK_BASE_BOTTOM = 4300;
 
 const objectsReference = [
   ['awards-cup',        2811, 3594],
@@ -30,8 +30,8 @@ class Landscape extends Component {
     const bookStack = this.props.projects.map((_, i) => {
       return {
         yOffset: BOOK_HEIGHT * i,
-        xOffset: 0,
-        tintDeviation: +0,
+        xOffset: (Math.random() - 0.5) * BOOK_WIDTH * 0.25,
+        tintDeviation: 10 ** (Math.random() * 0.5),
       }
     })
 
@@ -56,15 +56,18 @@ class Landscape extends Component {
       objects: this.state.objects.map(obj => {
         const img = document.querySelector(`#${obj.name}`);
         if (!img) return obj;
-        const xOffset = (img.naturalWidth - img.naturalWidth * this.props.scaleFactor) / 2;
-        const yOffset = img.naturalHeight - img.naturalHeight * this.props.scaleFactor;
+        const naturalWidth  = obj.naturalWidth  || img.naturalWidth;
+        const naturalHeight = obj.naturalHeight || img.naturalHeight;
+
+        const xOffset = (naturalWidth - naturalWidth * this.props.scaleFactor) / 2;
+        const yOffset = naturalHeight - naturalHeight * this.props.scaleFactor;
 
         return {
           ...obj,
           xOffset,
           yOffset,
-          naturalWidth: obj.naturalWidth || img.naturalWidth,
-          naturalHeight: obj.naturalHeight || img.naturalHeight
+          naturalWidth,
+          naturalHeight
         };
       }),
       transformOrigin: 'center bottom'
@@ -133,15 +136,16 @@ class Landscape extends Component {
             className: 'landscape-object',
             style: {
               left: obj.naturalLeft * this.props.scaleFactor - (obj.xOffset || 0),
-              top: obj.naturalTop *   this.props.scaleFactor - (obj.yOffset || 0),
+              top:  obj.naturalTop  * this.props.scaleFactor - (obj.yOffset || 0),
               transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
               transformOrigin: this.state.transformOrigin,
             }
           }
           
           if (obj.name === 'book-stack') {
+            console.log(obj.yOffset);
             return this.state.bookStack ? (
-              <div {...props} width={obj.naturalWidth} height={obj.naturalHeight}>
+              <div {...props} style={{...props.style, width: obj.naturalWidth, height: obj.naturalHeight}}>
                 {
                   this.state.bookStack.map((b, i) => 
                     <img 
@@ -152,7 +156,9 @@ class Landscape extends Component {
                       style={{
                         height: BOOK_HEIGHT,
                         width: BOOK_WIDTH,
-                        top: b.yOffset
+                        bottom: b.yOffset,
+                        left: b.xOffset,
+                        filter: `brightness(${b.tintDeviation})`
                       }}
                     />)
                 }
