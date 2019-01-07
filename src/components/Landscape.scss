@@ -1,54 +1,72 @@
-.Landscape {
-  width: 100%;
-  margin: 0;
+.bottom-container {
   position: absolute;
   bottom: 0;
+  left: 0;
+  transform-origin: left bottom;
+}
 
-  img, div.landscape-object {
-    margin: 0;
-    position: absolute;
+.rel-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
 
-    &.full-width-landscape {
-      width: 100%;
-      left: 0;
-      top: 0;
+.landscape {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+#shining-effect {
+  z-index: 1;
+  opacity: 0.85;
+  animation: shine 5s infinite ease;
+
+  @keyframes shine {
+    50% {
+      opacity: 1;
+      transform: bottom center scale(1.1, 1.1);
     }
-
-    &.landscape-object {
-      z-index: 13;
-      transition: transform 1s ease, filter 0.5s ease;
-
-      &:hover {
-        cursor: pointer;
-        transition: filter 0.5s ease;
-        filter: sepia(4);
-      }
-
-      .book--tiny {
-        position: absolute;
-      }
-    }
-
-    &#shining-effect {
-      z-index: 10;
-      opacity: 0.85;
-      animation: shine 5s infinite ease;
-
-      @keyframes shine {
-        50% {
-          opacity: 1;
-          transform: bottom center scale(1.1, 1.1);
-        }
-      }
-    }
-
-    &#jiri-head {
-      mix-blend-mode: multiply;
-      opacity: 0.68;
-      z-index: 11;
-    }
-
-    &#landscape-1 {z-index: 12}
   }
 }
 
+#jiri-head {
+  mix-blend-mode: multiply;
+  opacity: 0.68;
+  z-index: 11;
+}
+
+#landscape-1 {
+  z-index: 12;
+}
+
+.landscape-object {
+  margin: 0;
+  position: absolute;
+  z-index: 13;
+  transition: transform 1s ease, filter 0.5s ease;
+  transform-origin: center bottom;
+
+  &:hover {
+    cursor: pointer;
+    transition: filter 0.5s ease;
+    filter: sepia(3);
+    animation: boing 0.5s infinite ease-in-out;
+
+    @keyframes boing {
+      50% { transform: scale(1, 1.1) }
+    }
+  }
+}
+
+.book--tiny {
+  position: absolute;
+}
+
+#landscape-variant-container {
+  z-index: 13;
+}

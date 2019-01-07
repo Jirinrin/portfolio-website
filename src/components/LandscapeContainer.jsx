@@ -23,16 +23,17 @@ class LandscapeContainer extends Component {
     this.setState({scaleFactor: this.calculateScaleFactor(e.target.innerWidth)});
   }
 
-  // calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / 4961;
-  calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / 5000;
+  calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / 4961;
 
   render() { 
     return ( 
-      <div className="Landscape">
-        <h2>About me</h2>
-        <img src={require('../assets/landscape/jiri-shine.png')} className="full-width-landscape" id="shining-effect" alt="shining effect" />
-        <img src={require('../assets/landscape/jiri-head.png')} className="full-width-landscape" id="jiri-head" alt="floating head" />
-        <Landscape1 scaleFactor={this.state.scaleFactor} />
+      <div id="Landscape-container" className="bottom-container full-width" style={{height: this.state.scaleFactor * 5662, width: this.state.scaleFactor * 4961}}>
+        <div className="rel-container">
+          <h2>About me</h2>
+          <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" />
+          <img src={require('../assets/landscape/jiri-head.png')} className="landscape full-width" id="jiri-head" alt="floating head" />
+          <Landscape1 scaleFactor={this.state.scaleFactor} />
+        </div>
       </div> 
     );
   }
