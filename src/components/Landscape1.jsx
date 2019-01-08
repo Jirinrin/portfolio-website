@@ -219,7 +219,7 @@ class Landscape extends Component {
                         <img 
                           src={require('../assets/box-dark.png')} 
                           className="book--tiny" 
-                          key={`book-${i}`} 
+                          key={`book--tiny-${i}`} 
                           alt="book"
                           style={{
                             height: BOOK_HEIGHT,

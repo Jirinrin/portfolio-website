@@ -14,6 +14,7 @@ class LandscapeContainer extends Component {
     landscapeNum: 0,
     landscapeTitle: null,
     zoomIn: false,
+    animationOngoing: false
   };
 
   componentDidMount() {
@@ -26,7 +27,7 @@ class LandscapeContainer extends Component {
     });
   }
 
-  componentDidUpdate(oldProps, oldState) {
+  componentDidUpdate(_, oldState) {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
   }
@@ -40,10 +41,11 @@ class LandscapeContainer extends Component {
   calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / CANVAS_WIDTH;
 
   changeLandscape = (num, title=null) => {
-    this.setState({
-      landscapeNum: num,
-      landscapeTitle: title
-    });
+    if (!this.state.animationOngoing) {
+      this.setState({
+        landscapeNum: num,
+      });
+    }
   }
 
   updateAnimations(firstDelelete=false) {
@@ -104,6 +106,7 @@ class LandscapeContainer extends Component {
             mountOnEnter
             unmountOnExit
             timeout={1000}
+            onExited={() => this.setState({animationOngoing: false})}
           >
             <Landscape1 
               scaleFactor={this.state.scaleFactor}
@@ -118,6 +121,7 @@ class LandscapeContainer extends Component {
             mountOnEnter
             unmountOnExit
             timeout={1000}
+            onExited={() => this.setState({animationOngoing: false})}
           >
             <Landscape2 
               scaleFactor={this.state.scaleFactor}

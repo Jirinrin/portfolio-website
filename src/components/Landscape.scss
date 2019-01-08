@@ -67,8 +67,22 @@
   }
 }
 
-.book--tiny {
+.book--tiny, .book--large {
   position: absolute;
+}
+
+.book--large {
+  transition: all 0.4s ease;
+
+  &:hover {
+    transform: translateX(-100px); /// hoe moet je dit goed doen...
+  }
+}
+
+#book-stack--large {
+  margin: 0;
+  position: absolute;
+  z-index: 13;
 }
 
 #landscape-variant-container {
@@ -127,7 +141,7 @@
 
 .landscape--1-exit.landscape--1-exit-active, .landscape--2-exit.landscape--2-exit-active {
   filter: blur(20px) !important;
-  transition: all 1000ms ease;
+  transition: all 1000ms ease-out;
 }
 
 .landscape--1-exit, .landscape--2-exit {
@@ -136,5 +150,5 @@
 
 .landscape--1-enter.landscape--1-enter-active, .landscape--2-enter.landscape--2-enter-active {
   filter: blur(0) !important;
-  transition: all 1000ms ease;
+  transition: all 1000ms ease-out;
 }
