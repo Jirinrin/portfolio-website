@@ -30,7 +30,6 @@ const getBookStackTop = (size) => BOOK_BASE_BOTTOM - size * BOOK_HEIGHT;
 class Landscape extends Component {
   state = {
     objects: [],
-    bookStack: [],
     tooltip: null,
     showTooltip: false,
     popupMessage: null,
@@ -41,14 +40,6 @@ class Landscape extends Component {
   };
 
   componentWillMount() {
-    const bookStack = this.props.projects.map((_, i) => {
-      return {
-        yOffset: BOOK_HEIGHT * i,
-        xOffset: (Math.random() - 0.5) * BOOK_WIDTH * 0.25,
-        tintDeviation: 10 ** (Math.random() * 0.5),
-      }
-    })
-
     this.setState({
       objects: objectsReference.map(obj => {
         const bs = obj[0] === 'book-stack';
@@ -61,7 +52,6 @@ class Landscape extends Component {
           height: bs ? BOOK_HEIGHT * this.props.projects.length : null
         }
       }),
-      bookStack
     });
   }
 
@@ -194,7 +184,7 @@ class Landscape extends Component {
   }
 
   render() {
-    const {objects, bookStack, tooltip, showTooltip} = this.state;
+    const {objects, tooltip, showTooltip} = this.state;
     return (
       <div id="landscape-variant-container"
            className="bottom-container landscape--1"
@@ -222,10 +212,10 @@ class Landscape extends Component {
               }
               
               if (obj.id === 'book-stack') {
-                return bookStack ? (
+                return (
                   <div {...props} style={{...props.style, width: obj.width, height: obj.height}}>
                     {
-                      bookStack.map((b, i) => 
+                      this.props.projects.map((b, i) => 
                         <img 
                           src={require('../assets/box-dark.png')} 
                           className="book--tiny" 
@@ -234,14 +224,14 @@ class Landscape extends Component {
                           style={{
                             height: BOOK_HEIGHT,
                             width: BOOK_WIDTH,
-                            bottom: b.yOffset,
-                            left: b.xOffset,
-                            filter: `brightness(${b.tintDeviation})`
+                            bottom: b.book.yOffset * BOOK_HEIGHT,
+                            left: b.book.xOffset * BOOK_WIDTH,
+                            filter: `brightness(${b.book.tintDeviation})`
                           }}
                         />)
                     }
                   </div>
-                ) : null;
+                );
               }
               else {
                 return <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} />

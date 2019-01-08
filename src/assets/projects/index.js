@@ -2,7 +2,7 @@ export default [
   {
     repo: 'codaisseur-project-cowbell',
     title: 'Project Cowbell',
-    github: true
+    github: true,
   },
   {
     repo: 'first-ever-website',
