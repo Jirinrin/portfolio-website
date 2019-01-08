@@ -41,9 +41,6 @@ class Navbar extends Component {
 
   calculateTransform = (yOffset) => {
     const scale = mapRange(BASE_Y_OFFSET - yOffset, 0, 500, BASE_SCALE, 1);
-    console.log(yOffset);
-    
-    // scroll / BASE_Y_OFFSET;
     return scale <= 1 ? 1 : scale;
   }
 

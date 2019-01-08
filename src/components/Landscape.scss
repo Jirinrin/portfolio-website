@@ -92,8 +92,8 @@
 
 .tooltip-enter-active {
   opacity: 1;
-  transition: all 500ms ease;
   filter: blur(0);
+  transition: all 500ms ease;
 }
 
 .tooltip-exit {
@@ -103,8 +103,8 @@
 
 .tooltip-exit-active {
   opacity: 0;
-  transition: all 500ms ease;
   filter: blur(40px);
+  transition: all 500ms ease;
 }
 
 #text-test {
@@ -113,4 +113,23 @@
   height: auto;
   width: auto;
   white-space: nowrap;
+}
+
+
+.landscape--1-enter, .landscape--2-enter {
+  filter: blur(20px);
+}
+
+.landscape--1-exit.landscape--1-exit-active, .landscape--2-exit.landscape--2-exit-active {
+  filter: blur(20px);
+  transition: all 1000ms ease;
+}
+
+.landscape--1-exit, .landscape--2-exit {
+  filter: blur(0);
+}
+
+.landscape--1-enter.landscape--1-enter-active, .landscape--2-enter.landscape--2-enter-active {
+  filter: blur(0);
+  transition: all 1000ms ease;
 }

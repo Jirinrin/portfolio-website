@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
-import {CANVAS_WIDTH} from './LandscapeContainer';
+import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
 
 const BOOK_HEIGHT = 35;
 const BOOK_WIDTH = 215;
@@ -109,7 +109,6 @@ class Landscape extends Component {
     if (parseInt(target.style.left) + width > CANVAS_WIDTH) 
       left = `calc(${CANVAS_WIDTH - width}px - ${this.getTooltipPaddingY()} * 1.5)`;
     if (parseInt(target.style.left) <= (width - target.clientWidth) / 2) {
-      left = `calc(${this.getTooltipPaddingX()} * 1)`;
       if (left[0] === 'c') {
         extraStyles = {
           width: `calc(${CANVAS_WIDTH}px - ${this.getTooltipPaddingY()} * 2.5)`,
@@ -117,6 +116,7 @@ class Landscape extends Component {
           lineHeight: 'normal'
         }
       }
+      left = `calc(${this.getTooltipPaddingX()} * 1)`;
     }
 
     console.log({...(true && extraStyles)});
@@ -141,17 +141,18 @@ class Landscape extends Component {
   }
 
   slideToScreen = (screenName) => {
+    this.props.changeLandscape(2, screenName)
     return;
   }
 
   render() {
     const {objects, bookStack, tooltip, showTooltip} = this.state;
     return (
-      <div id="landscape-variant-container" 
-           className="bottom-container" 
+      <div id="landscape-variant-container"
+           className="bottom-container landscape--1" 
            style={{ 
              transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
-             height: 5662, width: 4961
+             height: CANVAS_HEIGHT, width: CANVAS_WIDTH
            }}>
         <div className="rel-container">
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
