@@ -75,8 +75,31 @@
   transition: all 0.4s ease;
 
   &:hover {
-    transform: translateX(-100px); /// hoe moet je dit goed doen...
+    transform: translateX(100px);
+    cursor: pointer;
   }
+}
+
+img.book--large__background {
+  transition: all 0.4s ease;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 14;
+
+  &:hover {
+    filter: sepia(3);
+  }
+}
+
+.book--large__title {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 15;
+  white-space: nowrap;
+  margin: 0;
 }
 
 #book-stack--large {

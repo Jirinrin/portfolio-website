@@ -19,6 +19,18 @@ class Landscape extends Component {
   componentDidUpdate(oldProps) {
   }
 
+  getCoverFontSize = () => BOOK_HEIGHT * 0.7;
+
+  getTextWidth = (text, fontSize) => {
+    console.log(text, fontSize);
+    const test = document.getElementById("text-test");
+    if (!test) return null;
+    test.style.fontSize = `${fontSize}px`;
+    test.innerHTML = text;
+    console.log(test);
+    return test.clientWidth + 1;
+  }
+
   render() {
     const {projects} = this.props;
     return (
@@ -43,30 +55,32 @@ class Landscape extends Component {
             }}
           >
             <div className="rel-container">
-              {projects.map((b, i) => 
-                <div>
-                  <img 
-                  src={require('../assets/box-dark.png')}
+              {projects.map((b, i) =>
+                <div
                   className="book--large"
                   key={`book--large-${i}`}
-                  alt="book"
                   style={{
                     height: BOOK_HEIGHT,
-                    width: BOOK_WIDTH,
+                    width: this.getTextWidth(b.title, this.getCoverFontSize()) || BOOK_WIDTH,
                     bottom: b.book.yOffset * BOOK_HEIGHT,
                     left: b.book.xOffset * BOOK_WIDTH,
                     filter: `brightness(${b.book.tintDeviation})`
                   }}
-                />
+                >
+                  <div className="rel-container">
+                    <img
+                      src={require('../assets/box-dark.png')}
+                      alt="book"
+                      className="book--large__background"
+                    />
+                    <p className="book--large__title" style={{fontSize: this.getCoverFontSize()}}>
+                      {b.title}
+                    </p>
+                  </div>
                 </div>
-                
-                
               )}
             </div>
-            
           </div>
-
-          <div id="text-test"/>
         </div>
       </div>
     );

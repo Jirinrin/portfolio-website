@@ -258,8 +258,6 @@ class Landscape extends Component {
               {tooltip && tooltip.contents}
             </p>
           </CSSTransition>
-
-          <div id="text-test"/>
         </div>
       </div>
     );

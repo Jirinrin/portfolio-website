@@ -41,11 +41,10 @@ class LandscapeContainer extends Component {
   calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / CANVAS_WIDTH;
 
   changeLandscape = (num, title=null) => {
-    if (!this.state.animationOngoing) {
+    if (!this.state.animationOngoing)
       this.setState({
         landscapeNum: num,
       });
-    }
   }
 
   updateAnimations(firstDelelete=false) {
@@ -130,6 +129,8 @@ class LandscapeContainer extends Component {
             />
           </CSSTransition>
         </div>
+        
+        <div id="text-test"/>
       </div> 
     );
   }
