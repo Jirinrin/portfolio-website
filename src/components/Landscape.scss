@@ -73,6 +73,7 @@
 
 #landscape-variant-container {
   z-index: 13;
+  transition: transform 1s ease;
 }
 
 .tooltip {

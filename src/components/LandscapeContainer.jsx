@@ -73,11 +73,13 @@ class LandscapeContainer extends Component {
     container.appendChild(style);
   }
 
-  zoomInCanvas = () => { // params: x-coord, y-coord, width, height ofzo
+  zoomInCanvas = () => {
     this.setState({zoomIn: true});
+    console.log(window);
+    window.scrollTo(0, 100000); // I know kan robuuster
   }
 
-  zoomOutCanvas = () => { // params: x-coord, y-coord, width, height ofzo
+  zoomOutCanvas = () => {
     this.setState({zoomIn: false});
   }
 

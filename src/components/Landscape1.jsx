@@ -12,6 +12,8 @@ const BOOK_BASE_BOTTOM = 4300;
 const TOOLTIP_FONT_SIZE = 1;
 const TOOLTIP_PADDING = 1.1;
 
+const BASE_ZOOM_BLUR = 8;
+
 const objectsReference = [
   ['awards-cup',        2811,  3594, 'Awards'],
   ['future-building',   479.5, 3765, 'Future Fantasy'],
@@ -33,7 +35,9 @@ class Landscape extends Component {
     showTooltip: false,
     popupMessage: null,
     zoomIn: false,
-    zoomRegion: null
+    zoomRegion: null,
+    zoomScale: 1,
+    zoomTranslation: ''
   };
 
   componentWillMount() {
@@ -126,21 +130,17 @@ class Landscape extends Component {
   popupMessage = (popupMessage) => this.setState({popupMessage});
 
   zoomPopup = (id) => {
-    // const obj = this.state.objects.find(o => o.id === id);
     const obj = document.querySelector(`#${id}`);
     if (!obj) return;
 
     console.log(obj);
 
     this.props.zoomInCanvas();
-    this.setState({
-      zoomIn: true,
-      zoomRegion: {
-        left: parseFloat(obj.style.left),
-        top: parseFloat(obj.style.top),
-        width: obj.naturalWidth,
-        height: obj.naturalHeight
-      }
+    this.updateZoomData({
+      left: parseFloat(obj.style.left),
+      top: parseFloat(obj.style.top),
+      width: obj.naturalWidth,
+      height: obj.naturalHeight
     });
   }
 
@@ -149,28 +149,30 @@ class Landscape extends Component {
     this.setState({zoomIn: false});
   }
 
-  getTransformation = () => {
-    console.log('hi');
-    if (this.state.zoomIn) {
-      const {zoomRegion} = this.state;
-      const sampleWidth = window.innerHeight / window.innerWidth > zoomRegion.height / zoomRegion.width;
-      const scaleFactor = sampleWidth ?
-                          (window.innerWidth  / zoomRegion.width * 0.9) :
-                          (window.innerHeight / zoomRegion.height * 0.9);
+  updateZoomData = (zoomRegion) => {
+    const sampleWidth = window.innerHeight / window.innerWidth > zoomRegion.height / zoomRegion.width;
+    const scaleFactor = sampleWidth ?
+                        (window.innerWidth  / zoomRegion.width * 0.9) :
+                        (window.innerHeight / zoomRegion.height * 0.9);
 
-      const xOffset = -zoomRegion.left;
-      const xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
-                                       : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
-      const yOffset = (CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
-      const yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
-                                       : zoomRegion.width * 0.05;
-
-      return `scale(${scaleFactor}, ${scaleFactor}) translate(${xOffset + xOffsetExtra}px, ${yOffset + yOffsetExtra}px)`;
-    }
-    else {
-      return `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
-    }
+    const xOffset = -zoomRegion.left;
+    const xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
+                                     : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
+    const yOffset = (CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
+    const yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
+                                     : zoomRegion.width * 0.05;
+    this.setState({
+      zoomIn: true,
+      zoomRegion,
+      zoomScale: scaleFactor,
+      zoomTranslation: `translate(${xOffset + xOffsetExtra}px, ${yOffset + yOffsetExtra}px)`
+    });
   }
+
+  getTransformation = () => this.state.zoomIn ? `scale(${this.state.zoomScale}, ${this.state.zoomScale}) ${this.state.zoomTranslation}`
+                                              : `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
+
+  getBlur = () => this.state.zoomIn ? BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
   slideToScreen = (screenName) => {
     this.props.changeLandscape(2, screenName)
@@ -184,7 +186,8 @@ class Landscape extends Component {
            className="bottom-container landscape--1"
            style={{ 
              transform: this.getTransformation(),
-             height: CANVAS_HEIGHT, width: CANVAS_WIDTH
+             height: CANVAS_HEIGHT, width: CANVAS_WIDTH,
+             filter: `blur(${this.getBlur()}px)`
            }}>
         <div className="rel-container">
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
