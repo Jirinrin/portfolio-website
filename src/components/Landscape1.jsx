@@ -31,7 +31,9 @@ class Landscape extends Component {
     bookStack: [],
     tooltip: null,
     showTooltip: false,
-    popupMessage: null
+    popupMessage: null,
+    zoomIn: false,
+    zoomRegion: null
   };
 
   componentWillMount() {
@@ -59,16 +61,6 @@ class Landscape extends Component {
     });
   }
 
-  componentDidUpdate(oldProps) {
-    if (this.props.scaleFactor !== oldProps.scaleFactor) {
-      this.setState({
-        objects: this.state.objects.map((obj, i) => ({
-          ...obj,
-        }))
-      })
-    }
-  }
-
   handleObjectClick = (e) => {
     const id = e.target.id || e.target.parentNode.id;
     switch (id) {
@@ -81,7 +73,7 @@ class Landscape extends Component {
       case 'octopus-tree':
       case 'spiral-tower':
       case 'technology-forest':
-        this.popupScreen(id);
+        this.zoomPopup(id);
         return;
       case 'book-stack':
         this.slideToScreen(id);
@@ -97,7 +89,6 @@ class Landscape extends Component {
 
   showTooltip = (e) => {
     const target = e.target.id ? e.target : e.target.parentNode;
-    console.log(target.id);
 
     const test = document.getElementById("text-test");
     test.style.fontSize = this.getTooltipFontSize();
@@ -119,8 +110,6 @@ class Landscape extends Component {
       left = `calc(${this.getTooltipPaddingX()} * 1)`;
     }
 
-    console.log({...(true && extraStyles)});
-    
     this.setState({
       showTooltip: true,
       tooltip: {
@@ -136,8 +125,51 @@ class Landscape extends Component {
 
   popupMessage = (popupMessage) => this.setState({popupMessage});
 
-  popupScreen = (message) => {
-    return;
+  zoomPopup = (id) => {
+    // const obj = this.state.objects.find(o => o.id === id);
+    const obj = document.querySelector(`#${id}`);
+    if (!obj) return;
+
+    console.log(obj);
+
+    this.props.zoomInCanvas();
+    this.setState({
+      zoomIn: true,
+      zoomRegion: {
+        left: parseFloat(obj.style.left),
+        top: parseFloat(obj.style.top),
+        width: obj.naturalWidth,
+        height: obj.naturalHeight
+      }
+    });
+  }
+
+  cancelZoom = () => {
+    this.props.zoomOutCanvas();
+    this.setState({zoomIn: false});
+  }
+
+  getTransformation = () => {
+    console.log('hi');
+    if (this.state.zoomIn) {
+      const {zoomRegion} = this.state;
+      const sampleWidth = window.innerHeight / window.innerWidth > zoomRegion.height / zoomRegion.width;
+      const scaleFactor = sampleWidth ?
+                          (window.innerWidth  / zoomRegion.width * 0.9) :
+                          (window.innerHeight / zoomRegion.height * 0.9);
+
+      const xOffset = -zoomRegion.left;
+      const xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
+                                       : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
+      const yOffset = (CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
+      const yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
+                                       : zoomRegion.width * 0.05;
+
+      return `scale(${scaleFactor}, ${scaleFactor}) translate(${xOffset + xOffsetExtra}px, ${yOffset + yOffsetExtra}px)`;
+    }
+    else {
+      return `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
+    }
   }
 
   slideToScreen = (screenName) => {
@@ -149,9 +181,9 @@ class Landscape extends Component {
     const {objects, bookStack, tooltip, showTooltip} = this.state;
     return (
       <div id="landscape-variant-container"
-           className="bottom-container landscape--1" 
+           className="bottom-container landscape--1"
            style={{ 
-             transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
+             transform: this.getTransformation(),
              height: CANVAS_HEIGHT, width: CANVAS_WIDTH
            }}>
         <div className="rel-container">

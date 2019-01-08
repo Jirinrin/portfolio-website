@@ -13,6 +13,7 @@ class LandscapeContainer extends Component {
     scaleFactor: 1,
     landscapeNum: 0,
     landscapeTitle: null,
+    zoomIn: false,
   };
 
   componentDidMount() {
@@ -72,10 +73,25 @@ class LandscapeContainer extends Component {
     container.appendChild(style);
   }
 
+  zoomInCanvas = () => { // params: x-coord, y-coord, width, height ofzo
+    this.setState({zoomIn: true});
+  }
+
+  zoomOutCanvas = () => { // params: x-coord, y-coord, width, height ofzo
+    this.setState({zoomIn: false});
+  }
+
   render() { 
     return ( 
-      <div id="Landscape-container" className="bottom-container full-width" style={{height: this.state.scaleFactor * CANVAS_HEIGHT, width: this.state.scaleFactor * CANVAS_WIDTH}}>
-        <div className="rel-container">
+      <div 
+        id="Landscape-container" 
+        className="bottom-container full-width" 
+        style={this.state.zoomIn ?
+          {height: '100vh', width: '100vw'} : /// en scroll naar beneden ofzo
+          {height: this.state.scaleFactor * CANVAS_HEIGHT, width: this.state.scaleFactor * CANVAS_WIDTH}
+        }
+      >
+        <div className="rel-container overflow-hidden">
           <h2>About me</h2>
           <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" />
           <img src={require('../assets/landscape/jiri-head.png')} className="landscape full-width" id="jiri-head" alt="floating head" />
@@ -87,7 +103,12 @@ class LandscapeContainer extends Component {
             unmountOnExit
             timeout={1000}
           >
-            <Landscape1 scaleFactor={this.state.scaleFactor} changeLandscape={this.changeLandscape} />
+            <Landscape1 
+              scaleFactor={this.state.scaleFactor}
+              changeLandscape={this.changeLandscape}
+              zoomInCanvas={this.zoomInCanvas}
+              zoomOutCanvas={this.zoomOutCanvas}
+            />
           </CSSTransition>
           <CSSTransition
             in={this.state.landscapeNum === 2}
@@ -96,7 +117,11 @@ class LandscapeContainer extends Component {
             unmountOnExit
             timeout={1000}
           >
-            <Landscape2 scaleFactor={this.state.scaleFactor} changeLandscape={this.changeLandscape} landscapeTitle={this.state.landscapeTitle} />
+            <Landscape2 
+              scaleFactor={this.state.scaleFactor}
+              landscapeTitle={this.state.landscapeTitle}
+              changeLandscape={this.changeLandscape}
+            />
           </CSSTransition>
         </div>
       </div> 
