@@ -156,11 +156,25 @@ class Landscape extends Component {
                         (window.innerHeight / zoomRegion.height * 0.9);
 
     const xOffset = -zoomRegion.left;
-    const xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
-                                     : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
     const yOffset = (CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
-    const yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
+    
+    // Compensations to center the zoomed object and give it margins
+    let xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
+                                     : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
+    let yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
                                      : zoomRegion.width * 0.05;
+               
+    // Extra compensations for if the image frame is partly outside the canvas
+    const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2);
+    if (canvasWidthDiff < 0) {
+      xOffsetExtra -= canvasWidthDiff;
+    }
+    const canvasWidthDiff2 = zoomRegion.left - xOffsetExtra; /// still not entirely optimally functional...
+    if (canvasWidthDiff2 < 0) {
+      xOffsetExtra += canvasWidthDiff2;
+    }
+    /// and should probably also add this for y direction
+    
     this.setState({
       zoomIn: true,
       zoomRegion,

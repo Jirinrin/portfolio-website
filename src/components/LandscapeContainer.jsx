@@ -89,7 +89,7 @@ class LandscapeContainer extends Component {
         id="Landscape-container" 
         className="bottom-container full-width" 
         style={this.state.zoomIn ?
-          {height: '100vh', width: '100vw'} : /// en scroll naar beneden ofzo
+          {height: '100vh', width: '100vw'} :
           {height: this.state.scaleFactor * CANVAS_HEIGHT, width: this.state.scaleFactor * CANVAS_WIDTH}
         }
       >

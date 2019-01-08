@@ -122,19 +122,19 @@
 
 
 .landscape--1-enter, .landscape--2-enter {
-  filter: blur(20px);
+  filter: blur(20px) !important;
 }
 
 .landscape--1-exit.landscape--1-exit-active, .landscape--2-exit.landscape--2-exit-active {
-  filter: blur(20px);
+  filter: blur(20px) !important;
   transition: all 1000ms ease;
 }
 
 .landscape--1-exit, .landscape--2-exit {
-  filter: blur(0);
+  filter: blur(0) !important;
 }
 
 .landscape--1-enter.landscape--1-enter-active, .landscape--2-enter.landscape--2-enter-active {
-  filter: blur(0);
+  filter: blur(0) !important;
   transition: all 1000ms ease;
 }
