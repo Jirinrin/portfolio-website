@@ -140,9 +140,12 @@ class Landscape extends Component {
   }
 
   updateZoomData = (zoomRegion) => {
-    const sampleWidth = window.innerHeight / window.innerWidth > zoomRegion.height / zoomRegion.width;
+    // const innerWidth = document.documentElement.clientWidth;
+    const innerWidth = window.innerWidth;
+
+    const sampleWidth = window.innerHeight / innerWidth > zoomRegion.height / zoomRegion.width;
     const scaleFactor = sampleWidth ?
-                        (window.innerWidth  / zoomRegion.width * 0.9) :
+                        (innerWidth  / zoomRegion.width * 0.9) :
                         (window.innerHeight / zoomRegion.height * 0.9);
 
     const xOffset = -zoomRegion.left;
@@ -150,16 +153,18 @@ class Landscape extends Component {
     
     // Compensations to center the zoomed object and give it margins
     let xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
-                                     : (window.innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
-    let yOffsetExtra = sampleWidth ? (window.innerHeight / window.innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
+                                     : (innerWidth / window.innerHeight) * zoomRegion.height / 2 - zoomRegion.width / 2;
+    let yOffsetExtra = sampleWidth ? (window.innerHeight / innerWidth) * zoomRegion.width / 2 - zoomRegion.height / 2
                                      : zoomRegion.width * 0.05;
                
     // Extra compensations for if the image frame is partly outside the canvas
-    const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2);
-    if (canvasWidthDiff < 0) {
-      xOffsetExtra -= canvasWidthDiff;
+    // const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2); /// still not entirely optimally functional...
+    const canvasWidthDiff = zoomRegion.left + (innerWidth / window.innerHeight) * zoomRegion.height - CANVAS_WIDTH;
+    if (canvasWidthDiff > 0) {
+      console.log('hi');
+      xOffsetExtra = 1/0.9 * canvasWidthDiff;
     }
-    const canvasWidthDiff2 = zoomRegion.left - xOffsetExtra; /// still not entirely optimally functional...
+    const canvasWidthDiff2 = zoomRegion.left - xOffsetExtra;
     if (canvasWidthDiff2 < 0) {
       xOffsetExtra += canvasWidthDiff2;
     }
@@ -234,7 +239,6 @@ class Landscape extends Component {
                 );
               }
               else {
-                console.log(obj);
                 return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} /> );
                 // return null;
               }

@@ -11,7 +11,7 @@ export const CANVAS_WIDTH  = 4961;
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
-    landscapeNum: 0,
+    landscapeNum: 2,
     landscapeTitle: null,
     zoomIn: false,
     animationOngoing: false
