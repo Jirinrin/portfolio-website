@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
+
+import {updateWidths} from '../actions/projects';
+
 import Landscape1 from './Landscape1';
 import Landscape2 from './Landscape2';
-import { CSSTransition } from 'react-transition-group';
 
 import './Landscape.scss';
 
@@ -17,6 +21,10 @@ class LandscapeContainer extends Component {
     animationOngoing: false
   };
 
+  componentWillMount() {
+    
+  }
+  
   /// zou hier (of in willmount) een action kunnen dispatchen om de boekbreedtes alvast te berekenen enzo obv de text-test dingie
   componentDidMount() {
     this.setState({
@@ -26,6 +34,18 @@ class LandscapeContainer extends Component {
       window.addEventListener('resize', this.handleResize);
       this.updateAnimations();
     });
+
+    this.props.updateWidths(
+      this.props.projects.map(p => {
+        const test = document.getElementById("text-test");
+        if (!test) return null;
+        test.style.fontSize = `10000px`;
+        test.style.padding = 0;
+        test.innerHTML = p.title;
+        console.log(p.title, test, test.innerHTML, test.clientWidth);
+        return (test.clientWidth + 1) / 10000;
+      })
+    );
   }
 
   componentDidUpdate(_, oldState) {
@@ -132,10 +152,13 @@ class LandscapeContainer extends Component {
           </CSSTransition>
         </div>
 
-        <div id="text-test"/>
+        <div className="text-test" id="text-test"/>
+        <div className="text-test" id="text-test-2"/>
       </div> 
     );
   }
 }
+
+const mapStateToProps = ({projects}) => ({projects});
  
-export default LandscapeContainer;
+export default connect(mapStateToProps, {updateWidths})(LandscapeContainer);

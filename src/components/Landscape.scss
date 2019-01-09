@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Cormorant:300,300i,400,400i,500,500i,600,600i,700,700i');
+
+landscape-container {
+  user-select: none;
+}
+
 .bottom-container {
   position: absolute;
   bottom: 0;
@@ -19,6 +25,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  user-select: none;
 }
 
 .full-width {
@@ -54,6 +61,7 @@
   z-index: 13;
   transition: transform 1s ease, filter 0.5s ease;
   transform-origin: center bottom;
+  user-select: none;
 
   &:hover {
     cursor: pointer;
@@ -65,6 +73,10 @@
       50% { transform: scale(1, 1.1) }
     }
   }
+}
+
+.book--tiny {
+  border-radius: 10px;
 }
 
 .book--tiny, .book--large {
@@ -86,20 +98,25 @@ img.book--large__background {
   height: 100%;
   position: absolute;
   z-index: 14;
+  border-radius: 30px;
 
   &:hover {
-    filter: sepia(3);
+    filter: sepia(3) hue-rotate(100deg); /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
   }
 }
 
 .book--large__title {
+  font-family: 'Cormorant', serif;
   position: absolute;
   width: 100%;
   height: 100%;
+  text-align: center;
   top: 0;
   z-index: 15;
   white-space: nowrap;
   margin: 0;
+  vertical-align: middle;
+  pointer-events: none;
 }
 
 #book-stack--large {
@@ -114,6 +131,7 @@ img.book--large__background {
 }
 
 .tooltip {
+  font-family: 'Cormorant', serif;
   position: absolute;
   color: rgb(223, 223, 223);
   z-index: 14;
@@ -149,12 +167,14 @@ img.book--large__background {
   transition: all 500ms ease;
 }
 
-#text-test {
+.text-test {
+  margin: 0;
   position: fixed;
   visibility: hidden;
   height: auto;
   width: auto;
   white-space: nowrap;
+  font-family: 'Cormorant', serif;
 }
 
 

@@ -4,8 +4,8 @@ import { CSSTransition } from 'react-transition-group';
 
 import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
 
-const BOOK_HEIGHT = 35;
-const BOOK_WIDTH = 215;
+const BOOK_HEIGHT = 40;
+const BOOK_WIDTH = 240;
 const BOOK_BASE_LEFT = 3690;
 const BOOK_BASE_BOTTOM = 4300;
 
@@ -220,7 +220,7 @@ class Landscape extends Component {
                 return (
                   <div {...props} style={{...props.style, width: obj.width, height: obj.height}}>
                     {
-                      this.props.projects.map((b, i) => 
+                      this.props.projects.map((p, i) => 
                         <img 
                           src={require('../assets/box-dark.png')} 
                           className="book--tiny" 
@@ -228,10 +228,10 @@ class Landscape extends Component {
                           alt="book"
                           style={{
                             height: BOOK_HEIGHT,
-                            width: BOOK_WIDTH,
-                            bottom: b.book.yOffset * BOOK_HEIGHT,
-                            left: b.book.xOffset * BOOK_WIDTH,
-                            filter: `brightness(${b.book.tintDeviation})`
+                            width: p.book.width * BOOK_HEIGHT,
+                            bottom: p.book.yOffset * BOOK_HEIGHT,
+                            left: p.book.xOffset * BOOK_HEIGHT,
+                            filter: `brightness(${p.book.tintDeviation})`
                           }}
                         />)
                     }
