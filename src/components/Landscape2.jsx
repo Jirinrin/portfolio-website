@@ -13,12 +13,6 @@ const getBookStackTop = (size) => BOOK_BASE_BOTTOM - size * BOOK_HEIGHT;
 class Landscape extends Component {
   state = {  };
 
-  componentWillMount() {
-  }
-
-  componentDidUpdate(oldProps) {
-  }
-
   getCoverFontSize = () => BOOK_HEIGHT * 0.7;
 
   getTextWidth = (text, fontSize) => {
@@ -34,8 +28,8 @@ class Landscape extends Component {
   render() {
     const {projects} = this.props;
     return (
-      <div id="landscape-variant-container" 
-           className="bottom-container landscape--2" 
+      <div id="landscape-variant-container--2" 
+           className="bottom-container landscape-variant-container landscape--2"
            style={{ 
              transform: `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`,
              height: CANVAS_HEIGHT, width: CANVAS_WIDTH

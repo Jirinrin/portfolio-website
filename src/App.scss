@@ -6,16 +6,22 @@ html {
   background-repeat: repeat repeat;
   background-size: cover;
   overflow-x: hidden;
+  height: 100%;
+}
+
+body, #root {
+  height: 100%;
+  position: relative;
+}
+
+.App {
+  position: relative;
 }
 
 h2 {
   display: none;
 }
 
-.App {
-  position: relative;
-
-}
 
 #main {
   position: relative;

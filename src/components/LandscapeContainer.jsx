@@ -17,6 +17,7 @@ class LandscapeContainer extends Component {
     animationOngoing: false
   };
 
+  /// zou hier (of in willmount) een action kunnen dispatchen om de boekbreedtes alvast te berekenen enzo obv de text-test dingie
   componentDidMount() {
     this.setState({
       scaleFactor: this.calculateScaleFactor(),
@@ -57,17 +58,18 @@ class LandscapeContainer extends Component {
     const exit2 = 'translate(100vw, 0)';
     const enter = 'translate(0, 0)';
 
+    const templatePt0 = 'div.landscape-variant-container'
     const templatePt1 = ' { transform: ';
     const templatePt2 = ` scale(${this.state.scaleFactor}, ${this.state.scaleFactor}) !important; }`;
     
-    rules.push('.landscape--1-enter'                           + templatePt1 + exit1 + templatePt2);
-    rules.push('.landscape--1-exit.landscape--1-exit-active'   + templatePt1 + exit1 + templatePt2);
-    rules.push('.landscape--2-enter'                           + templatePt1 + exit2 + templatePt2);
-    rules.push('.landscape--2-exit.landscape--2-exit-active'   + templatePt1 + exit2 + templatePt2);
-    rules.push('.landscape--1-enter.landscape--1-enter-active' + templatePt1 + enter + templatePt2);
-    rules.push('.landscape--1-exit'                            + templatePt1 + enter + templatePt2);
-    rules.push('.landscape--2-enter.landscape--2-enter-active' + templatePt1 + enter + templatePt2);
-    rules.push('.landscape--2-exit'                            + templatePt1 + enter + templatePt2);
+    rules.push(templatePt0 + '.landscape--1-enter'                           + templatePt1 + exit1 + templatePt2);
+    rules.push(templatePt0 + '.landscape--1-exit.landscape--1-exit-active'   + templatePt1 + exit1 + templatePt2);
+    rules.push(templatePt0 + '.landscape--2-enter'                           + templatePt1 + exit2 + templatePt2);
+    rules.push(templatePt0 + '.landscape--2-exit.landscape--2-exit-active'   + templatePt1 + exit2 + templatePt2);
+    rules.push(templatePt0 + '.landscape--1-enter.landscape--1-enter-active' + templatePt1 + enter + templatePt2);
+    rules.push(templatePt0 + '.landscape--1-exit'                            + templatePt1 + enter + templatePt2);
+    rules.push(templatePt0 + '.landscape--2-enter.landscape--2-enter-active' + templatePt1 + enter + templatePt2);
+    rules.push(templatePt0 + '.landscape--2-exit'                            + templatePt1 + enter + templatePt2);
 
     rules.forEach(r => style.appendChild(document.createTextNode(r)));
 
@@ -129,7 +131,7 @@ class LandscapeContainer extends Component {
             />
           </CSSTransition>
         </div>
-        
+
         <div id="text-test"/>
       </div> 
     );

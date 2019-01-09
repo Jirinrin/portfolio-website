@@ -3,7 +3,7 @@ import store from './store';
 import {Provider} from 'react-redux';
 
 import Navbar from './components/Navbar';
-import GithubCode from './components/GithubCode';
+import GithubCodeContainer from './components/GithubCodeContainer';
 import LandscapeContainer from './components/LandscapeContainer';
 
 import './App.scss';
@@ -15,7 +15,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <div id="main">
-            <GithubCode />
+            <GithubCodeContainer />
             <LandscapeContainer />
           </div>
         </div>

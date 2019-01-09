@@ -186,8 +186,8 @@ class Landscape extends Component {
   render() {
     const {objects, tooltip, showTooltip} = this.state;
     return (
-      <div id="landscape-variant-container"
-           className="bottom-container landscape--1"
+      <div id="landscape-variant-container--1"
+           className="bottom-container landscape-variant-container landscape--1"
            style={{ 
              transform: this.getTransformation(),
              height: CANVAS_HEIGHT, width: CANVAS_WIDTH,
@@ -234,7 +234,9 @@ class Landscape extends Component {
                 );
               }
               else {
-                return <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} />
+                console.log(obj);
+                return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} /> );
+                // return null;
               }
             }
           )}

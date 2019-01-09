@@ -108,7 +108,7 @@ img.book--large__background {
   z-index: 13;
 }
 
-#landscape-variant-container {
+.landscape-variant-container {
   z-index: 13;
   transition: transform 1s ease;
 }
@@ -150,7 +150,7 @@ img.book--large__background {
 }
 
 #text-test {
-  position: absolute;
+  position: fixed;
   visibility: hidden;
   height: auto;
   width: auto;
