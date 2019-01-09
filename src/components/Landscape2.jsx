@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
+import {calculateBookShadow} from './Landscape1';
 
 const BASE_BOOK_HEIGHT = 6;
 // const BASE_BOOK_WIDTH = 36;
@@ -16,8 +17,12 @@ class Landscape extends Component {
     /// zou nog extra factor toe kunnen voegen ofzo zodat het altijd binnen die ene stip op de grond past...?
     bookHeight: BASE_BOOK_HEIGHT / this.props.scaleFactor,
     openedBook: null,
-    
+    bookShadow: null
   };
+
+  componentDidMount() {
+    this.setBookShadow();
+  }
 
   componentDidUpdate(oldProps, oldState) {
     if (oldProps.scaleFactor !== this.props.scaleFactor)
@@ -84,10 +89,11 @@ class Landscape extends Component {
     zoomBook.style.width  = `calc(90vw / ${this.props.scaleFactor})`;
     zoomBook.style.height = `calc(90vh / ${this.props.scaleFactor})`;
     zoomBook.className += ' book--large__zoomed';
-    // zoomBook.getElementsByTagName('p')[0].style.opacity = 0;
 
     this.props.showPopup();
   }
+
+  setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--large')});
 
   render() {
     const {projects, scaleFactor} = this.props;
@@ -168,6 +174,15 @@ class Landscape extends Component {
                   </div>
                 </div>
               }
+              <div id="shadow-wrapper">
+                <svg 
+                  viewBox={`0 0 ${this.getStackWidth()} ${bookHeight*projects.length}`} 
+                  width={this.getStackWidth()+'rem'} 
+                  height={bookHeight*projects.length+'rem'} 
+                  id="book-stack-svg">
+                  <path d={this.state.bookShadow || null} className="shadow book-stack-shadow--2" fill="black"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

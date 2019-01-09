@@ -27,6 +27,28 @@ const objectsReference = [
 
 const getBookStackTop = (size) => BOOK_BASE_BOTTOM - size * BOOK_HEIGHT;
 
+export const calculateBookShadow = (bookClassName) => {
+  const $ = (px) => parseFloat(px);
+  
+  const books = document.querySelectorAll(bookClassName);
+  console.log(books);
+
+  let path = `M ${$(books[0].style.left)}, ${$(books[0].style.top) + $(books[0].style.height)}`;
+  books.forEach((b, i) => {
+    if (i !== 0)
+      path += ` L ${$(b.style.left)}, ${$(b.style.top) + $(b.style.height)}`;
+    path += ` L ${$(b.style.left)}, ${$(b.style.top)}`;
+  });
+  books.forEach((_, i) => {
+    const b = books[books.length - 1 - i];
+    path += ` L ${$(b.style.left) + $(b.style.width)}, ${$(b.style.top)}`;
+    path += ` L ${$(b.style.left) + $(b.style.width)}, ${$(b.style.top) + $(b.style.height)}`;
+  });
+
+  path += 'Z'; // for closing it, leave out last linedraw
+  return path;
+}
+
 class Landscape extends Component {
   state = {
     objects: [],
@@ -35,7 +57,8 @@ class Landscape extends Component {
     popupMessage: null,
     zoomRegion: null,
     zoomScale: 1,
-    zoomTranslation: ''
+    zoomTranslation: '',
+    bookShadow: null
   };
 
   componentWillMount() {
@@ -52,6 +75,10 @@ class Landscape extends Component {
         }
       }),
     });
+  }
+
+  componentDidMount() {
+    this.setBookShadow();
   }
 
   handleObjectClick = (e) => {
@@ -81,7 +108,12 @@ class Landscape extends Component {
   getTooltipPaddingY = () => `${TOOLTIP_PADDING / this.props.scaleFactor}rem`;
 
   showTooltip = (e) => {
-    const target = e.target.id ? e.target : e.target.parentNode;
+    let target = e.currentTarget;
+    
+    if (target.id === 'book-stack')
+    return;
+    if (target.id === 'book-stack-svg')
+    target = target.parentNode;
 
     const test = document.getElementById("text-test");
     test.style.fontSize = this.getTooltipFontSize();
@@ -156,7 +188,6 @@ class Landscape extends Component {
     // const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2); /// still not entirely optimally functional...
     const canvasWidthDiff = zoomRegion.left + (innerWidth / window.innerHeight) * zoomRegion.height - CANVAS_WIDTH;
     if (canvasWidthDiff > 0) {
-      console.log('hi');
       xOffsetExtra = 1/0.9 * canvasWidthDiff;
     }
     const canvasWidthDiff2 = zoomRegion.left - xOffsetExtra;
@@ -182,6 +213,8 @@ class Landscape extends Component {
     return;
   }
 
+  setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--tiny')});
+
   render() {
     const {objects, tooltip, showTooltip} = this.state;
     return (
@@ -206,8 +239,8 @@ class Landscape extends Component {
                   top:  obj.top,
                 },
                 onClick: this.handleObjectClick,
-                onMouseOver: this.showTooltip,
-                onMouseOut: this.hideTooltip
+                onMouseOver: obj.id === 'book-stack' ? null : this.showTooltip,
+                onMouseOut:  obj.id === 'book-stack' ? null : this.hideTooltip
               }
               
               if (obj.id === 'book-stack') {
@@ -218,7 +251,8 @@ class Landscape extends Component {
                         <img 
                           src={require('../assets/box-dark.png')} 
                           className="book--tiny" 
-                          key={`book--tiny-${i}`} 
+                          key={`book--tiny-${i}`}
+                          id={`book--tiny-${i}`}
                           alt="book"
                           style={{
                             height: BOOK_HEIGHT,
@@ -229,6 +263,10 @@ class Landscape extends Component {
                           }}
                         />)
                     }
+                    <svg width={obj.width} height={obj.height} id="book-stack-svg" onMouseOver={this.showTooltip} onMouseOut={this.hideTooltip}>
+                      <path d={this.state.bookShadow || null} fill="none" id="book-stack-hitbox"/>
+                      <path d={this.state.bookShadow || null} className="shadow book-stack-shadow--1" fill="black"/>
+                    </svg>
                   </div>
                 );
               }

@@ -77,6 +77,8 @@ landscape-container {
 
 .book--tiny {
   border-radius: 10px;
+  z-index: 15;
+  // display: none;
 }
 
 .book--tiny, .book--large {
@@ -290,3 +292,46 @@ img.book--large__background {
     transform: scale(0, 0);
   }
 }
+
+#shadow-wrapper {
+  filter: blur(10px);
+  transform: translateY(-0.5rem);
+}
+
+svg {
+  overflow: visible;
+  position: absolute;
+
+  &#book-stack-svg {
+    stroke: none;
+    z-index: 20;
+  }
+
+  path#book-stack-hitbox {
+    z-index: 22;
+    pointer-events: all;
+  }
+
+  path.shadow {
+    z-index: 21;
+    pointer-events: none;
+    transform-origin: center bottom;
+    mix-blend-mode: multiply;
+  }
+
+  path.book-stack-shadow--1 {
+    transform: scaleY(-0.7) skew(-50deg);
+    opacity: 0.5;
+  }
+
+  path.book-stack-shadow--2 {
+    transform: scaleY(-1) skew(-50deg);
+    opacity: 0.4;
+  }
+
+  // path {
+  //   // stroke: red; 
+  //   stroke-width: 4px;
+  // }
+}
+

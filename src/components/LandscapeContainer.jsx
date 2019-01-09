@@ -23,12 +23,7 @@ class LandscapeContainer extends Component {
     largePopup: true,
     popupMessage: null
   };
-
-  componentWillMount() {
-    
-  }
   
-  /// zou hier (of in willmount) een action kunnen dispatchen om de boekbreedtes alvast te berekenen enzo obv de text-test dingie
   componentDidMount() {
     this.setState({
       scaleFactor: this.calculateScaleFactor(),
@@ -45,7 +40,6 @@ class LandscapeContainer extends Component {
         test.style.fontSize = `10000px`;
         test.style.padding = 0;
         test.innerHTML = p.title;
-        console.log(p.title, test, test.innerHTML, test.clientWidth);
         return (test.clientWidth + 1) / 10000;
       })
     );
@@ -101,7 +95,6 @@ class LandscapeContainer extends Component {
 
   zoomInCanvas = () => {
     this.setState({zoomIn: true});
-    console.log(window);
     window.scrollTo(0, 100000); // I know kan robuuster
   }
 
@@ -121,14 +114,13 @@ class LandscapeContainer extends Component {
   }
 
   hidePopup = (e) => {
-    console.log(e.target);
     if (!e.target.className.includes('popup-window-background')) return;
     this.zoomOutCanvas()
   }
 
   render() { 
     return ( 
-      <div 
+      <div
         id="Landscape-container" 
         className="bottom-container full-width" 
         style={this.state.zoomIn ?
