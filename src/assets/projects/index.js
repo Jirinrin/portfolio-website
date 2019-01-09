@@ -1,3 +1,5 @@
+// Max permitted title length: ~20 chars?
+
 export default [
   {
     repo: 'codaisseur-project-cowbell',

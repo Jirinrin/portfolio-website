@@ -18,8 +18,8 @@ export default function reducer(state=defaultState, action={}) {
         ...p,
         book: {
           ...p.book,
-          width: action.widths[i], /// moet hier nog de metric stuffen ofzo
-          xOffset: p.book.xOffset * action.widths[i] ///dit slaat nog nergens op vgm
+          width: action.widths[i],
+          xOffset: p.book.xOffset * action.widths[i]
         }
       }));
     default:

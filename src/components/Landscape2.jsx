@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
 
 const BASE_BOOK_HEIGHT = 6;
-const BASE_BOOK_WIDTH = 36;
+// const BASE_BOOK_WIDTH = 36;
 const BOOK_BASE_LEFT = 1540;
 const BOOK_BASE_BOTTOM = 4810;
 
+const BOOK_PADDING_PART = 0.15;
+
 class Landscape extends Component {
-  state = { 
+  state = {
+    /// zou nog extra factor toe kunnen voegen ofzo zodat het altijd binnen die ene stip op de grond past...?
     bookHeight: BASE_BOOK_HEIGHT / this.props.scaleFactor,
   };
 
@@ -21,10 +24,12 @@ class Landscape extends Component {
   }
 
   getBookStackTop = (size) => `calc(${BOOK_BASE_BOTTOM}px - ${size * this.state.bookHeight}rem)`;
-  
-  getCoverFontSize = () => this.state.bookHeight * 0.7;
 
-  getTextWidth = (baseWidth) => baseWidth * this.getCoverFontSize();
+  getPadding = () => this.state.bookHeight * BOOK_PADDING_PART;
+  
+  getCoverFontSize = () => this.state.bookHeight - this.getPadding() * 2;
+
+  getTextWidth = (baseWidth) => baseWidth * this.getCoverFontSize() + this.getPadding() * 2;
 
   getStackWidthRange = () => {
     const range = [0, 0];
@@ -85,8 +90,7 @@ class Landscape extends Component {
                     height: bookHeight + 'rem',
                     width: this.getTextWidth(b.book.width) + 'rem',
                     bottom: b.book.yOffset * bookHeight + 'rem',
-                    left: this.getTextWidth(b.book.xOffset) + 'rem',
-                    filter: `brightness(${b.book.tintDeviation})`
+                    left: this.getTextWidth(b.book.xOffset) + 'rem'
                   }}
                 >
                   <div className="rel-container">
@@ -94,9 +98,18 @@ class Landscape extends Component {
                       src={require('../assets/box-dark.png')}
                       alt="book"
                       className="book--large__background"
+                      style={{filter: `brightness(${b.book.tintDeviation})`}}
                     />
-                    <p className="book--large__title" style={{fontSize: this.getCoverFontSize()+'rem'}}>
-                      {b.title}
+                    <p 
+                      className="book--large__title"
+                      style={{
+                        fontSize: this.getCoverFontSize() + 'rem',
+                        lineHeight: this.getCoverFontSize() * 1.2 + 'rem',
+                      }}
+                    >
+                      <span className={`${b.book.tintDeviation < 1.5 ? 'dark-background' : (b.book.tintDeviation > 2.5 ? 'white-background' : '')}`}>
+                        {b.title}
+                      </span>
                     </p>
                   </div>
                 </div>

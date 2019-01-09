@@ -88,6 +88,8 @@ landscape-container {
 
   &:hover {
     transform: translateX(100px);
+    filter: sepia(3) hue-rotate(100deg);
+    /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
     cursor: pointer;
   }
 }
@@ -100,9 +102,8 @@ img.book--large__background {
   z-index: 14;
   border-radius: 30px;
 
-  &:hover {
-    filter: sepia(3) hue-rotate(100deg); /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
-  }
+  // &:hover {
+  // }
 }
 
 .book--large__title {
@@ -117,6 +118,31 @@ img.book--large__background {
   margin: 0;
   vertical-align: middle;
   pointer-events: none;
+  // color: rgb(26, 26, 26);  
+
+  span {
+    line-height: normal;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+
+    background-color: #1d1d1d;
+    color: transparent;
+    background-clip: text;
+    text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.192);
+    // background-color: #3f3f3f;
+    // text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.856);
+
+    &.dark-background {
+      background-color: #3d3d3d;
+      text-shadow: 0rem 1rem 0.6rem rgba(255, 255, 255, 0.856);
+    }
+
+    &.white-background {
+      background-color: #3d3d3d;
+      text-shadow: 0rem 1rem 1rem rgba(224, 224, 224, 0.26);
+    }
+  }
 }
 
 #book-stack--large {
