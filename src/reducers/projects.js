@@ -4,7 +4,7 @@ import {UPDATE_WIDTHS} from '../actions/projects';
 const defaultState = projects.map((p, i) => ({
   ...p,
   book: {
-    yOffset: i,
+    yOffset: projects.length - 1 - i,
     xOffset: (Math.random() - 0.5) * 0.25,
     tintDeviation: 10 ** (Math.random() * 0.5),
     width: 1

@@ -18,7 +18,10 @@ class LandscapeContainer extends Component {
     landscapeNum: 2,
     landscapeTitle: null,
     zoomIn: false,
-    animationOngoing: false
+    animationOngoing: false,
+    showPopup: false,
+    largePopup: true,
+    popupMessage: null
   };
 
   componentWillMount() {
@@ -103,7 +106,24 @@ class LandscapeContainer extends Component {
   }
 
   zoomOutCanvas = () => {
-    this.setState({zoomIn: false});
+    this.setState({
+      showPopup: false,
+      zoomIn: false
+    });
+  }
+
+  showPopup = (popupMessage, largePopup=true) => {
+    this.setState({
+      showPopup: true, 
+      largePopup,
+      popupMessage
+    });
+  }
+
+  hidePopup = (e) => {
+    console.log(e.target);
+    if (!e.target.className.includes('popup-window-background')) return;
+    this.zoomOutCanvas()
   }
 
   render() { 
@@ -134,6 +154,8 @@ class LandscapeContainer extends Component {
               changeLandscape={this.changeLandscape}
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
+              zoomIn={this.state.zoomIn}
+              showPopup={this.showPopup}
             />
           </CSSTransition>
           <CSSTransition
@@ -148,10 +170,36 @@ class LandscapeContainer extends Component {
               scaleFactor={this.state.scaleFactor}
               landscapeTitle={this.state.landscapeTitle}
               changeLandscape={this.changeLandscape}
+              zoomInCanvas={this.zoomInCanvas}
+              zoomOutCanvas={this.zoomOutCanvas}
+              zoomIn={this.state.zoomIn}
+              showPopup={this.showPopup}
             />
           </CSSTransition>
-        </div>
 
+          <CSSTransition
+            in={this.state.showPopup}
+            classNames="popup-window-background"
+            unmountOnExit
+            timeout={500}
+          >
+            <div className="popup-window-background" onClick={this.hidePopup}>
+              <div className={`popup-window${this.state.largePopup ? ' popup-window-large' : ''}`}>
+                {/* <p
+                  className="tooltip"
+                  style={{
+                    left: tooltip && tooltip.left,
+                    top: tooltip && tooltip.top,
+                    fontSize: `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`,
+                    padding:  `${this.getTooltipPaddingY()} ${this.getTooltipPaddingX()}`,
+                    ...(tooltip && tooltip.extraStyles)
+                  }}
+                > */}
+                {this.state.popupMessage}
+              </div>
+            </div>
+          </CSSTransition>
+        </div>
         <div className="text-test" id="text-test"/>
         <div className="text-test" id="text-test-2"/>
       </div> 

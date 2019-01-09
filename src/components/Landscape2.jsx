@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import _ from 'lodash';
 
 import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
 
@@ -14,13 +15,21 @@ class Landscape extends Component {
   state = {
     /// zou nog extra factor toe kunnen voegen ofzo zodat het altijd binnen die ene stip op de grond past...?
     bookHeight: BASE_BOOK_HEIGHT / this.props.scaleFactor,
+    openedBook: null,
+    
   };
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps, oldState) {
     if (oldProps.scaleFactor !== this.props.scaleFactor)
       this.setState({
         BOOK_HEIGHT: BASE_BOOK_HEIGHT / this.props.scaleFactor,
       });
+
+    if (this.state.openedBook !== oldState.openedBook && this.state.openedBook)
+      this.zoomInBook();
+
+    if (oldProps.zoomIn !== this.props.zoomIn && !this.props.zoomIn)
+      this.setState({openedBook: null});
   }
 
   getBookStackTop = (size) => `calc(${BOOK_BASE_BOTTOM}px - ${size * this.state.bookHeight}rem)`;
@@ -48,13 +57,37 @@ class Landscape extends Component {
     return this.getTextWidth(range[1] - range[0]);
   }
 
-  // getTextWidth = (text, fontSize) => {
-  //   const test = document.getElementById("text-test");
-  //   if (!test) return null;
-  //   test.style.fontSize = `${fontSize}rem`;
-  //   test.innerHTML = text;
-  //   return test.clientWidth + 1;
-  // }
+  setupBookZoom = (e) => {
+    this.setState({
+      openedBook: {
+        book: e.currentTarget,
+        title: e.currentTarget.getElementsByTagName('p')[0].innerHTML,
+        style: {
+          left: e.currentTarget.style.left,
+          top: e.currentTarget.style.top,
+          width: e.currentTarget.style.width,
+          height: e.currentTarget.style.height,
+        },
+        imageFilter:  e.currentTarget.getElementsByTagName('img')[0].style.filter,
+      }
+    });    
+  }
+
+  zoomInBook = () => {
+    const zoomBook = document.querySelector('#zooming-book');
+    const bookStack = zoomBook.parentNode.parentNode;
+
+    this.props.zoomInCanvas();
+    zoomBook.style.left   = `calc(-1 * ${bookStack.style.left} + 5vw / ${this.props.scaleFactor})`;
+    /// dit moet uiteindelijk dus wel robuuster zodat het altijd op de plek waar de viewport nu is deze hele toestand aanmaakt
+    zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${CANVAS_HEIGHT}px - 95vh / ${this.props.scaleFactor})`;
+    zoomBook.style.width  = `calc(90vw / ${this.props.scaleFactor})`;
+    zoomBook.style.height = `calc(90vh / ${this.props.scaleFactor})`;
+    zoomBook.className += ' book--large__zoomed';
+    // zoomBook.getElementsByTagName('p')[0].style.opacity = 0;
+
+    this.props.showPopup();
+  }
 
   render() {
     const {projects, scaleFactor} = this.props;
@@ -66,7 +99,8 @@ class Landscape extends Component {
            style={{ 
              transform: `scale(${scaleFactor}, ${scaleFactor})`,
              height: CANVAS_HEIGHT, width: CANVAS_WIDTH
-           }}>
+           }}
+      >
         <div className="rel-container">
           <img src={require('../assets/landscape/landscape-2.png')} className="landscape" id="landscape-2" alt="landscape 2"
                onClick={() => this.props.changeLandscape(1)} />
@@ -89,9 +123,10 @@ class Landscape extends Component {
                   style={{
                     height: bookHeight + 'rem',
                     width: this.getTextWidth(b.book.width) + 'rem',
-                    bottom: b.book.yOffset * bookHeight + 'rem',
+                    top: b.book.yOffset * bookHeight + 'rem',
                     left: this.getTextWidth(b.book.xOffset) + 'rem'
                   }}
+                  onClick={this.setupBookZoom}
                 >
                   <div className="rel-container">
                     <img
@@ -114,6 +149,25 @@ class Landscape extends Component {
                   </div>
                 </div>
               )}
+              {this.state.openedBook && 
+                <div 
+                  id="zooming-book"
+                  className="book--large book--large__zoomed"
+                  style={{
+                    ...this.state.openedBook.style,
+                    height: bookHeight + 'rem',
+                  }}
+                >
+                  <div className="rel-container">
+                    <img
+                      src={require('../assets/box-dark.png')}
+                      alt="book"
+                      className="book--large__background"
+                      style={{filter: this.state.openedBook.imageFilter}}
+                    />
+                  </div>
+                </div>
+              }
             </div>
           </div>
         </div>

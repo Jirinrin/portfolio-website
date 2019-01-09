@@ -33,7 +33,6 @@ class Landscape extends Component {
     tooltip: null,
     showTooltip: false,
     popupMessage: null,
-    zoomIn: false,
     zoomRegion: null,
     zoomScale: 1,
     zoomTranslation: ''
@@ -56,7 +55,7 @@ class Landscape extends Component {
   }
 
   handleObjectClick = (e) => {
-    const id = e.target.id || e.target.parentNode.id;
+    const id = e.currentTarget.id;
     switch (id) {
       case 'awards-cup':
         this.popupMessage('Awards still under construction')
@@ -117,26 +116,22 @@ class Landscape extends Component {
 
   hideTooltip = () => this.setState({showTooltip: false});
 
-  popupMessage = (popupMessage) => this.setState({popupMessage});
+  popupMessage = (popupMessage) => {
+    this.props.showPopup(popupMessage, false);
+  }
 
   zoomPopup = (id) => {
     const obj = document.querySelector(`#${id}`);
     if (!obj) return;
 
-    console.log(obj);
-
-    this.props.zoomInCanvas();
     this.updateZoomData({
       left: parseFloat(obj.style.left),
       top: parseFloat(obj.style.top),
       width: obj.naturalWidth,
       height: obj.naturalHeight
     });
-  }
-
-  cancelZoom = () => {
-    this.props.zoomOutCanvas();
-    this.setState({zoomIn: false});
+    this.props.zoomInCanvas();
+    this.props.showPopup();
   }
 
   updateZoomData = (zoomRegion) => {
@@ -171,17 +166,16 @@ class Landscape extends Component {
     /// and should probably also add this for y direction
     
     this.setState({
-      zoomIn: true,
       zoomRegion,
       zoomScale: scaleFactor,
       zoomTranslation: `translate(${xOffset + xOffsetExtra}px, ${yOffset + yOffsetExtra}px)`
     });
   }
 
-  getTransformation = () => this.state.zoomIn ? `scale(${this.state.zoomScale}, ${this.state.zoomScale}) ${this.state.zoomTranslation}`
+  getTransformation = () => this.props.zoomIn ? `scale(${this.state.zoomScale}, ${this.state.zoomScale}) ${this.state.zoomTranslation}`
                                               : `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
 
-  getBlur = () => this.state.zoomIn ? BASE_ZOOM_BLUR / this.state.zoomScale : 0;
+  getBlur = () => this.props.zoomIn ? BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
   slideToScreen = (screenName) => {
     this.props.changeLandscape(2, screenName)
@@ -229,7 +223,7 @@ class Landscape extends Component {
                           style={{
                             height: BOOK_HEIGHT,
                             width: p.book.width * BOOK_HEIGHT,
-                            bottom: p.book.yOffset * BOOK_HEIGHT,
+                            top: p.book.yOffset * BOOK_HEIGHT,
                             left: p.book.xOffset * BOOK_HEIGHT,
                             filter: `brightness(${p.book.tintDeviation})`
                           }}
