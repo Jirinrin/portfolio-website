@@ -254,11 +254,16 @@ img.book--large__background {
   padding: 2rem;
   overflow-y: scroll;
   cursor: default;
+  // scrollbar-width: none;
 
   &.popup-window-large {
     width: calc(100vw - 18rem);
     height: calc(100vh - 14rem);
   }
+
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 .popup-window-background-enter {
