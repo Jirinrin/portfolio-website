@@ -99,7 +99,7 @@ class Landscape extends Component {
 
     const project = this.props.projects.find(p => p.id === this.state.openedBook.book.id);
     if (!project) return;
-    this.props.showPopup(project.description);
+    this.props.showProjectPopup(project);
   }
 
   setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--large')});

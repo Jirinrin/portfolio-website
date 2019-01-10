@@ -148,7 +148,7 @@ class Landscape extends Component {
   hideTooltip = () => this.setState({showTooltip: false});
 
   popupMessage = (popupMessage) => {
-    this.props.showPopup(popupMessage, false);
+    this.props.showPopup(popupMessage);
   }
 
   zoomPopup = (id) => {
@@ -162,7 +162,7 @@ class Landscape extends Component {
       height: obj.naturalHeight
     });
     this.props.zoomInCanvas();
-    this.props.showPopup();
+    this.props.showAboutPopup(id);
   }
 
   updateZoomData = (zoomRegion) => {

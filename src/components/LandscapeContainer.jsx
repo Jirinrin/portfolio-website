@@ -22,7 +22,9 @@ class LandscapeContainer extends Component {
     animationOngoing: false,
     showPopup: false,
     largePopup: true,
-    popupText: null
+    popupText: null,
+    popupProject: null,
+    popupType: 'text'
   };
   
   componentDidMount() {
@@ -110,18 +112,66 @@ class LandscapeContainer extends Component {
     });
   }
 
-  showPopup = (popupText, largePopup=true) => {
+  showAboutPopup = (name) => {
+    this.setState({
+      showPopup: true,
+      popupComponent: name,
+      popupType: 'about'
+    });
+  }
+
+  showProjectPopup = (project) => {
+    /// doe iets met id: kan in URL ofzo en kan gebruikt worden om github-link te genereren ()
+    /// stuur dus markdown naar de state
+    /// en maak image gallery aan obv spul ofzo...
+    console.log(project);
+    this.setState({
+      showPopup: true,
+      popupProject: project,
+      popupType: 'project'
+    });
+  }
+
+  showPopup = (popupText) => {
     console.log('hi', popupText)
     this.setState({
       showPopup: true,
-      largePopup,
-      popupText
+      popupText,
+      popupType: 'text'
     });
   }
 
   hidePopup = (e) => {
     if (!e.target.className.includes('popup-window-background')) return;
     this.zoomOutCanvas()
+  }
+
+  renderPopup() {
+    switch (this.state.popupType) {
+      case 'text':
+        return (
+          <ReactMarkdown source={this.state.popupText} />
+        );
+      case 'about':
+        return null;
+      case 'project':
+        return (
+          <div>
+            <ReactMarkdown source={this.state.popupProject.description} />
+            
+            <br/>
+            {this.state.popupProject.github && 
+              <a>{`https://github.com/Jirinrin/${this.state.popupId}`}</a>
+            }
+            <br/>
+            {this.state.popupProject.images[0] &&
+              this.state.popupProject.images.map(img => <img src={require(img)} alt="project img"/>)
+            }
+          </div>
+        );
+      default:
+        throw new Error('Nonexisting popup type');
+    }
   }
 
   render() { 
@@ -154,6 +204,7 @@ class LandscapeContainer extends Component {
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
               showPopup={this.showPopup}
+              showAboutPopup={this.showAboutPopup}
             />
           </CSSTransition>
           <CSSTransition
@@ -171,7 +222,7 @@ class LandscapeContainer extends Component {
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
-              showPopup={this.showPopup}
+              showProjectPopup={this.showProjectPopup}
             />
           </CSSTransition>
 
@@ -182,19 +233,8 @@ class LandscapeContainer extends Component {
             timeout={500}
           >
             <div className="popup-window-background" onClick={this.hidePopup}>
-              <div className={`popup-window${this.state.largePopup ? ' popup-window-large' : ''}`}>
-                {/* <p
-                  className="tooltip"
-                  style={{
-                    left: tooltip && tooltip.left,
-                    top: tooltip && tooltip.top,
-                    fontSize: `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`,
-                    padding:  `${this.getTooltipPaddingY()} ${this.getTooltipPaddingX()}`,
-                    ...(tooltip && tooltip.extraStyles)
-                  }}
-                > */}
-                {this.state.popupText && <ReactMarkdown source={this.state.popupText} />}
-                {/* {this.state.popupText} */}
+              <div className={`popup-window${this.state.popupType === 'text' ? '' : ' popup-window-large'}`}>
+                {this.renderPopup()}
               </div>
             </div>
           </CSSTransition>
