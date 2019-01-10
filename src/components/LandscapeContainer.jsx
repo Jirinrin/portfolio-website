@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import ReactMarkdown from 'react-markdown';
 
+import * as C from '../constants';
+
 import {updateWidths} from '../actions/projects';
 
 import Landscape1 from './Landscape1';
@@ -10,15 +12,13 @@ import Landscape2 from './Landscape2';
 
 import './Landscape.scss';
 
-export const CANVAS_HEIGHT = 5662;
-export const CANVAS_WIDTH  = 4961;
-
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
     landscapeNum: 2,
     landscapeTitle: null,
     zoomIn: false,
+    frameOffset: null,
     animationOngoing: false,
     showPopup: false,
     largePopup: true,
@@ -59,7 +59,7 @@ class LandscapeContainer extends Component {
 
   handleResize = (e) => this.setState({scaleFactor: this.calculateScaleFactor(e.target.innerWidth)});
 
-  calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / CANVAS_WIDTH;
+  calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / C.CANVAS_WIDTH;
 
   changeLandscape = (num, title=null) => {
     if (!this.state.animationOngoing)
@@ -96,19 +96,57 @@ class LandscapeContainer extends Component {
     container.appendChild(style);
   }
 
-  scrollToBottom = () => window.scrollTo(0, 100000); // I know kan robuuster
+  dontScroll = (e) => {
+    e.preventDefault();
+  }
 
-  zoomInCanvas = () => {
-    this.setState({zoomIn: true});
-    window.addEventListener('scroll', this.scrollToBottom);
-    this.scrollToBottom();
+  scrollTo = (offset=0) => {
+    console.log(offset);
+    
+    if (!offset)
+      window.scrollTo(0, 100000);
+
+    if (offset) {
+
+    }
+    // window.scrollBy
+    // window.scroll
+    // if (extraOffset)
+    //   window.scrollBy(0, extraOffset);
+  }
+
+  getBottomOffset = (scroll) => {
+    if (!scroll) return 0;
+    const body = document.body;
+    const html = document.documentElement;
+
+    const docHeight = Math.max(
+      body.scrollHeight, 
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+
+    return (docHeight - scroll - window.innerHeight);
+  }
+
+  zoomInCanvas = (scroll=undefined) => {
+    const bottomOffset = this.getBottomOffset(scroll);
+    this.setState({
+      zoomIn: true,
+      frameOffset: bottomOffset
+    });
+    this.scrollTo(bottomOffset);
+    window.addEventListener('scroll', this.dontScroll);
   }
 
   zoomOutCanvas = () => {
-    window.removeEventListener('scroll', this.scrollToBottom);
+    window.removeEventListener('scroll', this.dontScroll);
     this.setState({
       showPopup: false,
-      zoomIn: false
+      zoomIn: false,
+      frameOffset: null
     });
   }
 
@@ -161,7 +199,7 @@ class LandscapeContainer extends Component {
             
             <br/>
             {this.state.popupProject.github && 
-              <a>{`https://github.com/Jirinrin/${this.state.popupId}`}</a>
+              <a href={`https://github.com/Jirinrin/${this.state.popupProject.id}`} target="_blank">github</a>
             }
             <br/>
             {this.state.popupProject.images[0] &&
@@ -180,14 +218,16 @@ class LandscapeContainer extends Component {
         id="Landscape-container" 
         className="bottom-container full-width" 
         style={this.state.zoomIn ?
-          {height: '100vh', width: '100vw'} :
-          {height: this.state.scaleFactor * CANVAS_HEIGHT, width: this.state.scaleFactor * CANVAS_WIDTH}
+          {height: '100vh', width: '100vw', bottom: this.state.frameOffset} :
+          {height: this.state.scaleFactor * C.CANVAS_HEIGHT, width: this.state.scaleFactor * C.CANVAS_WIDTH}
         }
       >
         <div className="rel-container overflow-hidden">
           <h2>About me</h2>
-          <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" />
-          <img src={require('../assets/landscape/jiri-head.png')} className="landscape full-width" id="jiri-head" alt="floating head" />
+          <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" 
+               style={{bottom: -this.state.frameOffset}}/>
+          <img src={require('../assets/landscape/jiri-head.png')} className="landscape full-width" id="jiri-head" alt="floating head" 
+               style={{bottom: -this.state.frameOffset}}/>
           
           <CSSTransition
             in={this.state.landscapeNum === 1}
@@ -223,6 +263,7 @@ class LandscapeContainer extends Component {
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
               showProjectPopup={this.showProjectPopup}
+              bottom={this.state.frameOffset}
             />
           </CSSTransition>
 
@@ -230,7 +271,7 @@ class LandscapeContainer extends Component {
             in={this.state.showPopup}
             classNames="popup-window-background"
             unmountOnExit
-            timeout={500}
+            timeout={{enter: 700, exit: 500}}
           >
             <div className="popup-window-background" onClick={this.hidePopup}>
               <div className={`popup-window${this.state.popupType === 'text' ? '' : ' popup-window-large'}`}>

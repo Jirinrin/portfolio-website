@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import _ from 'lodash';
+// import _ from 'lodash';
 
-import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
-import {calculateBookShadow} from './Landscape1';
+import * as C from '../constants';
 
 import {fetchProjectDescriptions} from '../actions/projects';
-
-const BASE_BOOK_HEIGHT = 6;
-// const BASE_BOOK_WIDTH = 36;
-const BOOK_BASE_LEFT = 1540;
-const BOOK_BASE_BOTTOM = 4810;
-
-const BOOK_PADDING_PART = 0.15;
 
 class Landscape extends Component {
   state = {
     /// zou nog extra factor toe kunnen voegen ofzo zodat het altijd binnen die ene stip op de grond past...?
-    bookHeight: BASE_BOOK_HEIGHT / this.props.scaleFactor,
+    bookHeight: C.LARGE_BASE_BOOK_HEIGHT / this.props.scaleFactor,
     openedBook: null,
     bookShadow: null
   };
@@ -34,19 +26,22 @@ class Landscape extends Component {
   componentDidUpdate(oldProps, oldState) {
     if (oldProps.scaleFactor !== this.props.scaleFactor)
       this.setState({
-        BOOK_HEIGHT: BASE_BOOK_HEIGHT / this.props.scaleFactor,
+        BOOK_HEIGHT: C.LARGE_BASE_BOOK_HEIGHT / this.props.scaleFactor,
       });
 
     if (this.state.openedBook !== oldState.openedBook && this.state.openedBook)
+      this.props.zoomInCanvas(window.pageYOffset);
+
+    if (this.state.openedBook && this.props.zoomIn && this.props.bottom !== oldProps.bottom)
       this.zoomInBook();
 
     if (oldProps.zoomIn !== this.props.zoomIn && !this.props.zoomIn)
       this.setState({openedBook: null});
   }
 
-  getBookStackTop = (size) => `calc(${BOOK_BASE_BOTTOM}px - ${size * this.state.bookHeight}rem)`;
+  getBookStackTop = (size) => `calc(${C.LARGE_BOOK_BASE_BOTTOM}px - ${size * this.state.bookHeight}rem)`;
 
-  getPadding = () => this.state.bookHeight * BOOK_PADDING_PART;
+  getPadding = () => this.state.bookHeight * C.LARGE_BOOK_PADDING_PART;
   
   getCoverFontSize = () => this.state.bookHeight - this.getPadding() * 2;
 
@@ -89,10 +84,11 @@ class Landscape extends Component {
     const zoomBook = document.querySelector('#zooming-book');
     const bookStack = zoomBook.parentNode.parentNode;
 
-    this.props.zoomInCanvas();
+    console.log(window.pageYOffset, document.body.clientHeight);
+
     zoomBook.style.left   = `calc(-1 * ${bookStack.style.left} + 5vw / ${this.props.scaleFactor})`;
     /// dit moet uiteindelijk dus wel robuuster zodat het altijd op de plek waar de viewport nu is deze hele toestand aanmaakt
-    zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${CANVAS_HEIGHT}px - 95vh / ${this.props.scaleFactor})`;
+    zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${C.CANVAS_HEIGHT}px - 95vh / ${this.props.scaleFactor} - ${this.props.bottom / this.props.scaleFactor}px)`;
     zoomBook.style.width  = `calc(90vw / ${this.props.scaleFactor})`;
     zoomBook.style.height = `calc(90vh / ${this.props.scaleFactor})`;
     zoomBook.className += ' book--large__zoomed';
@@ -102,18 +98,20 @@ class Landscape extends Component {
     this.props.showProjectPopup(project);
   }
 
-  setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--large')});
+  setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--large')});
 
   render() {
     const {projects, scaleFactor} = this.props;
     const {bookHeight} = this.state;
+    console.log(this.props.bottom);
 
     return (
       <div id="landscape-variant-container--2" 
            className="bottom-container landscape-variant-container landscape--2"
            style={{ 
-             transform: `scale(${scaleFactor}, ${scaleFactor})`,
-             height: CANVAS_HEIGHT, width: CANVAS_WIDTH
+             transform: `scale(${scaleFactor}, ${scaleFactor})`, /// al deze scales kunnen best gwn 1x scalefactor hebben, wordt toch gwn uniform
+             height: C.CANVAS_HEIGHT, width: C.CANVAS_WIDTH,
+             bottom: -this.props.bottom
            }}
       >
         <div className="rel-container">
@@ -124,7 +122,7 @@ class Landscape extends Component {
           <div 
             id="book-stack--large" 
             style={{
-              left: BOOK_BASE_LEFT,
+              left: C.LARGE_BOOK_BASE_LEFT,
               top: this.getBookStackTop(projects.length),
               width: this.getStackWidth() + 'rem',
               height: bookHeight * projects.length + 'rem'

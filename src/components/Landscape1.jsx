@@ -2,51 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
-import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
-
-const BOOK_HEIGHT = 40;
-const BOOK_WIDTH = 240;
-const BOOK_BASE_LEFT = 3690;
-const BOOK_BASE_BOTTOM = 4300;
-
-const TOOLTIP_FONT_SIZE = 1;
-const TOOLTIP_PADDING = 1.1;
-
-const BASE_ZOOM_BLUR = 8;
-
-const objectsReference = [
-  ['awards-cup',        2811,  3594, 'Awards'],
-  ['future-building',   479.5, 3765, 'Future Fantasy'],
-  ['hobby-heap',        74,    4377, 'Hobby Heap'],
-  ['jiri-soul',         2103,  4330, 'Jiri\'s SOUL'],
-  ['octopus-tree',      1321,  4205, 'The Octopus Tree of Life'],
-  ['spiral-tower',      4238,  2760, 'Two Sided Miracle'],
-  ['technology-forest', 0,     3919, 'Techno Forest'],
-  ['book-stack',        null,  null, 'Projects']
-];
-
-const getBookStackTop = (size) => BOOK_BASE_BOTTOM - size * BOOK_HEIGHT;
-
-export const calculateBookShadow = (bookClassName) => {
-  const $ = (px) => parseFloat(px);
-  
-  const books = document.querySelectorAll(bookClassName);
-
-  let path = `M ${$(books[0].style.left)}, ${$(books[0].style.top) + $(books[0].style.height)}`;
-  books.forEach((b, i) => {
-    if (i !== 0)
-      path += ` L ${$(b.style.left)}, ${$(b.style.top) + $(b.style.height)}`;
-    path += ` L ${$(b.style.left)}, ${$(b.style.top)}`;
-  });
-  books.forEach((_, i) => {
-    const b = books[books.length - 1 - i];
-    path += ` L ${$(b.style.left) + $(b.style.width)}, ${$(b.style.top)}`;
-    path += ` L ${$(b.style.left) + $(b.style.width)}, ${$(b.style.top) + $(b.style.height)}`;
-  });
-
-  path += 'Z'; // for closing it, leave out last linedraw
-  return path;
-}
+import * as C from '../constants';
 
 class Landscape extends Component {
   state = {
@@ -62,15 +18,15 @@ class Landscape extends Component {
 
   componentWillMount() {
     this.setState({
-      objects: objectsReference.map(obj => {
+      objects: C.OBJECTS_REFERENCE.map(obj => {
         const bs = obj[0] === 'book-stack';
         return {
           id: obj[0],
           name: obj[3],
-          left: bs ? BOOK_BASE_LEFT                             : obj[1],
-          top: bs ? getBookStackTop(this.props.projects.length) : obj[2],
-          width: bs ? BOOK_WIDTH                                : null,
-          height: bs ? BOOK_HEIGHT * this.props.projects.length : null
+          left:   bs ? C.TINY_BOOK_BASE_LEFT                           : obj[1],
+          top:    bs ? C.getTinyBookStackTop(this.props.projects.length) : obj[2],
+          width:  bs ? C.TINY_BOOK_WIDTH                               : null,
+          height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length : null
         }
       }),
     });
@@ -102,9 +58,9 @@ class Landscape extends Component {
     }
   }
 
-  getTooltipFontSize = () => `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`;
-  getTooltipPaddingX = () => `${(TOOLTIP_PADDING - TOOLTIP_FONT_SIZE / 2) / this.props.scaleFactor}rem`;
-  getTooltipPaddingY = () => `${TOOLTIP_PADDING / this.props.scaleFactor}rem`;
+  getTooltipFontSize = () => `${C.TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`;
+  getTooltipPaddingX = () => `${(C.TOOLTIP_PADDING - C.TOOLTIP_FONT_SIZE / 2) / this.props.scaleFactor}rem`;
+  getTooltipPaddingY = () => `${C.TOOLTIP_PADDING / this.props.scaleFactor}rem`;
 
   showTooltip = (e) => {
     let target = e.currentTarget;
@@ -121,12 +77,12 @@ class Landscape extends Component {
     const width = test.clientWidth + 1;
     let extraStyles = {};
     let left = parseInt(target.style.left) + (target.clientWidth - width) / 2 + 'px';
-    if (parseInt(target.style.left) + width > CANVAS_WIDTH) 
-      left = `calc(${CANVAS_WIDTH - width}px - ${this.getTooltipPaddingY()} * 1.5)`;
+    if (parseInt(target.style.left) + width > C.CANVAS_WIDTH) 
+      left = `calc(${C.CANVAS_WIDTH - width}px - ${this.getTooltipPaddingY()} * 1.5)`;
     if (parseInt(target.style.left) <= (width - target.clientWidth) / 2) {
       if (left[0] === 'c') {
         extraStyles = {
-          width: `calc(${CANVAS_WIDTH}px - ${this.getTooltipPaddingY()} * 2.5)`,
+          width: `calc(${C.CANVAS_WIDTH}px - ${this.getTooltipPaddingY()} * 2.5)`,
           whiteSpace: 'normal',
           lineHeight: 'normal'
         }
@@ -139,7 +95,7 @@ class Landscape extends Component {
       tooltip: {
         contents: target.name || (target.id === 'book-stack' && 'Projects'),
         left,
-        top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(TOOLTIP_FONT_SIZE+TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
+        top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(C.TOOLTIP_FONT_SIZE+C.TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
         extraStyles
       }
     });
@@ -175,7 +131,7 @@ class Landscape extends Component {
                         (window.innerHeight / zoomRegion.height * 0.9);
 
     const xOffset = -zoomRegion.left;
-    const yOffset = (CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
+    const yOffset = (C.CANVAS_HEIGHT * scaleFactor - zoomRegion.top * scaleFactor - window.innerHeight) / scaleFactor; 
     
     // Compensations to center the zoomed object and give it margins
     let xOffsetExtra = sampleWidth ? zoomRegion.width * 0.05 
@@ -185,7 +141,7 @@ class Landscape extends Component {
                
     // Extra compensations for if the image frame is partly outside the canvas
     // const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2); /// still not entirely optimally functional...
-    const canvasWidthDiff = zoomRegion.left + (innerWidth / window.innerHeight) * zoomRegion.height - CANVAS_WIDTH;
+    const canvasWidthDiff = zoomRegion.left + (innerWidth / window.innerHeight) * zoomRegion.height - C.CANVAS_WIDTH;
     if (canvasWidthDiff > 0) {
       xOffsetExtra = 1/0.9 * canvasWidthDiff;
     }
@@ -205,14 +161,14 @@ class Landscape extends Component {
   getTransformation = () => this.props.zoomIn ? `scale(${this.state.zoomScale}, ${this.state.zoomScale}) ${this.state.zoomTranslation}`
                                               : `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
 
-  getBlur = () => this.props.zoomIn ? BASE_ZOOM_BLUR / this.state.zoomScale : 0;
+  getBlur = () => this.props.zoomIn ? C.BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
   slideToScreen = (screenName) => {
     this.props.changeLandscape(2, screenName)
     return;
   }
 
-  setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--tiny')});
+  setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--tiny')});
 
   render() {
     const {objects, tooltip, showTooltip} = this.state;
@@ -221,7 +177,7 @@ class Landscape extends Component {
            className="bottom-container landscape-variant-container landscape--1"
            style={{ 
              transform: this.getTransformation(),
-             height: CANVAS_HEIGHT, width: CANVAS_WIDTH,
+             height: C.CANVAS_HEIGHT, width: C.CANVAS_WIDTH,
              filter: `blur(${this.getBlur()}px)`
            }}>
         <div className="rel-container">
@@ -254,10 +210,10 @@ class Landscape extends Component {
                           id={`book--tiny-${i}`}
                           alt="book"
                           style={{
-                            height: BOOK_HEIGHT,
-                            width: p.book.width * BOOK_HEIGHT,
-                            top: p.book.yOffset * BOOK_HEIGHT,
-                            left: p.book.xOffset * BOOK_HEIGHT,
+                            height: C.TINY_BOOK_HEIGHT,
+                            width:  C.TINY_BOOK_HEIGHT * p.book.width,
+                            top:    C.TINY_BOOK_HEIGHT * p.book.yOffset,
+                            left:   C.TINY_BOOK_HEIGHT * p.book.xOffset,
                             filter: `brightness(${p.book.tintDeviation})`
                           }}
                         />)
@@ -287,7 +243,7 @@ class Landscape extends Component {
               style={{
                 left: tooltip && tooltip.left,
                 top: tooltip && tooltip.top,
-                fontSize: `${TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`,
+                fontSize: `${C.TOOLTIP_FONT_SIZE / this.props.scaleFactor}rem`,
                 padding:  `${this.getTooltipPaddingY()} ${this.getTooltipPaddingX()}`,
                 ...(tooltip && tooltip.extraStyles)
               }}

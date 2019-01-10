@@ -2,6 +2,18 @@
 
 export default [
   {
+    id: 'bath-srpn',
+    title: 'SRPN',
+    github: true,
+    images: []
+  },
+  {
+    id: 'bath-dungeon-of-doom',
+    title: 'Dungeon of Doom',
+    github: true,
+    images: []
+  },
+  {
     id: 'first-ever-website',
     title: 'First Evarrr Website',
     github: true,
@@ -12,5 +24,35 @@ export default [
     title: 'Project Cowbell',
     github: true,
     images: []
-  }
+  },
+  {
+    id: 'semicolon-spammer',
+    title: ';;;;;;;;',
+    github: true,
+    images: []
+  },
+  {
+    id: 'week7-bomberman-game',
+    title: 'Bomberman clone',
+    github: true,
+    images: []
+  },
+  {
+    id: 'week8-ticket-uber-fullstack',
+    title: 'Ticket Uber',
+    github: true,
+    images: []
+  },
+  {
+    id: 'portfolio-website',
+    title: 'Portfolio website',
+    github: true,
+    images: []
+  },
+  {
+    id: 'questionnaires-appjection',
+    title: 'Questionnaire creator',
+    github: false,
+    images: []
+  },
 ]
