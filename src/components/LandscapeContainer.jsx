@@ -188,6 +188,7 @@ class LandscapeContainer extends Component {
             
             <br/>
             {this.state.popupProject.github && 
+              /// laat floaten rechtsbovenin ofzo
               <a href={`https://github.com/Jirinrin/${this.state.popupProject.id}`} target="_blank">github</a>
             }
             <br/>

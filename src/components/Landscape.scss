@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Cormorant:300,300i,400,400i,500,500i,600,600i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Cinzel:400,700,900|Cormorant:300,300i,400,400i,500,500i,600,600i,700,700i|Old+Standard+TT:400,400i,700|Ovo');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+SC:100,400&subset=japanese');
+@font-face {
+  font-family: 'Rough Typewriter';
+  src: url('../assets/fonts/rough_typewriter.otf');
+}
 
 landscape-container {
   user-select: none;
@@ -90,7 +95,8 @@ landscape-container {
   z-index: 20;
 
   &:hover {
-    transform: translateX(100px);
+    transform: scale(1.5);
+    z-index: 21;
     filter: sepia(3) hue-rotate(100deg);
     /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
     cursor: pointer;
@@ -254,6 +260,9 @@ img.book--large__background {
   padding: 2rem;
   overflow-y: scroll;
   cursor: default;
+  font-family: 'Cormorant', serif;
+  transition: all 0.2s ease;
+  font-size: 1rem;
   // scrollbar-width: none;
 
   &.popup-window-large {
@@ -261,8 +270,79 @@ img.book--large__background {
     height: calc(100vh - 14rem);
   }
 
-  // &::-webkit-scrollbar {
-  //   display: none;
+  /*
+  font-family: 'Cormorant', serif;
+  font-family: 'Ovo', serif;
+  font-family: 'Cinzel', serif;
+  font-family: 'Old Standard TT', serif;
+  */
+
+  h1 {
+    font-family: 'Cormorant', serif;
+    font-size: 4rem;
+    line-height: 0;
+    margin-bottom: 3.5rem;
+  }
+
+  h2 {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-family: 'Ovo', serif;
+    font-size: 1.2rem;
+  }
+
+  p {
+    // font-family: 'Cormorant', serif;
+    font-size: 1.3rem;
+
+    code {
+
+    }
+
+    strong {
+
+    }
+
+    em {
+
+    }
+  }
+
+  img {
+
+  }
+
+  a {
+    text-decoration: none;
+    color: rgb(40, 104, 93);
+    filter: brightness(1);
+    &:hover {
+      filter: brightness(1.5);
+    }
+    transition: all 0.2s ease;
+  }
+  
+
+  ul {
+    li {
+
+    }
+  }
+
+  code {
+    font-family: 'Rough Typewriter';
+  }
+
+  // pre {
+    
+  // }
+
+  // blockquote {
+
   // }
 }
 
