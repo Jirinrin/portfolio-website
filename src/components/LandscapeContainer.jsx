@@ -93,12 +93,16 @@ class LandscapeContainer extends Component {
     container.appendChild(style);
   }
 
+  scrollToBottom = () => window.scrollTo(0, 100000); // I know kan robuuster
+
   zoomInCanvas = () => {
     this.setState({zoomIn: true});
-    window.scrollTo(0, 100000); // I know kan robuuster
+    window.addEventListener('scroll', this.scrollToBottom);
+    this.scrollToBottom();
   }
 
   zoomOutCanvas = () => {
+    window.removeEventListener('scroll', this.scrollToBottom);
     this.setState({
       showPopup: false,
       zoomIn: false

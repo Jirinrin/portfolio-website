@@ -87,6 +87,7 @@ landscape-container {
 
 .book--large {
   transition: all 0.4s ease;
+  z-index: 20;
 
   &:hover {
     transform: translateX(100px);
