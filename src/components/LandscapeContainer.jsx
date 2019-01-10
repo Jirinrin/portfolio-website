@@ -15,7 +15,7 @@ import './Landscape.scss';
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
-    landscapeNum: 2,
+    landscapeNum: 0,
     landscapeTitle: null,
     zoomIn: false,
     frameOffset: null,

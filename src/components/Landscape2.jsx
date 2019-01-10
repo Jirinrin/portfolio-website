@@ -135,7 +135,7 @@ class Landscape extends Component {
                   key={`book--large-${i}`}
                   id={p.id}
                   style={{
-                    height: bookHeight + 'rem',
+                    height: bookHeight*1.01 + 'rem',
                     width: this.getTextWidth(p.book.width) + 'rem',
                     top: p.book.yOffset * bookHeight + 'rem',
                     left: this.getTextWidth(p.book.xOffset) + 'rem'
@@ -169,7 +169,7 @@ class Landscape extends Component {
                   className="book--large book--large__zoomed"
                   style={{
                     ...this.state.openedBook.style,
-                    height: bookHeight + 'rem',
+                    height: bookHeight*1.01 + 'rem',
                   }}
                 >
                   <div className="rel-container">

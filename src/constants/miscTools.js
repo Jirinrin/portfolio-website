@@ -20,5 +20,6 @@ export const calculateBookShadow = (bookClassName) => {
   });
 
   path += 'Z'; // for closing it, leave out last linedraw
+
   return path;
 }

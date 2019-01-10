@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'JMH Typewriter mono';
+  src: url('./assets/fonts/JMH Typewriter mono.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JMH Typewriter mono';
+  src: url('./assets/fonts/JMH Typewriter mono Italic.ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'JMH Typewriter mono';
+  src: url('./assets/fonts/JMH Typewriter mono Fine.ttf');
+  font-weight: lighter;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JMH Typewriter mono';
+  src: url('./assets/fonts/JMH Typewriter mono Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
 $background-url: url("./assets/background-darkgray.jpg");
 
 html {
@@ -7,10 +32,6 @@ html {
   background-size: cover;
   overflow-x: hidden;
   height: 100%;
-
-  
-
-  
 }
 
 ::-webkit-scrollbar {
@@ -45,6 +66,10 @@ body, #root {
 
 h2 {
   display: none;
+}
+
+code {
+  font-family: 'JMH Typewriter mono';
 }
 
 

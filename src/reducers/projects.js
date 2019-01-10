@@ -32,9 +32,6 @@ const getXOffsets = (widths) => {
       offsets.push(newOffset);
     }
   });
-
-  console.log(widths, offsets);
-
   return offsets;
 }
 
@@ -43,7 +40,6 @@ export default function reducer(state=defaultState, action={}) {
     case UPDATE_WIDTHS:
       // console.log(state, action);
       const xOffsets = getXOffsets(action.widths);
-      console.log(xOffsets);
       return state.map((p, i) => ({
         ...p,
         book: {
