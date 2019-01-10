@@ -242,7 +242,7 @@ class LandscapeContainer extends Component {
             classNames="landscape--2"
             mountOnEnter
             unmountOnExit
-            timeout={1000}
+            timeout={1200}
             onExited={() => this.setState({animationOngoing: false})}
           >
             <Landscape2 

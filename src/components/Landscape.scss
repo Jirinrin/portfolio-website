@@ -4,6 +4,10 @@
   font-family: 'Rough Typewriter';
   src: url('../assets/fonts/rough_typewriter.otf');
 }
+@font-face {
+  font-family: 'Rough Typewriter';
+  src: url('../assets/fonts/rough_typewriter.otf');
+}
 
 landscape-container {
   user-select: none;
@@ -222,20 +226,30 @@ img.book--large__background {
 
 .landscape--1-enter, .landscape--2-enter {
   filter: blur(20px) !important;
+  z-index: 14;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .landscape--1-exit.landscape--1-exit-active, .landscape--2-exit.landscape--2-exit-active {
   filter: blur(20px) !important;
-  transition: all 1000ms ease-out;
+  opacity: 0;
+  transition: all 1000ms ease-in-out;
 }
+
+// .landscape--2-enter {
+//   pointer-events
+// }
 
 .landscape--1-exit, .landscape--2-exit {
   filter: blur(0) !important;
+  opacity: 1;
 }
 
 .landscape--1-enter.landscape--1-enter-active, .landscape--2-enter.landscape--2-enter-active {
   filter: blur(0) !important;
-  transition: all 1000ms ease-out;
+  opacity: 1;
+  transition: all 1000ms ease-in-out;
 }
 
 .popup-window-background {
