@@ -31,7 +31,6 @@ export const calculateBookShadow = (bookClassName) => {
   const $ = (px) => parseFloat(px);
   
   const books = document.querySelectorAll(bookClassName);
-  console.log(books);
 
   let path = `M ${$(books[0].style.left)}, ${$(books[0].style.top) + $(books[0].style.height)}`;
   books.forEach((b, i) => {
@@ -85,7 +84,7 @@ class Landscape extends Component {
     const id = e.currentTarget.id;
     switch (id) {
       case 'awards-cup':
-        this.popupMessage('Awards still under construction')
+        this.popupMessage('Awards still under construction, hahah')
         return;
       case 'future-building':
       case 'hobby-heap':

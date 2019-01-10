@@ -1,5 +1,7 @@
+import request from 'superagent';
+
 import projects from '../assets/projects';
-import {UPDATE_WIDTHS} from '../actions/projects';
+import {UPDATE_WIDTHS, PROJECT_DESCRIPTIONS_FETCHED} from '../actions/projects';
 
 const defaultState = projects.map((p, i) => ({
   ...p,
@@ -21,6 +23,11 @@ export default function reducer(state=defaultState, action={}) {
           width: action.widths[i],
           xOffset: p.book.xOffset * action.widths[i]
         }
+      }));
+    case PROJECT_DESCRIPTIONS_FETCHED:
+      return state.map((p, i) => ({
+        ...p,
+        description: action.projectDescriptions[i]
       }));
     default:
       return state;

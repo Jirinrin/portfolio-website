@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import ReactMarkdown from 'react-markdown';
 
 import {updateWidths} from '../actions/projects';
 
@@ -21,7 +22,7 @@ class LandscapeContainer extends Component {
     animationOngoing: false,
     showPopup: false,
     largePopup: true,
-    popupMessage: null
+    popupText: null
   };
   
   componentDidMount() {
@@ -109,11 +110,12 @@ class LandscapeContainer extends Component {
     });
   }
 
-  showPopup = (popupMessage, largePopup=true) => {
+  showPopup = (popupText, largePopup=true) => {
+    console.log('hi', popupText)
     this.setState({
-      showPopup: true, 
+      showPopup: true,
       largePopup,
-      popupMessage
+      popupText
     });
   }
 
@@ -191,7 +193,8 @@ class LandscapeContainer extends Component {
                     ...(tooltip && tooltip.extraStyles)
                   }}
                 > */}
-                {this.state.popupMessage}
+                {this.state.popupText && <ReactMarkdown source={this.state.popupText} />}
+                {/* {this.state.popupText} */}
               </div>
             </div>
           </CSSTransition>

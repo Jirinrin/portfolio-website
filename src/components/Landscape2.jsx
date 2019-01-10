@@ -5,6 +5,8 @@ import _ from 'lodash';
 import {CANVAS_HEIGHT, CANVAS_WIDTH} from './LandscapeContainer';
 import {calculateBookShadow} from './Landscape1';
 
+import {fetchProjectDescriptions} from '../actions/projects';
+
 const BASE_BOOK_HEIGHT = 6;
 // const BASE_BOOK_WIDTH = 36;
 const BOOK_BASE_LEFT = 1540;
@@ -19,6 +21,11 @@ class Landscape extends Component {
     openedBook: null,
     bookShadow: null
   };
+
+  componentWillMount() {
+    if (!this.props.projects[0].description)
+      this.props.fetchProjectDescriptions(this.props.projects);
+  }
 
   componentDidMount() {
     this.setBookShadow();
@@ -90,7 +97,9 @@ class Landscape extends Component {
     zoomBook.style.height = `calc(90vh / ${this.props.scaleFactor})`;
     zoomBook.className += ' book--large__zoomed';
 
-    this.props.showPopup();
+    const project = this.props.projects.find(p => p.id === this.state.openedBook.book.id);
+    if (!project) return;
+    this.props.showPopup(project.description);
   }
 
   setBookShadow = () => this.setState({bookShadow: calculateBookShadow('.book--large')});
@@ -122,15 +131,16 @@ class Landscape extends Component {
             }}
           >
             <div className="rel-container">
-              {projects.map((b, i) =>
+              {projects.map((p, i) =>
                 <div
                   className="book--large"
                   key={`book--large-${i}`}
+                  id={p.id}
                   style={{
                     height: bookHeight + 'rem',
-                    width: this.getTextWidth(b.book.width) + 'rem',
-                    top: b.book.yOffset * bookHeight + 'rem',
-                    left: this.getTextWidth(b.book.xOffset) + 'rem'
+                    width: this.getTextWidth(p.book.width) + 'rem',
+                    top: p.book.yOffset * bookHeight + 'rem',
+                    left: this.getTextWidth(p.book.xOffset) + 'rem'
                   }}
                   onClick={this.setupBookZoom}
                 >
@@ -139,7 +149,7 @@ class Landscape extends Component {
                       src={require('../assets/box-dark.png')}
                       alt="book"
                       className="book--large__background"
-                      style={{filter: `brightness(${b.book.tintDeviation})`}}
+                      style={{filter: `brightness(${p.book.tintDeviation})`}}
                     />
                     <p 
                       className="book--large__title"
@@ -148,8 +158,8 @@ class Landscape extends Component {
                         lineHeight: this.getCoverFontSize() * 1.2 + 'rem',
                       }}
                     >
-                      <span className={`${b.book.tintDeviation < 1.5 ? 'dark-background' : (b.book.tintDeviation > 2.5 ? 'white-background' : '')}`}>
-                        {b.title}
+                      <span className={`${p.book.tintDeviation < 1.5 ? 'dark-background' : (p.book.tintDeviation > 2.5 ? 'white-background' : '')}`}>
+                        {p.title}
                       </span>
                     </p>
                   </div>
@@ -193,4 +203,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects}) => ({projects});
 
-export default connect(mapStateToProps)(Landscape);
+export default connect(mapStateToProps, {fetchProjectDescriptions})(Landscape);
