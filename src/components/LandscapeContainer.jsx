@@ -96,24 +96,12 @@ class LandscapeContainer extends Component {
     container.appendChild(style);
   }
 
-  dontScroll = (e) => {
-    e.preventDefault();
-  }
-
   scrollTo = (offset=0) => {
-    console.log(offset);
-    
-    if (!offset)
-      window.scrollTo(0, 100000);
-
-    if (offset) {
-
-    }
-    // window.scrollBy
-    // window.scroll
-    // if (extraOffset)
-    //   window.scrollBy(0, extraOffset);
+    window.scrollTo(0, 100000);
+    window.scrollBy(0, -offset);
   }
+
+  scrollToFrameOffset = () => this.scrollTo(this.state.frameOffset);
 
   getBottomOffset = (scroll) => {
     if (!scroll) return 0;
@@ -135,14 +123,15 @@ class LandscapeContainer extends Component {
     const bottomOffset = this.getBottomOffset(scroll);
     this.setState({
       zoomIn: true,
-      frameOffset: bottomOffset
-    });
+      frameOffset: bottomOffset,
+    }, 
+    window.addEventListener('scroll', this.scrollToFrameOffset)
+    );
     this.scrollTo(bottomOffset);
-    window.addEventListener('scroll', this.dontScroll);
   }
 
   zoomOutCanvas = () => {
-    window.removeEventListener('scroll', this.dontScroll);
+    window.removeEventListener('scroll', this.scrollToFrameOffset);
     this.setState({
       showPopup: false,
       zoomIn: false,

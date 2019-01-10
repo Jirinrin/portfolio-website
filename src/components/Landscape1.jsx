@@ -163,10 +163,7 @@ class Landscape extends Component {
 
   getBlur = () => this.props.zoomIn ? C.BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
-  slideToScreen = (screenName) => {
-    this.props.changeLandscape(2, screenName)
-    return;
-  }
+  slideToScreen = (screenName) => this.props.changeLandscape(2, screenName);
 
   setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--tiny')});
 

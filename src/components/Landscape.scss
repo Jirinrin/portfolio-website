@@ -252,6 +252,7 @@ img.book--large__background {
   margin: auto auto;
   z-index: 30;
   padding: 2rem;
+  overflow-y: scroll;
   cursor: default;
 
   &.popup-window-large {
