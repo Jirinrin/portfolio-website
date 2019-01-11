@@ -27,10 +27,10 @@ const LANGUAGE_REFERENCE = {
   md: 'markdown'
 };
 
-const GithubCode = ({code, snippets}) => {
-  if (!code ||!snippets) return null;
+const GithubCode = ({code}) => {
+  if (!code) return null;
 
-  const shuffledCode = code && _.shuffle(code).slice(0, snippets);
+  const shuffledCode = code && _.shuffle(code);
   return (
     <div className="GithubCode">
       {shuffledCode.map(c => {
@@ -42,6 +42,7 @@ const GithubCode = ({code, snippets}) => {
             rel="noopener noreferrer" target="_blank"
           >
             <SyntaxHighlighter 
+              key={c.code+c.filePath+c.lineNo+c.repo}
               style={duotone}
               language={LANGUAGE_REFERENCE[splittedPath[splittedPath.length - 1]]}
             >

@@ -45,19 +45,35 @@ class Navbar extends Component {
   }
 
   render() {
-    return ( <nav>
-      <li>ABOUT</li>
-      <li>CONTACT</li>
-      <li 
-        id="center-name"
-        style={{
-          transform: `translateY(${this.state.yOffset}px)
-                      scale(${this.state.scale}, ${this.state.scale})`
-        }}
-      >ーJIRIー</li>
-      <li>PROJECTS</li>
-      <li>AWARDS</li>
-    </nav> );
+    return ( 
+      <div className="rel-container">
+        <nav>
+          <li>ABOUT</li>
+          <li>CONTACT</li>
+          <li 
+            id="center-name"
+            style={{
+              transform: `translateY(${this.state.yOffset}px)
+                          scale(${this.state.scale})`
+            }}
+          >
+            <p>侍鈴々</p>
+            <p 
+              className="subtitle" 
+              style={{
+                  opacity: (this.state.yOffset) / BASE_Y_OFFSET
+              }}
+            >
+            Jiri Swen <br/>
+            coding individual
+            </p>
+          </li>
+          <li>PROJECTS</li>
+          <li>AWARDS</li>
+        </nav>
+        
+      </div>
+    );
   }
 }
  

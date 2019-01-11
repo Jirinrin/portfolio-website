@@ -7,13 +7,12 @@ import GithubCode from './GithubCode';
 
 class GithubCodeContainer extends Component {
   state = { 
-    codeSnippets: 1,
     intervalId: null
    }
 
   componentWillMount() {
     this.props.indexGithub();
-    this.setState({intervalId: setInterval(this.updateSnippets, 1000)});
+    this.setState({intervalId: setInterval(this.loadMoreCode, 1000)});
   }
 
   componentDidUpdate(oldProps) {
@@ -23,11 +22,12 @@ class GithubCodeContainer extends Component {
     // console.log(this.props.githubCode);
   }
 
-  updateSnippets = () => {
+  loadMoreCode = () => {
     const code = document.querySelector('.GithubCode');
     if (!code)
       return;
 
+    /// constante van mk
     const body = document.body;
     const html = document.documentElement;
     const docHeight = Math.max(
@@ -38,16 +38,10 @@ class GithubCodeContainer extends Component {
       html.offsetHeight
     );
 
-    if (docHeight - code.clientHeight > 0 && this.state.codeSnippets < 1000) {
-      console.log(this.state.codeSnippets);
-      if (this.state.codeSnippets < this.props.githubCode.length) {
-        this.props.loadGithubCode();
-      }
-      this.setState({codeSnippets: this.state.codeSnippets + 100});
-    }
-    else {
+    if (docHeight - code.clientHeight > 0)
+      this.props.loadGithubCode();
+    else
       clearInterval(this.state.intervalId);
-    }
       
     console.log(code.clientHeight, docHeight);
   }

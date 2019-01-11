@@ -178,6 +178,7 @@ class Landscape extends Component {
              filter: `blur(${this.getBlur()}px)`
            }}>
         <div className="rel-container">
+         <h2 className="landscape-name"> ABOUT </h2>
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
           {objects[0] &&
             objects.map(obj => {

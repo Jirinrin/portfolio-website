@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+SC:100,400&subset=japanese');
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
+@font-face {
+  font-family: 'Aozora Mincho';
+  src: url('../assets/fonts/AozoraMincho-thin.ttf');
+}
 
 nav {
   position: fixed;
@@ -24,17 +29,45 @@ nav {
     font-weight: 400;
     mix-blend-mode: screen;
     z-index: 101;
-    white-space: nowrap;
+    // white-space: nowrap;
     
-    display: inline-flex;
+    display: flex;
     flex: auto;
     flex-grow: 1;
     justify-content: center;
 
     &#center-name {
       font-size: 4rem;
+      max-height: 4rem;
+      overflow: visible;
+      margin-top: 0;
       font-weight: 100;
       flex-grow: 10;
+      font-family: 'Aozora Mincho';
+      white-space: nowrap;
+      word-wrap: break-word !important;
+      word-break: break-all !important;
+
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      p {
+        margin: 0;
+      }
+
+      p.subtitle {
+        // position: absolute;
+        // left: 50vw;
+        // right: 50vw;
+        display: block;
+        background: none;
+        color: rgb(223, 223, 223);
+        font-family: 'Cinzel', serif;
+        font-size: 1rem;
+        // white-space: nowrap;
+      }
     }
   }
 }
+

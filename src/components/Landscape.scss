@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Cinzel:400,700,900|Cormorant:300,300i,400,400i,500,500i,600,600i,700,700i|Old+Standard+TT:400,400i,700|Ovo');
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+SC:100,400&subset=japanese');
-@font-face {
-  font-family: 'Rough Typewriter';
-  src: url('../assets/fonts/rough_typewriter.otf');
-}
-
-
 
 landscape-container {
   user-select: none;
@@ -25,6 +19,7 @@ landscape-container {
 }
 
 .overflow-hidden {
+  // clip-path: inset( -100vw -100vw -100vw 0 );
   overflow: hidden;
 }
 
@@ -35,19 +30,36 @@ landscape-container {
   user-select: none;
 }
 
+h2.landscape-name {
+  display: block;
+  font-family: 'Cormorant', serif;
+  position: absolute;
+  font-size: 50rem;
+  z-index: 20;
+  color: rgba(0, 0, 0, 0.274);
+  mix-blend-mode: multiply;
+  width: 100%;
+  top: 4%;
+  text-align: center;
+  font-weight: normal;
+  user-select: none;
+}
+
 .full-width {
   width: 100%;
 }
 
 #shining-effect {
   z-index: 1;
-  opacity: 0.85;
-  animation: shine 5s infinite ease;
+  opacity: 0.8;
+  animation: shine 20s infinite ease;
+  mix-blend-mode: screen;
 
   @keyframes shine {
     50% {
       opacity: 1;
-      transform: bottom center scale(1.1, 1.1);
+      transform: scale(1.2);
+      transform-origin: center bottom;
     }
   }
 }
@@ -93,13 +105,13 @@ landscape-container {
 }
 
 .book--large {
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   z-index: 20;
 
   &:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
     z-index: 21;
-    filter: sepia(3) hue-rotate(100deg);
+    filter: sepia(3);
     /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
     cursor: pointer;
   }
