@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-// import _ from 'lodash';
 
 import * as C from '../constants';
 
@@ -17,10 +16,13 @@ class Landscape extends Component {
   componentWillMount() {
     if (!this.props.projects[0].description)
       this.props.fetchProjectDescriptions(this.props.projects);
+    
+    console.log('hii');
   }
 
   componentDidMount() {
     this.setBookShadow();
+    this.props.scrollDown();
   }
 
   componentDidUpdate(oldProps, oldState) {

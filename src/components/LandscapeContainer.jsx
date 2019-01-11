@@ -40,10 +40,10 @@ class LandscapeContainer extends Component {
       this.props.projects.map(p => {
         const test = document.getElementById("text-test");
         if (!test) return null;
-        test.style.fontSize = `10000px`;
+        test.style.fontSize = `1000px`;
         test.style.padding = 0;
         test.innerHTML = p.title;
-        return (test.clientWidth + 1) / 10000;
+        return (test.clientWidth + 1) / 1000;
       })
     );
   }
@@ -97,8 +97,27 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0) => {
+    console.log(offset);
     window.scrollTo(0, 100000);
     window.scrollBy(0, -offset);
+  }
+
+  scrollDown = (smooth=false, callback) => {
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight, 
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+
+    if (smooth)
+      window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
+    else 
+      window.scrollTo(0, 100000);
+    setTimeout(callback, 100);
   }
 
   scrollToFrameOffset = () => this.scrollTo(this.state.frameOffset);
@@ -124,10 +143,11 @@ class LandscapeContainer extends Component {
     this.setState({
       zoomIn: true,
       frameOffset: bottomOffset,
-    }, 
-    window.addEventListener('scroll', this.scrollToFrameOffset)
-    );
-    this.scrollTo(bottomOffset);
+    },
+    () => {
+      this.scrollTo(bottomOffset);
+      window.addEventListener('scroll', this.scrollToFrameOffset);
+    });
   }
 
   zoomOutCanvas = () => {
@@ -189,7 +209,9 @@ class LandscapeContainer extends Component {
             <br/>
             {this.state.popupProject.github && 
               /// laat floaten rechtsbovenin ofzo
-              <a href={`https://github.com/Jirinrin/${this.state.popupProject.id}`} target="_blank">github</a>
+              <a href={`https://github.com/Jirinrin/${this.state.popupProject.id}`} target="_blank" rel="noopener noreferrer">
+                github
+              </a>
             }
             <br/>
             {this.state.popupProject.images[0] &&
@@ -223,7 +245,7 @@ class LandscapeContainer extends Component {
             classNames="landscape--1"
             mountOnEnter
             unmountOnExit
-            timeout={1000}
+            timeout={{enter: 1000, exit: 1200}}
             onExited={() => this.setState({animationOngoing: false})}
           >
             <Landscape1 
@@ -234,6 +256,7 @@ class LandscapeContainer extends Component {
               zoomIn={this.state.zoomIn}
               showPopup={this.showPopup}
               showAboutPopup={this.showAboutPopup}
+              scrollDown={this.scrollDown}
             />
           </CSSTransition>
           <CSSTransition
@@ -241,7 +264,7 @@ class LandscapeContainer extends Component {
             classNames="landscape--2"
             mountOnEnter
             unmountOnExit
-            timeout={1200}
+            timeout={{enter: 1200, exit: 1000}}
             onExited={() => this.setState({animationOngoing: false})}
           >
             <Landscape2 
@@ -253,6 +276,7 @@ class LandscapeContainer extends Component {
               zoomIn={this.state.zoomIn}
               showProjectPopup={this.showProjectPopup}
               bottom={this.state.frameOffset}
+              scrollDown={this.scrollDown}
             />
           </CSSTransition>
 
@@ -273,9 +297,9 @@ class LandscapeContainer extends Component {
         <CSSTransition
             in={this.state.landscapeNum === 2}
             classNames="back-arrow"
-            mountOnEnter
+            // mountOnEnter
             unmountOnExit
-            timeout={1200}
+            timeout={{enter: 10000, exit: 10000}}
           >
             <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.changeLandscape(1)} />
           </CSSTransition>

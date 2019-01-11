@@ -37,10 +37,7 @@ export const indexGithub = () => async (dispatch, getState) => {
     })
   );
 
-  let lengthCounter = 0;
-  dispatch(
-    githubIndexed(indexing)
-  );
+  dispatch(githubIndexed(indexing));
 }
 
 
@@ -74,8 +71,6 @@ export const loadGithubCode = (allProjects=false) => async (dispatch, getState) 
     const repo = Object.keys(indexing)[Math.round(Math.random() * Object.values(indexing).length - 0.5)];
     const filePath = indexing[repo][Math.round(Math.random() * indexing[repo].length - 0.5)];
 
-    console.log(repo, filePath);
-       
     request
     .get(`${BASE_URL_RAW}/${repo}/master/${filePath}`)
     .then(res =>  [{repo, filePath, code: res.text}])

@@ -48,10 +48,10 @@ class Landscape extends Component {
       case 'octopus-tree':
       case 'spiral-tower':
       case 'technology-forest':
-        this.zoomPopup(id);
+        this.props.scrollDown(true, () => this.zoomPopup(id));
         return;
       case 'book-stack':
-        this.slideToScreen(id);
+        this.props.scrollDown(true, () => this.slideToScreen(id));
         return;
       default:
         throw new Error('id of the thing you clicked on seems invalid');
@@ -70,7 +70,7 @@ class Landscape extends Component {
     if (target.id === 'book-stack-svg')
     target = target.parentNode;
 
-    const test = document.getElementById("text-test");
+    const test = document.getElementById("text-test-2");
     test.style.fontSize = this.getTooltipFontSize();
     test.style.padding = this.getTooltipPaddingX();
     test.innerHTML = target.name;

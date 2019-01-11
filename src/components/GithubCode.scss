@@ -8,18 +8,23 @@
 
 .GithubCode {
   width: 100%;
+  height: 100%;
+  position: absolute;
   overflow: hidden;
   // filter: hue-rotate(80deg);
   filter: sepia(3);
+  mix-blend-mode: multiply;
   
 
   a {
     text-decoration: none;
     // transition: all 0.1s;
-    filter: brightness(0.3);
+    filter: brightness(0.5) contrast(2);
+    opacity: 0.3;
 
     &:hover {
-      filter: brightness(1.5);
+      filter: brightness(1);
+      opacity: 1;
     }
   }
   
@@ -48,3 +53,25 @@
     }
   }
 }
+
+.GithubCodeContainer-enter {
+  opacity: 0 !important;
+  filter: blur(40px);
+}
+
+.GithubCodeContainer-enter-active {
+  opacity: 0.3 !important;
+  filter: blur(0);
+  transition: all 1000ms ease;
+}
+
+// .GithubCodeContainer-exit {
+//   opacity: 1 !important;
+//   filter: blur(0);
+// }
+
+// .GithubCodeContainer-exit-active {
+//   opacity: 0 !important;
+//   filter: blur(40px);
+//   transition: all 500ms ease;
+// }

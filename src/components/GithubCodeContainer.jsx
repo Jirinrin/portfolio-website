@@ -1,55 +1,64 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {CSSTransition} from 'react-transition-group';
 
 import {indexGithub, loadGithubCode} from '../actions/githubCode';
 import GithubCode from './GithubCode';
 
+const MAX_CHARS = 19000;
 
 class GithubCodeContainer extends Component {
   state = { 
-    intervalId: null
+    intervalId: null,
+    code: null,
+    previousPageYOffset: window.pageYOffset
    }
 
   componentWillMount() {
     this.props.indexGithub();
-    this.setState({intervalId: setInterval(this.loadMoreCode, 1000)});
+    window.addEventListener('scroll', this.handleScrollChange);
   }
 
-  componentDidUpdate(oldProps) {
-    if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) {
+  async componentDidUpdate(oldProps) {
+    if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) 
       this.props.loadGithubCode(true);
+
+    if (oldProps.githubCode.length !== this.props.githubCode.length) {
+      if (this.shouldLoadMoreCode())
+        this.props.loadGithubCode();
+      else {
+        this.setState({code: this.props.githubCode});
+        // setTimeout(() => window.removeEventListener('scroll', this.handleScrollChange), 10000);
+      }
     }
-    // console.log(this.props.githubCode);
   }
 
-  loadMoreCode = () => {
-    const code = document.querySelector('.GithubCode');
-    if (!code)
-      return;
+  shouldLoadMoreCode = () => {
+    const codeString = this.props.githubCode.map(codeLine => codeLine.code).join('');
+    return codeString.length < MAX_CHARS * (window.innerWidth / 1920);
+  }
 
-    /// constante van mk
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.max(
-      body.scrollHeight, 
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight
-    );
-
-    if (docHeight - code.clientHeight > 0)
-      this.props.loadGithubCode();
+  handleScrollChange = () => {
+    console.log(this.state.previousPageYOffset);
+    if (window.pageYOffset === 0 && this.state.previousPageYOffset - window.pageYOffset > 300)
+      window.scrollTo(0, this.state.previousPageYOffset);
     else
-      clearInterval(this.state.intervalId);
-      
-    console.log(code.clientHeight, docHeight);
+      this.setState({previousPageYOffset: window.pageYOffset});
   }
 
   render() { 
     return ( 
       <div className="GithubCodeContainer">
-        <GithubCode code={this.props.githubCode} snippets={this.state.codeSnippets} />
+        <CSSTransition
+            in={!!this.state.code}
+            classNames="GithubCodeContainer"
+            mountOnEnter
+            unmountOnExit
+            timeout={1000}
+          >
+            <GithubCode code={this.state.code} />
+          </CSSTransition>
+        {/* <code className="text-test" id="text-test-3"/> */}
       </div>
      );
   }

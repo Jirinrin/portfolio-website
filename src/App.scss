@@ -59,6 +59,10 @@ html {
 body, #root {
   height: 100%;
   position: relative;
+  ::selection {
+    background: rgb(49, 49, 49);
+    color: rgb(199, 199, 199);
+  }
 }
 
 .App {
@@ -80,4 +84,14 @@ code {
 
 h2 {
   font-family: 'Cinzel', serif;
+}
+
+.text-test {
+  margin: 0;
+  position: fixed;
+  visibility: hidden;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+  font-family: 'Cormorant', serif;
 }

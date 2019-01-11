@@ -35,7 +35,7 @@ h2.landscape-name {
   font-family: 'Cormorant', serif;
   position: absolute;
   font-size: 50rem;
-  z-index: 20;
+  z-index: 13;
   color: rgba(0, 0, 0, 0.274);
   mix-blend-mode: multiply;
   width: 100%;
@@ -223,17 +223,6 @@ img.book--large__background {
   transition: all 500ms ease;
 }
 
-.text-test {
-  margin: 0;
-  position: fixed;
-  visibility: hidden;
-  height: auto;
-  width: auto;
-  white-space: nowrap;
-  font-family: 'Cormorant', serif;
-}
-
-
 .landscape--1-enter, .landscape--2-enter {
   filter: blur(20px) !important;
   z-index: 14;
@@ -245,6 +234,10 @@ img.book--large__background {
   filter: blur(20px) !important;
   opacity: 0;
   transition: all 1000ms ease-in-out;
+}
+
+div.landscape--1-exit.landscape--1-exit-active {
+  transition: all 1000ms ease-in-out 200ms;
 }
 
 // .landscape--2-enter {
@@ -260,6 +253,12 @@ img.book--large__background {
   filter: blur(0) !important;
   opacity: 1;
   transition: all 1000ms ease-in-out;
+}
+
+div.landscape--2-enter.landscape--2-enter-active {
+  filter: blur(0) !important;
+  opacity: 1;
+  transition: all 1000ms ease-in-out 200ms;
 }
 
 .popup-window-background {
@@ -287,7 +286,6 @@ img.book--large__background {
   font-family: 'Cormorant', serif;
   transition: all 0.2s ease;
   font-size: 1rem;
-  // scrollbar-width: none;
 
   &.popup-window-large {
     width: calc(100vw - 18rem);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import './Navbar.scss';
 
 const BASE_Y_OFFSET = window.innerHeight / 2;
@@ -23,7 +22,9 @@ class Navbar extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
   
-  onScroll = (e) => this.updateScrollParams(e.pageY);
+  onScroll = (e) => {
+    this.updateScrollParams(window.pageYOffset);
+  }
   
   updateScrollParams = (scroll) => {
     const yOffset = this.calculateY(scroll);
@@ -48,8 +49,8 @@ class Navbar extends Component {
     return ( 
       <div className="rel-container">
         <nav>
-          <li>ABOUT</li>
           <li>CONTACT</li>
+          <li>ABOUT</li>
           <li 
             id="center-name"
             style={{
@@ -65,7 +66,7 @@ class Navbar extends Component {
               }}
             >
             Jiri Swen <br/>
-            coding individual
+            a coding individual
             </p>
           </li>
           <li>PROJECTS</li>
