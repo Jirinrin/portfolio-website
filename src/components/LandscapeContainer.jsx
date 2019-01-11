@@ -270,6 +270,17 @@ class LandscapeContainer extends Component {
             </div>
           </CSSTransition>
         </div>
+
+        <CSSTransition
+            in={this.state.landscapeNum === 2}
+            classNames="back-arrow"
+            mountOnEnter
+            unmountOnExit
+            timeout={1200}
+          >
+            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.changeLandscape(1)} />
+          </CSSTransition>
+        
         <div className="text-test" id="text-test"/>
         <div className="text-test" id="text-test-2"/>
       </div> 

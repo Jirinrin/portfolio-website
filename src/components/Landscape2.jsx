@@ -103,7 +103,6 @@ class Landscape extends Component {
   render() {
     const {projects, scaleFactor} = this.props;
     const {bookHeight} = this.state;
-    console.log(this.props.bottom);
 
     return (
       <div id="landscape-variant-container--2" 
@@ -115,8 +114,7 @@ class Landscape extends Component {
            }}
       >
         <div className="rel-container">
-          <img src={require('../assets/landscape/landscape-2.png')} className="landscape" id="landscape-2" alt="landscape 2"
-               onClick={() => this.props.changeLandscape(1)} />
+          <img src={require('../assets/landscape/landscape-2.png')} className="landscape" id="landscape-2" alt="landscape 2" />
 
           {/* and yes, the width of the bookstack is inaccurate due to the deviations and stuff */}
           <div 

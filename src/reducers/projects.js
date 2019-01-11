@@ -4,6 +4,7 @@ import projects from '../assets/projects';
 import {UPDATE_WIDTHS, PROJECT_DESCRIPTIONS_FETCHED} from '../actions/projects';
 
 const BOOK_STACK_WIDTH_LIMIT = 10;
+const MINIMUM_BOOK_OVERLAP = 1.5;
 
 const defaultState = projects.map((p, i) => ({
   ...p,
@@ -22,7 +23,7 @@ const getXOffsets = (widths) => {
     if (i === 0)
       offsets.push(0);
     else {
-      let range = [offsets[i-1] - width, widths[i-1] + offsets[i-1]];
+      let range = [offsets[i-1] - width + MINIMUM_BOOK_OVERLAP, widths[i-1] + offsets[i-1] - MINIMUM_BOOK_OVERLAP];
       if (range[0] < -BOOK_STACK_WIDTH_LIMIT)
         range[0] = -BOOK_STACK_WIDTH_LIMIT;
       if (range[1] + width > BOOK_STACK_WIDTH_LIMIT)

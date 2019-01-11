@@ -189,24 +189,24 @@ img.book--large__background {
   pointer-events: none;
 }
 
-.tooltip-enter, {
-  opacity: 0;
+.tooltip-enter, .back-arrow-enter {
+  opacity: 0 !important;
   filter: blur(40px);
 }
 
-.tooltip-enter-active {
-  opacity: 1;
+.tooltip-enter-active, .back-arrow-enter-active {
+  opacity: 1 !important;
   filter: blur(0);
   transition: all 500ms ease;
 }
 
-.tooltip-exit {
-  opacity: 1;
+.tooltip-exit, .back-arrow-exit, .back-arrow-exit:hover {
+  opacity: 1 !important;
   filter: blur(0);
 }
 
-.tooltip-exit-active {
-  opacity: 0;
+.tooltip-exit-active, .back-arrow-exit-active, .back-arrow-exit-active:hover {
+  opacity: 0 !important;
   filter: blur(40px);
   transition: all 500ms ease;
 }
@@ -429,3 +429,35 @@ svg {
   // }
 }
 
+.back-arrow {
+  position: fixed !important;
+  width: 6rem;
+  left: 2rem;
+  top: calc(50vh - 3rem);
+  z-index: 30;
+
+  
+  transition: 0.4s all ease;
+  opacity: 0.7;
+
+  &:hover {
+    &:not(.back-arrow-exit) {
+      filter: sepia(3);
+      cursor: pointer;
+      animation: left-right 0.5s ease-in-out infinite alternate;
+      opacity: 1;
+
+      @keyframes left-right {
+        to {transform: scale(0.9) translateX(-1rem)}
+      }
+    }
+  }
+}
+
+.back-arrow-enter-active {
+  transition: all 500ms ease 700ms !important;
+}
+
+.back-arrow-exit-active {
+  transition: all 500ms ease !important;
+}
