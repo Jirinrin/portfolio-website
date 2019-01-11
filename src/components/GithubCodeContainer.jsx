@@ -6,29 +6,65 @@ import GithubCode from './GithubCode';
 
 
 class GithubCodeContainer extends Component {
-  state = {  }
+  state = { 
+    codeSnippets: 1,
+    intervalId: null
+   }
 
   componentWillMount() {
     this.props.indexGithub();
+    this.setState({intervalId: setInterval(this.updateSnippets, 1000)});
   }
 
   componentDidUpdate(oldProps) {
-    if (oldProps.githubIndexing !== this.props.githubIndexing) {
+    if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) {
       this.props.loadGithubCode(true);
-      this.props.loadGithubCode();
+    }
+    // console.log(this.props.githubCode);
+  }
+
+  updateSnippets = () => {
+    const code = document.querySelector('.GithubCode');
+    if (!code)
+      return;
+
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight, 
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+
+    if (docHeight - code.clientHeight > 0 && this.state.codeSnippets < 1000) {
+      console.log(this.state.codeSnippets);
+      if (this.state.codeSnippets < this.props.githubCode.length) {
+        this.props.loadGithubCode();
+      }
+      this.setState({codeSnippets: this.state.codeSnippets + 100});
+    }
+    else {
+      clearInterval(this.state.intervalId);
     }
       
+    console.log(code.clientHeight, docHeight);
   }
 
   render() { 
-    return ( <GithubCode code={this.props.githubCode}/> );
+    return ( 
+      <div className="GithubCodeContainer">
+        <GithubCode code={this.props.githubCode} snippets={this.state.codeSnippets} />
+      </div>
+     );
   }
 }
 
-const mapStateToProps = ({githubCode, githubIndexing}) => {
+const mapStateToProps = ({githubCode}) => {
   return {
-    githubCode: githubCode.map(code => code.code.split('\n').map((line, i) => ({repo: code.repo, filePath: code.filePath, lineNo: i, code: line}))).flat(),
-    githubIndexing
+    githubCode: githubCode.code.map(code => code.code.split('\n').map((line, i) => ({repo: code.repo, filePath: code.filePath, lineNo: i, code: line}))).flat(),
+    githubIndexing: githubCode.indexing
   };
 };
 

@@ -19,15 +19,11 @@ export const indexGithub = () => async (dispatch, getState) => {
   if (!projects)
     return;
   
-  console.log(projects);
-
   await Promise.all(
     projects.map(async p => {
       if (!p.github)
         return;
       
-      console.log(p);
-
       const treeSha = await request
                             .get(`${BASE_URL}/${p.id}/branches/master`)
                             .then(res => res.body.commit.commit.tree.sha);
@@ -43,13 +39,7 @@ export const indexGithub = () => async (dispatch, getState) => {
 
   let lengthCounter = 0;
   dispatch(
-    githubIndexed({
-      indexing,
-      lengthReference: Object.entries(indexing).map(kv => {
-        lengthCounter += kv[1].length;
-        return [kv[0], lengthCounter];
-      })
-    })
+    githubIndexed(indexing)
   );
 }
 
@@ -63,7 +53,7 @@ const codeFetched = (code=[]) => ({
 
 export const loadGithubCode = (allProjects=false) => async (dispatch, getState) => {
   const projects = getState().projects;
-  const indexing = getState().githubIndexing.indexing;
+  const indexing = getState().githubCode.indexing;
   if (!projects || !indexing)
     return;
   
@@ -81,21 +71,14 @@ export const loadGithubCode = (allProjects=false) => async (dispatch, getState) 
     .then(code => dispatch(codeFetched(code)));
   }
   else {
-    const lengths = getState().githubIndexing.lengthReference;
-    console.log(lengths);
-    const index = Math.round(Math.random() * lengths[lengths.length - 1][1] - 0.5);
-    console.log(index);
-    for (let i = 0; i < lengths.length; i++) {
-      if (index < lengths[i][1]) {
-        const repo = lengths[i][0];
-        const filePath = indexing[repo][index - (i === 0 ? 0 : lengths[i-1][1])];
+    const repo = Object.keys(indexing)[Math.round(Math.random() * Object.values(indexing).length - 0.5)];
+    const filePath = indexing[repo][Math.round(Math.random() * indexing[repo].length - 0.5)];
 
-        request
-        .get(`${BASE_URL_RAW}/${repo}/master/${filePath}`)
-        .then(res =>  [{repo, filePath, code: res.text}])
-        .then(code => dispatch(codeFetched(code)));
-      break;
-      }
-    }
+    console.log(repo, filePath);
+       
+    request
+    .get(`${BASE_URL_RAW}/${repo}/master/${filePath}`)
+    .then(res =>  [{repo, filePath, code: res.text}])
+    .then(code => dispatch(codeFetched(code)));
   }
 }

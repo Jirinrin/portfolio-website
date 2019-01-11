@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 // import {duotoneSea as duotone} from 'react-syntax-highlighter/dist/styles/prism';
 import {duotoneForest as duotone} from 'react-syntax-highlighter/dist/styles/prism';
@@ -26,23 +27,25 @@ const LANGUAGE_REFERENCE = {
   md: 'markdown'
 };
 
-const GithubCode = (props) => {
-  return ( 
+const GithubCode = ({code, snippets}) => {
+  if (!code ||!snippets) return null;
+
+  const shuffledCode = code && _.shuffle(code).slice(0, snippets);
+  return (
     <div className="GithubCode">
-      {props.code && props.code.map(code => {
-        const splittedPath = code.filePath.split('.');
-        console.log(code.code.split('\n'))
-        // console.log(LANGUAGE_REFERENCE[splittedCode[splittedCode.length - 1]]);
-        console.log(splittedPath[splittedPath.length - 1]);
-        return ( 
-          <a href={`https://github.com/Jirinrin/${code.repo}/blob/master/${code.filePath}`} target="_blank">
+      {shuffledCode.map(c => {
+        const splittedPath = c.filePath.split('.');
+        return (
+          <a
+            key={c.code+c.filePath+c.lineNo+c.repo}
+            href={`https://github.com/Jirinrin/${c.repo}/blob/master/${c.filePath}`} 
+            rel="noopener noreferrer" target="_blank"
+          >
             <SyntaxHighlighter 
-              key={code.code+code.filePath+code.lineNo+code.repo}
-              // style={duotoneLight}
               style={duotone}
               language={LANGUAGE_REFERENCE[splittedPath[splittedPath.length - 1]]}
             >
-              {code.code}
+              {c.code}
             </SyntaxHighlighter>
           </a>
         );
