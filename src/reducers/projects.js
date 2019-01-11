@@ -1,7 +1,7 @@
 import projects from '../assets/projects';
 import {UPDATE_WIDTHS, PROJECT_DESCRIPTIONS_FETCHED} from '../actions/projects';
 
-const BOOK_STACK_WIDTH_LIMIT = 8;
+const BOOK_STACK_WIDTH_LIMIT = 9;// * (window.innerHeight / 1920);
 const MINIMUM_BOOK_OVERLAP = 1.5;
 
 const defaultState = projects.map((p, i) => ({

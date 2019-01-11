@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import * as C from '../constants';
 
 import {updateWidths} from '../actions/projects';
+import {changePage} from '../actions/currentPage';
 
 import Landscape1 from './Landscape1';
 import Landscape2 from './Landscape2';
@@ -15,7 +16,7 @@ import './Landscape.scss';
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
-    landscapeNum: 0,
+    // landscapeNum: 0,
     landscapeTitle: null,
     zoomIn: false,
     frameOffset: null,
@@ -48,9 +49,12 @@ class LandscapeContainer extends Component {
     );
   }
 
-  componentDidUpdate(_, oldState) {
+  componentDidUpdate(oldProps, oldState) {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
+
+    if (this.props.currentPage !== oldProps.currentPage)
+      window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
   }
 
   componentWillUnmount() {
@@ -61,12 +65,12 @@ class LandscapeContainer extends Component {
 
   calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / C.CANVAS_WIDTH;
 
-  changeLandscape = (num, title=null) => {
-    if (!this.state.animationOngoing)
-      this.setState({
-        landscapeNum: num,
-      });
-  }
+  // changeLandscape = (num, title=null) => {
+  //   if (!this.state.animationOngoing)
+  //     this.setState({
+  //       landscapeNum: num,
+  //     });
+  // }
 
   updateAnimations(firstDelelete=false) {
     // const style = document.createElement('style');
@@ -241,7 +245,7 @@ class LandscapeContainer extends Component {
                style={{bottom: -this.state.frameOffset}}/>
           
           <CSSTransition
-            in={this.state.landscapeNum === 1}
+            in={this.props.currentPage === 'landscape-1'}
             classNames="landscape--1"
             mountOnEnter
             unmountOnExit
@@ -250,7 +254,6 @@ class LandscapeContainer extends Component {
           >
             <Landscape1 
               scaleFactor={this.state.scaleFactor}
-              changeLandscape={this.changeLandscape}
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
@@ -260,7 +263,7 @@ class LandscapeContainer extends Component {
             />
           </CSSTransition>
           <CSSTransition
-            in={this.state.landscapeNum === 2}
+            in={this.props.currentPage === 'landscape-2'}
             classNames="landscape--2"
             mountOnEnter
             unmountOnExit
@@ -270,7 +273,6 @@ class LandscapeContainer extends Component {
             <Landscape2 
               scaleFactor={this.state.scaleFactor}
               landscapeTitle={this.state.landscapeTitle}
-              changeLandscape={this.changeLandscape}
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
@@ -295,13 +297,13 @@ class LandscapeContainer extends Component {
         </div>
 
         <CSSTransition
-            in={this.state.landscapeNum === 2}
+            in={this.props.currentPage === 'landscape-2'}
             classNames="back-arrow"
             // mountOnEnter
             unmountOnExit
             timeout={{enter: 10000, exit: 10000}}
           >
-            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.changeLandscape(1)} />
+            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage('landscape-1')} />
           </CSSTransition>
         
         <div className="text-test" id="text-test"/>
@@ -311,6 +313,6 @@ class LandscapeContainer extends Component {
   }
 }
 
-const mapStateToProps = ({projects}) => ({projects});
+const mapStateToProps = ({projects, currentPage}) => ({projects, currentPage});
  
-export default connect(mapStateToProps, {updateWidths})(LandscapeContainer);
+export default connect(mapStateToProps, {updateWidths, changePage})(LandscapeContainer);

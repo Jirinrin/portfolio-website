@@ -16,7 +16,7 @@ class GithubCodeContainer extends Component {
 
   componentWillMount() {
     this.props.indexGithub();
-    window.addEventListener('scroll', this.handleScrollChange);
+    // window.addEventListener('scroll', this.handleScrollChange);
   }
 
   async componentDidUpdate(oldProps) {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
+import {changePage} from '../actions/currentPage';
+
 import * as C from '../constants';
 
 class Landscape extends Component {
@@ -23,10 +25,10 @@ class Landscape extends Component {
         return {
           id: obj[0],
           name: obj[3],
-          left:   bs ? C.TINY_BOOK_BASE_LEFT                           : obj[1],
+          left:   bs ? C.TINY_BOOK_BASE_LEFT                             : obj[1],
           top:    bs ? C.getTinyBookStackTop(this.props.projects.length) : obj[2],
-          width:  bs ? C.TINY_BOOK_WIDTH                               : null,
-          height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length : null
+          width:  bs ? C.TINY_BOOK_WIDTH                                 : null,
+          height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length   : null
         }
       }),
     });
@@ -51,7 +53,7 @@ class Landscape extends Component {
         this.props.scrollDown(true, () => this.zoomPopup(id));
         return;
       case 'book-stack':
-        this.props.scrollDown(true, () => this.slideToScreen(id));
+        this.props.scrollDown(true, () => this.props.changePage('landscape-2'));
         return;
       default:
         throw new Error('id of the thing you clicked on seems invalid');
@@ -163,8 +165,6 @@ class Landscape extends Component {
 
   getBlur = () => this.props.zoomIn ? C.BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
-  slideToScreen = (screenName) => this.props.changeLandscape(2, screenName);
-
   setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--tiny')});
 
   render() {
@@ -257,4 +257,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects}) => ({projects});
 
-export default connect(mapStateToProps)(Landscape);
+export default connect(mapStateToProps, {changePage})(Landscape);
