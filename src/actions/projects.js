@@ -14,7 +14,10 @@ const projectDescriptionsFetched = (projectDescriptions=[]) => ({
   projectDescriptions
 });
 
-export const fetchProjectDescriptions = (projectsList) => (dispatch) => {
+export const fetchProjectDescriptions = () => (dispatch, getState) => {
+  const projectsList = getState().projects;
+  if (!projectsList) 
+    return;
   Promise.all(projectsList.map(p => 
     request
     .get(require(`../assets/projects/${p.id}.md`))

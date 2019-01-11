@@ -36,7 +36,7 @@ html {
 
 ::-webkit-scrollbar {
   // display: none;
-  width: 1em;
+  width: 0.7rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -69,7 +69,7 @@ h2 {
 }
 
 code {
-  font-family: 'JMH Typewriter mono';
+  font-family: 'JMH Typewriter mono' !important;
 }
 
 

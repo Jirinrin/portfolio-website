@@ -1,4 +1,42 @@
 .GithubCode {
-  height: 300vw;
+  height: 400vh;
+  width: 100vw;
   position: relative;
+  overflow: hidden;
+  filter: hue-rotate(80deg);
+
+  a {
+    text-decoration: none;
+    transition: all 0.1s;
+    filter: brightness(0.5);
+
+    &:hover {
+      filter: brightness(2);
+    }
+  }
+  
+  pre {
+    overflow: hidden !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    white-space: normal !important;
+    padding: 0 !important;
+    display: inline !important;
+    tab-size: 2 !important;
+    background: none !important;
+    border: 0 !important;
+
+    code {
+      // color: rgb(95, 95, 95);
+      // mix-blend-mode: multiply;
+      word-wrap: break-word !important;
+      word-break: break-all !important;
+      white-space: normal !important;
+      // line-height: 0;
+      // z-index: 1000;
+      background: none !important;
+      border: 0 !important;
+      font-size: 1.2rem !important;
+    }
+  }
 }
