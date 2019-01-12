@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+
+import {changePage} from '../actions/currentPage';
+
 import './Navbar.scss';
 
 const BASE_Y_OFFSET = window.innerHeight / 2;
@@ -49,8 +53,12 @@ class Navbar extends Component {
     return ( 
       <div className="rel-container">
         <nav>
-          <li>CONTACT</li>
-          <li>ABOUT</li>
+          <li>
+            CONTACT
+          </li>
+          <li>
+            ABOUT
+          </li>
           <li 
             id="center-name"
             style={{
@@ -69,16 +77,22 @@ class Navbar extends Component {
             a coding individual
             </p>
           </li>
-          <li>PROJECTS</li>
-          <li>AWARDS</li>
+          <li>
+            PROJECTS
+          </li>
+          <li>
+            AWARDS
+          </li>
         </nav>
         
       </div>
     );
   }
 }
- 
-export default Navbar;
+
+const mapStateToProps = ({currentPage}) => ({currentPage});
+
+export default connect(mapStateToProps, {changePage})(Navbar);
 
 function mapRange(num, inMin, inMax, outMin, outMax) {
   return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;

@@ -1,9 +1,18 @@
 import {CHANGE_PAGE} from '../actions/currentPage';
 
-export default function reducer(state='landscape-1', action={}) {
+const startPage = {
+  landscape: 1,
+  popup: null,
+  showPopup: false
+};
+
+export default function reducer(state=startPage, action={}) {
   switch (action.type) {
     case CHANGE_PAGE:
-      return action.pageName;
+      return {
+        ...state,
+        ...action.page
+      };
     default:
       return state;
   }

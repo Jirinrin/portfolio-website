@@ -1,6 +1,15 @@
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 
-export const changePage = (pageName) => ({
-  type: CHANGE_PAGE,
-  pageName
-});
+export const changePage = (page) => {
+  let extraProps = {};
+  if (page.popup)
+    extraProps.showPopup = true;
+
+  return {
+    type: CHANGE_PAGE,
+    page: {
+      ...page,
+      ...extraProps
+    }
+  };
+}

@@ -11,7 +11,6 @@ class Landscape extends Component {
     objects: [],
     tooltip: null,
     showTooltip: false,
-    popupMessage: null,
     zoomRegion: null,
     zoomScale: 1,
     zoomTranslation: '',
@@ -42,7 +41,12 @@ class Landscape extends Component {
     const id = e.currentTarget.id;
     switch (id) {
       case 'awards-cup':
-        this.popupMessage('Awards still under construction, hahah')
+        this.props.changePage({
+          popup: {
+            type: 'text',
+            text: 'Awards still under construction, hahah'
+          }
+        })
         return;
       case 'future-building':
       case 'hobby-heap':
@@ -53,7 +57,7 @@ class Landscape extends Component {
         this.props.scrollDown(true, () => this.zoomPopup(id));
         return;
       case 'book-stack':
-        this.props.scrollDown(true, () => this.props.changePage('landscape-2'));
+        this.props.scrollDown(true, () => this.props.changePage({landscape: 2}));
         return;
       default:
         throw new Error('id of the thing you clicked on seems invalid');
@@ -105,10 +109,6 @@ class Landscape extends Component {
 
   hideTooltip = () => this.setState({showTooltip: false});
 
-  popupMessage = (popupMessage) => {
-    this.props.showPopup(popupMessage);
-  }
-
   zoomPopup = (id) => {
     const obj = document.querySelector(`#${id}`);
     if (!obj) return;
@@ -120,7 +120,12 @@ class Landscape extends Component {
       height: obj.naturalHeight
     });
     this.props.zoomInCanvas();
-    this.props.showAboutPopup(id);
+    this.props.changePage({
+      popup: {
+        type: 'about',
+        id
+      }
+    });
   }
 
   updateZoomData = (zoomRegion) => {

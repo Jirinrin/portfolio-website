@@ -21,11 +21,10 @@ class LandscapeContainer extends Component {
     zoomIn: false,
     frameOffset: null,
     animationOngoing: false,
-    showPopup: false,
-    largePopup: true,
-    popupText: null,
-    popupProject: null,
-    popupType: 'text'
+    // showPopup: false,
+    // popupText: null,
+    // popupProject: null,
+    // popupType: 'text'
   };
   
   componentDidMount() {
@@ -53,7 +52,7 @@ class LandscapeContainer extends Component {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
 
-    if (this.props.currentPage !== oldProps.currentPage)
+    if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) && this.props.currentPage.landscape === 1)
       window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
   }
 
@@ -157,69 +156,74 @@ class LandscapeContainer extends Component {
   zoomOutCanvas = () => {
     window.removeEventListener('scroll', this.scrollToFrameOffset);
     this.setState({
-      showPopup: false,
       zoomIn: false,
       frameOffset: null
-    });
+    }, () => this.props.changePage({showPopup: false}));
   }
 
-  showAboutPopup = (name) => {
-    this.setState({
-      showPopup: true,
-      popupComponent: name,
-      popupType: 'about'
-    });
-  }
+  // showAboutPopup = (name) => {
+  //   this.setState({
+  //     showPopup: true,
+  //     popupComponent: name,
+  //     popupType: 'about'
+  //   });
+  // }
 
-  showProjectPopup = (project) => {
-    /// doe iets met id: kan in URL ofzo en kan gebruikt worden om github-link te genereren ()
-    /// stuur dus markdown naar de state
-    /// en maak image gallery aan obv spul ofzo...
-    console.log(project);
-    this.setState({
-      showPopup: true,
-      popupProject: project,
-      popupType: 'project'
-    });
-  }
+  // showProjectPopup = (project) => {
+  //   /// doe iets met id: kan in URL ofzo en kan gebruikt worden om github-link te genereren ()
+  //   /// stuur dus markdown naar de state
+  //   /// en maak image gallery aan obv spul ofzo...
+  //   console.log(project);
+  //   this.setState({
+  //     showPopup: true,
+  //     popupProject: project,
+  //     popupType: 'project'
+  //   });
+  // }
 
-  showPopup = (popupText) => {
-    console.log('hi', popupText)
-    this.setState({
-      showPopup: true,
-      popupText,
-      popupType: 'text'
-    });
-  }
+  // showPopup = (popupText) => {
+  //   console.log('hi', popupText)
+  //   this.setState({
+  //     showPopup: true,
+  //     popupText,
+  //     popupType: 'text'
+  //   });
+  // }
 
   hidePopup = (e) => {
-    if (!e.target.className.includes('popup-window-background')) return;
-    this.zoomOutCanvas()
+    if (!e.target.className.includes('popup-window-background')) 
+      return;
+
+    this.zoomOutCanvas();
   }
 
   renderPopup() {
-    switch (this.state.popupType) {
+    const {popup} = this.props.currentPage
+    if (!popup)
+      return null;
+
+    switch (popup.type) {
       case 'text':
         return (
-          <ReactMarkdown source={this.state.popupText} />
+          <ReactMarkdown source={popup.text} />
         );
       case 'about':
         return null;
       case 'project':
         return (
           <div>
-            <ReactMarkdown source={this.state.popupProject.description} />
+            <ReactMarkdown source={popup.project.description} />
             
             <br/>
-            {this.state.popupProject.github && 
+            {popup.project.github && 
               /// laat floaten rechtsbovenin ofzo
-              <a href={`https://github.com/Jirinrin/${this.state.popupProject.id}`} target="_blank" rel="noopener noreferrer">
+              <a href={`https://github.com/Jirinrin/${popup.project.id}`} target="_blank" rel="noopener noreferrer">
                 github
               </a>
             }
             <br/>
-            {this.state.popupProject.images[0] &&
-              this.state.popupProject.images.map(img => <img src={require(img)} alt="project img"/>)
+            {popup.project.images[0] &&
+              popup.project.images.map(img => <img src={require(img)} alt="project img"/>)
             }
           </div>
         );
@@ -245,7 +249,7 @@ class LandscapeContainer extends Component {
                style={{bottom: -this.state.frameOffset}}/>
           
           <CSSTransition
-            in={this.props.currentPage === 'landscape-1'}
+            in={this.props.currentPage.landscape === 1}
             classNames="landscape--1"
             mountOnEnter
             unmountOnExit
@@ -257,13 +261,11 @@ class LandscapeContainer extends Component {
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
-              showPopup={this.showPopup}
-              showAboutPopup={this.showAboutPopup}
               scrollDown={this.scrollDown}
             />
           </CSSTransition>
           <CSSTransition
-            in={this.props.currentPage === 'landscape-2'}
+            in={this.props.currentPage.landscape === 2}
             classNames="landscape--2"
             mountOnEnter
             unmountOnExit
@@ -276,20 +278,19 @@ class LandscapeContainer extends Component {
               zoomInCanvas={this.zoomInCanvas}
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
-              showProjectPopup={this.showProjectPopup}
               bottom={this.state.frameOffset}
               scrollDown={this.scrollDown}
             />
           </CSSTransition>
 
           <CSSTransition
-            in={this.state.showPopup}
+            in={this.props.currentPage.showPopup}
             classNames="popup-window-background"
             unmountOnExit
             timeout={{enter: 700, exit: 500}}
           >
             <div className="popup-window-background" onClick={this.hidePopup}>
-              <div className={`popup-window${this.state.popupType === 'text' ? '' : ' popup-window-large'}`}>
+              <div className={`popup-window${this.props.currentPage.popup && this.props.currentPage.popup.type === 'text' ? '' : ' popup-window-large'}`}>
                 {this.renderPopup()}
               </div>
             </div>
@@ -297,13 +298,13 @@ class LandscapeContainer extends Component {
         </div>
 
         <CSSTransition
-            in={this.props.currentPage === 'landscape-2'}
+            in={this.props.currentPage.landscape === 2}
             classNames="back-arrow"
             // mountOnEnter
             unmountOnExit
             timeout={{enter: 10000, exit: 10000}}
           >
-            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage('landscape-1')} />
+            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage({landscape: 1})} />
           </CSSTransition>
         
         <div className="text-test" id="text-test"/>

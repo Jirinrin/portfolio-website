@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as C from '../constants';
 
 import {fetchProjectDescriptions} from '../actions/projects';
+import {changePage} from '../actions/currentPage';
 
 class Landscape extends Component {
   state = {
@@ -97,7 +98,14 @@ class Landscape extends Component {
 
     const project = this.props.projects.find(p => p.id === this.state.openedBook.book.id);
     if (!project) return;
-    this.props.showProjectPopup(project);
+    this.props.changePage()
+    
+    this.props.changePage({
+      popup: {
+        type: 'project',
+        project
+      }
+    });
   }
 
   setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--large')});
@@ -202,4 +210,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects}) => ({projects});
 
-export default connect(mapStateToProps, {fetchProjectDescriptions})(Landscape);
+export default connect(mapStateToProps, {fetchProjectDescriptions, changePage})(Landscape);
