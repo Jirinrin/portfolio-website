@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
 import {changePage} from '../actions/currentPage';
+import {fetchAboutTexts} from '../actions/abouts';
 
 import * as C from '../constants';
 
 class Landscape extends Component {
   state = {
-    objects: [],
+    // objects: [],
     tooltip: null,
     showTooltip: false,
     zoomRegion: null,
@@ -17,23 +18,26 @@ class Landscape extends Component {
     bookShadow: null
   };
 
-  componentWillMount() {
-    this.setState({
-      objects: C.OBJECTS_REFERENCE.map(obj => {
-        const bs = obj[0] === 'book-stack';
-        return {
-          id: obj[0],
-          name: obj[3],
-          left:   bs ? C.TINY_BOOK_BASE_LEFT                             : obj[1],
-          top:    bs ? C.getTinyBookStackTop(this.props.projects.length) : obj[2],
-          width:  bs ? C.TINY_BOOK_WIDTH                                 : null,
-          height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length   : null
-        }
-      }),
-    });
-  }
+  // componentWillMount() {
+  //   this.setState({
+  //     objects: C.OBJECTS_REFERENCE.map(obj => {
+  //       const bs = obj[0] === 'book-stack';
+  //       return {
+  //         id: obj[0],
+  //         name: obj[3],
+  //         left:   bs ? C.TINY_BOOK_BASE_LEFT                             : obj[1],
+  //         top:    bs ? C.getTinyBookStackTop(this.props.projects.length) : obj[2],
+  //         width:  bs ? C.TINY_BOOK_WIDTH                                 : null,
+  //         height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length   : null
+  //       }
+  //     }),
+  //   });
+  // }
 
   componentDidMount() {
+    if (!this.props.abouts['jiri-soul'].text)
+      this.props.fetchAboutTexts();
+
     this.setBookShadow();
   }
 
@@ -44,7 +48,7 @@ class Landscape extends Component {
         this.props.changePage({
           popup: {
             type: 'text',
-            text: 'Awards still under construction, hahah'
+            text: this.props.abouts[id].text
           }
         })
         return;
@@ -123,7 +127,7 @@ class Landscape extends Component {
     this.props.changePage({
       popup: {
         type: 'about',
-        id
+        text: this.props.abouts[id].text
       }
     });
   }
@@ -173,7 +177,7 @@ class Landscape extends Component {
   setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--tiny')});
 
   render() {
-    const {objects, tooltip, showTooltip} = this.state;
+    const {tooltip, showTooltip} = this.state;
     return (
       <div id="landscape-variant-container--1"
            className="bottom-container landscape-variant-container landscape--1"
@@ -185,8 +189,9 @@ class Landscape extends Component {
         <div className="rel-container">
          <h2 className="landscape-name"> ABOUT </h2>
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
-          {objects[0] &&
-            objects.map(obj => {
+          {this.props.abouts['jiri-soul'] &&
+            Object.values(this.props.abouts).map(obj => {
+              if (!obj.left || !obj.top) return null;
               const props = {
                 key: obj.id,
                 id: obj.id,
@@ -205,8 +210,8 @@ class Landscape extends Component {
                 return (
                   <div {...props} style={{...props.style, width: obj.width, height: obj.height}}>
                     {
-                      this.props.projects.map((p, i) => 
-                        <img 
+                      this.props.projects.map((p, i) => {
+                        return <img
                           src={require('../assets/box-dark.png')} 
                           className="book--tiny" 
                           key={`book--tiny-${i}`}
@@ -219,7 +224,7 @@ class Landscape extends Component {
                             left:   C.TINY_BOOK_HEIGHT * p.book.xOffset,
                             filter: `brightness(${p.book.tintDeviation})`
                           }}
-                        />)
+                        />})
                     }
                     <svg width={obj.width} height={obj.height} id="book-stack-svg" onMouseOver={this.showTooltip} onMouseOut={this.hideTooltip}>
                       <path d={this.state.bookShadow || null} fill="none" id="book-stack-hitbox"/>
@@ -260,6 +265,6 @@ class Landscape extends Component {
   }
 }
 
-const mapStateToProps = ({projects}) => ({projects});
+const mapStateToProps = ({projects, abouts}) => ({projects, abouts});
 
-export default connect(mapStateToProps, {changePage})(Landscape);
+export default connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape);

@@ -16,15 +16,10 @@ import './Landscape.scss';
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
-    // landscapeNum: 0,
     landscapeTitle: null,
     zoomIn: false,
     frameOffset: null,
     animationOngoing: false,
-    // showPopup: false,
-    // popupText: null,
-    // popupProject: null,
-    // popupType: 'text'
   };
   
   componentDidMount() {
@@ -52,7 +47,7 @@ class LandscapeContainer extends Component {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
 
-    if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) && this.props.currentPage.landscape === 1)
+    if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage))
       window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
   }
 
@@ -106,15 +101,15 @@ class LandscapeContainer extends Component {
   }
 
   scrollDown = (smooth=false, callback) => {
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.max(
-      body.scrollHeight, 
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight
-    );
+    // const body = document.body;
+    // const html = document.documentElement;
+    // const docHeight = Math.max(
+    //   body.scrollHeight, 
+    //   body.offsetHeight,
+    //   html.clientHeight,
+    //   html.scrollHeight,
+    //   html.offsetHeight
+    // );
 
     if (smooth)
       window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
@@ -161,35 +156,6 @@ class LandscapeContainer extends Component {
     }, () => this.props.changePage({showPopup: false}));
   }
 
-  // showAboutPopup = (name) => {
-  //   this.setState({
-  //     showPopup: true,
-  //     popupComponent: name,
-  //     popupType: 'about'
-  //   });
-  // }
-
-  // showProjectPopup = (project) => {
-  //   /// doe iets met id: kan in URL ofzo en kan gebruikt worden om github-link te genereren ()
-  //   /// stuur dus markdown naar de state
-  //   /// en maak image gallery aan obv spul ofzo...
-  //   console.log(project);
-  //   this.setState({
-  //     showPopup: true,
-  //     popupProject: project,
-  //     popupType: 'project'
-  //   });
-  // }
-
-  // showPopup = (popupText) => {
-  //   console.log('hi', popupText)
-  //   this.setState({
-  //     showPopup: true,
-  //     popupText,
-  //     popupType: 'text'
-  //   });
-  // }
-
   hidePopup = (e) => {
     if (!e.target.className.includes('popup-window-background')) 
       return;
@@ -204,11 +170,10 @@ class LandscapeContainer extends Component {
 
     switch (popup.type) {
       case 'text':
+      case 'about':
         return (
           <ReactMarkdown source={popup.text} />
         );
-      case 'about':
-        return null;
       case 'project':
         return (
           <div>
@@ -249,7 +214,7 @@ class LandscapeContainer extends Component {
                style={{bottom: -this.state.frameOffset}}/>
           
           <CSSTransition
-            in={this.props.currentPage.landscape === 1}
+            in={this.props.currentPage.landscape === 1 && !!this.props.projects[0].book.xOffset}
             classNames="landscape--1"
             mountOnEnter
             unmountOnExit

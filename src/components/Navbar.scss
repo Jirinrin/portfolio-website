@@ -5,6 +5,10 @@
   src: url('../assets/fonts/AozoraMincho-thin.ttf');
 }
 
+$text-shadow-spread: 0.03;
+$text-shadow-opacity: 0;
+$text-shadow-plus: 0.6;
+
 nav {
   position: fixed;
   top: 0;
@@ -14,13 +18,13 @@ nav {
   width: 100%;
   height: 6rem;
   z-index: 100;
-  user-select: none;
+  // user-select: none;
 
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  pointer-events: none;
+  // pointer-events: none;
 
   li {
     margin-top: -3rem;
@@ -37,8 +41,38 @@ nav {
     flex: auto;
     flex-grow: 1;
     justify-content: center;
+    transition: filter 0.4s ease, all 0.2s ease;
 
-    // &hover {}
+    &:hover {
+      cursor: pointer;
+      filter: brightness(1.5);
+      animation: glow 0.8s ease-in-out infinite alternate;
+
+      // Animation based on https://www.w3schools.com/howto/howto_css_glowing_text.asp
+      @keyframes glow {
+        from {
+          text-shadow:
+            0 0 1rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
+            0 0 2rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
+            0 0 3rem * $text-shadow-spread #d3d3d3 * $text-shadow-opacity,
+            0 0 4rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+            0 0 5rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+            0 0 6rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+            0 0 7rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity;
+        }
+        to {
+          $new-text-shadow-opacity: $text-shadow-opacity + $text-shadow-plus;
+          text-shadow: 
+            0 0 2rem * $text-shadow-spread #ffffff * ($new-text-shadow-opacity),
+            0 0 3rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
+            0 0 4rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
+            0 0 5rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
+            0 0 6rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
+            0 0 7rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
+            0 0 8rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity);
+        }
+      }
+    }
 
     &#center-name {
       font-size: 5rem;

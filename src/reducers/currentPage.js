@@ -3,7 +3,8 @@ import {CHANGE_PAGE} from '../actions/currentPage';
 const startPage = {
   landscape: 1,
   popup: null,
-  showPopup: false
+  showPopup: false,
+  forceLoad: null
 };
 
 export default function reducer(state=startPage, action={}) {

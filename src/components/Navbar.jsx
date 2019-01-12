@@ -49,14 +49,33 @@ class Navbar extends Component {
     return scale <= 1 ? 1 : scale;
   }
 
+  goToPopup = (type, content) => {
+    this.props.changePage({
+      landscape: 1,
+      popup: {
+        type,
+        ...content
+      },
+      forceLoad: true,
+    })
+  }
+
+  goTo = (content) => {
+    this.props.changePage({
+      ...content,
+      forceLoad: true,
+      showPopup: false
+    });
+  }
+
   render() {
     return ( 
       <div className="rel-container">
         <nav>
-          <li>
+          <li onClick={() => this.goToPopup('about', {id: 'contact-details'})}>
             CONTACT
           </li>
-          <li>
+          <li onClick={() => this.goTo({landscape: 1})}>
             ABOUT
           </li>
           <li 
@@ -77,10 +96,10 @@ class Navbar extends Component {
             a coding individual
             </p>
           </li>
-          <li>
+          <li onClick={() => this.goTo({landscape: 2})}>
             PROJECTS
           </li>
-          <li>
+          <li onClick={() => this.goToPopup('text', {text: this.props.abouts['awards-cup'].text})}>
             AWARDS
           </li>
         </nav>
@@ -90,7 +109,7 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = ({currentPage}) => ({currentPage});
+const mapStateToProps = ({currentPage, abouts}) => ({currentPage, abouts});
 
 export default connect(mapStateToProps, {changePage})(Navbar);
 

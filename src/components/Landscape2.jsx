@@ -14,14 +14,10 @@ class Landscape extends Component {
     bookShadow: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.projects[0].description)
       this.props.fetchProjectDescriptions(this.props.projects);
-    
-    console.log('hii');
-  }
-
-  componentDidMount() {
+      
     this.setBookShadow();
     this.props.scrollDown();
   }

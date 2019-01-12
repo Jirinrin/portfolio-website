@@ -109,7 +109,8 @@ h2.landscape-name {
   z-index: 20;
 
   &:hover {
-    transform: scale(1.1);
+    // transform: scale(1.1);
+    transform: translate(2rem, 2rem) scale(1.1);
     z-index: 21;
     filter: sepia(3);
     /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
@@ -429,7 +430,7 @@ svg {
   }
 
   path.book-stack-shadow--2 {
-    transform: scaleY(-1) skew(-50deg);
+    transform: scaleY(-1) skew(-45deg);
     opacity: 0.4;
   }
 }
