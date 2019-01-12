@@ -17,7 +17,7 @@ class Landscape extends Component {
   componentDidMount() {
     if (!this.props.projects[0].description)
       this.props.fetchProjectDescriptions(this.props.projects);
-      
+
     this.setBookShadow();
     this.props.scrollDown();
   }
@@ -31,7 +31,7 @@ class Landscape extends Component {
     if (this.state.openedBook !== oldState.openedBook && this.state.openedBook)
       this.props.zoomInCanvas(window.pageYOffset);
 
-    if (this.state.openedBook && this.props.zoomIn && this.props.bottom !== oldProps.bottom)
+    if (this.state.openedBook && this.props.zoomIn !== oldProps.zoomIn && this.props.zoomIn)
       this.zoomInBook();
 
     if (oldProps.zoomIn !== this.props.zoomIn && !this.props.zoomIn)
@@ -83,8 +83,6 @@ class Landscape extends Component {
     const zoomBook = document.querySelector('#zooming-book');
     const bookStack = zoomBook.parentNode.parentNode;
 
-    console.log(window.pageYOffset, document.body.clientHeight);
-
     zoomBook.style.left   = `calc(-1 * ${bookStack.style.left} + 5vw / ${this.props.scaleFactor})`;
     /// dit moet uiteindelijk dus wel robuuster zodat het altijd op de plek waar de viewport nu is deze hele toestand aanmaakt
     zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${C.CANVAS_HEIGHT}px - 95vh / ${this.props.scaleFactor} - ${this.props.bottom / this.props.scaleFactor}px)`;
@@ -94,7 +92,6 @@ class Landscape extends Component {
 
     const project = this.props.projects.find(p => p.id === this.state.openedBook.book.id);
     if (!project) return;
-    this.props.changePage()
     
     this.props.changePage({
       popup: {

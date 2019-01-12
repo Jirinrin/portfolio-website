@@ -442,7 +442,6 @@ svg {
   top: calc(50vh - 3rem);
   z-index: 30;
 
-  
   transition: 0.4s all ease;
   opacity: 0.7;
 
@@ -467,3 +466,25 @@ svg {
 .back-arrow-exit-active {
   transition: all 500ms ease !important;
 }
+
+// .back-arrow-enter {
+//   opacity: 0 !important;
+//   filter: blur(200px);
+// }
+
+// .back-arrow-enter-active {
+//   opacity: 1 !important;
+//   filter: blur(0);
+//   transition: all 400ms ease;
+// }
+
+// .back-arrow-exit {
+//   opacity: 1 !important;
+//   filter: blur(0);
+// }
+
+// .back-arrow-exit-active {
+//   opacity: 0 !important;
+//   filter: blur(200px);
+//   transition: all 400ms ease;
+// }

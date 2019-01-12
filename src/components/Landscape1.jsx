@@ -41,6 +41,20 @@ class Landscape extends Component {
     this.setBookShadow();
   }
 
+  componentDidUpdate(oldProps) {
+    if (oldProps.zoomIn !== this.props.zoomIn && this.props.zoomIn) {
+      const obj = document.querySelector(`#${this.props.currentPage.popup.id}`);
+      if (!obj) return;
+
+      this.updateZoomData({
+        left: parseFloat(obj.style.left),
+        top: parseFloat(obj.style.top),
+        width: obj.naturalWidth,
+        height: obj.naturalHeight
+      });
+    }
+  }
+
   handleObjectClick = (e) => {
     const id = e.currentTarget.id;
     switch (id) {
@@ -114,22 +128,14 @@ class Landscape extends Component {
   hideTooltip = () => this.setState({showTooltip: false});
 
   zoomPopup = (id) => {
-    const obj = document.querySelector(`#${id}`);
-    if (!obj) return;
-
-    this.updateZoomData({
-      left: parseFloat(obj.style.left),
-      top: parseFloat(obj.style.top),
-      width: obj.naturalWidth,
-      height: obj.naturalHeight
-    });
-    this.props.zoomInCanvas();
     this.props.changePage({
       popup: {
         type: 'about',
+        id,
         text: this.props.abouts[id].text
       }
     });
+    // this.props.zoomInCanvas();
   }
 
   updateZoomData = (zoomRegion) => {
@@ -265,6 +271,6 @@ class Landscape extends Component {
   }
 }
 
-const mapStateToProps = ({projects, abouts}) => ({projects, abouts});
+const mapStateToProps = ({projects, abouts, currentPage}) => ({projects, abouts, currentPage});
 
 export default connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape);

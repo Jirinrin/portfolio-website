@@ -47,8 +47,18 @@ class LandscapeContainer extends Component {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
 
-    if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage))
+    if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) &&
+        !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
       window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
+
+      console.log(this.state);
+      if (!this.state.zoomIn && 
+          this.props.currentPage.popup && 
+          (!oldProps.currentPage.popup || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id) &&
+          this.props.currentPage.popup.type === 'about') {
+        this.zoomInCanvas();
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -95,7 +105,7 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0) => {
-    console.log(offset);
+    // console.log(offset);
     window.scrollTo(0, 100000);
     window.scrollBy(0, -offset);
   }
@@ -150,6 +160,7 @@ class LandscapeContainer extends Component {
 
   zoomOutCanvas = () => {
     window.removeEventListener('scroll', this.scrollToFrameOffset);
+
     this.setState({
       zoomIn: false,
       frameOffset: 0
@@ -158,8 +169,8 @@ class LandscapeContainer extends Component {
 
   hidePopup = (e) => {
     if (!e.target.className.includes('popup-window-background')) 
-      return;
-
+    return;
+    
     this.zoomOutCanvas();
   }
 
@@ -267,9 +278,9 @@ class LandscapeContainer extends Component {
         <CSSTransition
             in={this.props.currentPage.landscape === 2}
             classNames="back-arrow"
-            // mountOnEnter
+            mountOnEnter
             unmountOnExit
-            timeout={{enter: 1200, exit: 500}}
+            timeout={{enter: 10000, exit: 10000}}
           >
             <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage({landscape: 1})} />
           </CSSTransition>

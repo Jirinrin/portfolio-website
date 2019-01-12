@@ -95,6 +95,7 @@ class Navbar extends Component {
       landscape: 1,
       popup: {
         type,
+        id,
         text: this.props.abouts[id].text
       },
       forceLoad: true,
