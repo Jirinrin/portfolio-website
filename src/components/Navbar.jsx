@@ -4,6 +4,8 @@ import { CSSTransition } from 'react-transition-group';
 
 import {changePage} from '../actions/currentPage';
 
+import {SITE_NAME} from '../assets/SITE_NAME';
+
 import './Navbar.scss';
 
 const BASE_Y_OFFSET = window.innerHeight * 0.4;
@@ -55,6 +57,11 @@ class Navbar extends Component {
 
     window.addEventListener('scroll', this.onScroll);
     window.addEventListener('resize', () => this.forceUpdate());
+  }
+
+  componentDidUpdate() {
+    if (this.state.yOffset > 0)
+      document.title = SITE_NAME;
   }
   
   componentWillUnmount() {

@@ -66,7 +66,8 @@ class GithubCodeContainer extends Component {
 
 const mapStateToProps = ({githubCode}) => {
   return {
-    githubCode: githubCode.code.map(code => code.code.split('\n').map((line, i) => ({repo: code.repo, filePath: code.filePath, lineNo: i, code: line}))).flat(),
+    githubCode: githubCode.code.map(code => code.code.split('\n').map((line, i) => ({repo: code.repo, filePath: code.filePath, lineNo: i, code: line})))
+                               .reduce((acc, val) => acc.concat(val), []),
     githubIndexing: githubCode.indexing
   };
 };

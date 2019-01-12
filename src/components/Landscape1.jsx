@@ -41,11 +41,12 @@ class Landscape extends Component {
     this.setBookShadow();
   }
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps, oldState) {
     if (oldProps.zoomIn !== this.props.zoomIn && this.props.zoomIn) {
       const obj = document.querySelector(`#${this.props.currentPage.popup.id}`);
       if (!obj) return;
 
+      this.props.setPageName(obj.name);
       this.updateZoomData({
         left: parseFloat(obj.style.left),
         top: parseFloat(obj.style.top),
@@ -53,6 +54,9 @@ class Landscape extends Component {
         height: obj.naturalHeight
       });
     }
+
+    if (this.state.tooltip !== oldState.tooltip)
+      this.props.setPageName();
   }
 
   handleObjectClick = (e) => {
@@ -176,8 +180,8 @@ class Landscape extends Component {
     });
   }
 
-  getTransformation = () => this.props.zoomIn ? `scale(${this.state.zoomScale}, ${this.state.zoomScale}) ${this.state.zoomTranslation}`
-                                              : `scale(${this.props.scaleFactor}, ${this.props.scaleFactor})`;
+  getTransformation = () => this.props.zoomIn ? `scale(${this.state.zoomScale}) ${this.state.zoomTranslation}`
+                                              : `scale(${this.props.scaleFactor})`;
 
   getBlur = () => this.props.zoomIn ? C.BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 

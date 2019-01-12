@@ -6,12 +6,14 @@ import smoothscroll from 'smoothscroll-polyfill';
 // kick off the polyfill!
 
 import * as C from '../constants';
+import {SITE_NAME} from '../assets/SITE_NAME';
 
 import {updateWidths} from '../actions/projects';
 import {changePage} from '../actions/currentPage';
 
 import Landscape1 from './Landscape1';
 import Landscape2 from './Landscape2';
+
 
 import './Landscape.scss';
 
@@ -42,7 +44,7 @@ class LandscapeContainer extends Component {
     frameOffset: 0,
     animationOngoing: false,
   };
-  
+
   componentDidMount() {
     this.setState({
       scaleFactor: this.calculateScaleFactor(),
@@ -71,7 +73,7 @@ class LandscapeContainer extends Component {
     if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) &&
         !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
       console.log('hah');
-      window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: 'smooth'});
+      this.scrollDown(true);
 
       if (!this.state.zoomIn && 
           this.props.currentPage.popup && 
@@ -110,7 +112,7 @@ class LandscapeContainer extends Component {
 
     // const templatePt0 = 'div.landscape-variant-container'
     // const templatePt1 = ' { transform: ';
-    // const templatePt2 = ` scale(${this.state.scaleFactor}, ${this.state.scaleFactor}) !important; }`;
+    // const templatePt2 = ` scale(${this.state.scaleFactor}) !important; }`;
     
     // rules.push(templatePt0 + '.landscape--1-enter'                           + templatePt1 + exit1 + templatePt2);
     // rules.push(templatePt0 + '.landscape--1-exit.landscape--1-exit-active'   + templatePt1 + exit1 + templatePt2);
@@ -127,14 +129,11 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0) => {
-    window.scrollTo(0, getBottomScrollPos() - offset);
+    window.scrollTo({top: getBottomScrollPos() - offset, left: 0, behavior: 'auto'});
   }
 
   scrollDown = (smooth=false, callback) => {
-    if (smooth)
-      window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: 'smooth'});
-    else 
-      window.scrollTo(0, getBottomScrollPos());
+    window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: smooth ? 'smooth' : 'auto'});
     setTimeout(callback, 100);
   }
 
@@ -180,6 +179,17 @@ class LandscapeContainer extends Component {
     this.props.changePage({landscape: 1})
   }
 
+  setPageName = (customName=null) => {
+    if (customName)
+    document.title = `${SITE_NAME} | ${customName}`;
+    else if (this.props.currentPage.landscape === 2)
+      document.title = `${SITE_NAME} | Projects`;
+    else if (window.pageYOffset / getBottomScrollPos() > 0.6)
+      document.title = `${SITE_NAME} | About`
+    else
+      document.title = SITE_NAME;
+  }
+
   renderPopup() {
     const {popup} = this.props.currentPage
     if (!popup)
@@ -189,20 +199,41 @@ class LandscapeContainer extends Component {
       case 'text':
       case 'about':
         return (
-          <ReactMarkdown source={popup.text} />
+          <ReactMarkdown source={popup.text} linkTarget={'_blank'} />
         );
       case 'project':
         return (
           <div>
-            <ReactMarkdown source={popup.project.description} />
-            
-            <br/>
             {popup.project.github && 
-              /// laat floaten rechtsbovenin ofzo
-              <a href={`https://github.com/Jirinrin/${popup.project.id}`} target="_blank" rel="noopener noreferrer">
-                github
+              <a 
+                className="github-icon" 
+                /// something seems to be wrong with the hrefs for this...
+                href={`https://github.com/Jirinrin/${popup.project.id}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => window.open(`https://github.com/Jirinrin/${popup.project.id}`, '_blank')}
+              >
+                <img src={require('../assets/icons/github.png')} alt={'github icon'}/>
               </a>
             }
+            <ReactMarkdown 
+              source={popup.project.description}
+              linkTarget={'_blank'}
+              renderers={{
+                link: props => 
+                  <a 
+                    href={props.href} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => window.open(props.href, '_blank')}
+                  > 
+                    {props.children}
+                  </a>
+              }}
+            />
+            
+            <br/>
+            
             <br/>
             {popup.project.images[0] &&
               popup.project.images.map(img => <img src={require(img)} alt="project img"/>)
@@ -214,7 +245,8 @@ class LandscapeContainer extends Component {
     }
   }
 
-  render() { 
+  render() {
+    this.setPageName();
     return ( 
       <div
         id="Landscape-container" 
@@ -244,6 +276,7 @@ class LandscapeContainer extends Component {
               zoomOutCanvas={this.zoomOutCanvas}
               zoomIn={this.state.zoomIn}
               scrollDown={this.scrollDown}
+              setPageName={this.setPageName}
             />
           </CSSTransition>
           <CSSTransition

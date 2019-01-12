@@ -304,8 +304,9 @@ div.landscape--2-enter.landscape--2-enter-active {
   h1 {
     font-family: 'Cormorant', serif;
     font-size: 4rem;
-    line-height: 0;
-    margin-bottom: 3.5rem;
+    line-height: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 0;
   }
 
   h2 {
@@ -332,16 +333,33 @@ div.landscape--2-enter.landscape--2-enter-active {
     }
   }
 
+  
+
+  a.github-icon {
+    float: right;
+    opacity: 0.3;
+
+    img {
+      width: 4rem;
+      transition: all 0.4s ease;
+    }
+
+    &:hover {
+      filter: sepia(3);
+      opacity: 1;
+    }
+  }
+
   img {
 
   }
 
   a {
     text-decoration: none;
-    color: rgb(40, 104, 93);
-    filter: brightness(1);
+    color: rgb(99, 99, 99);
+    filter: sepia(3);
     &:hover {
-      filter: brightness(1.5);
+      color: white;
     }
     transition: all 0.2s ease;
   }
@@ -439,6 +457,7 @@ svg {
 .back-arrow {
   position: fixed !important;
   width: 8vw;
+  max-width: 8rem;
   left: 4vw;
   top: calc(50vh - 4vw);
   z-index: 30;
