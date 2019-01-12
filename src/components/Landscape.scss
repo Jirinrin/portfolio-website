@@ -351,7 +351,9 @@ div.landscape--2-enter.landscape--2-enter-active {
   }
 
   img {
-
+    // width: 50%;
+    // height: 30px;
+    // margin: 2rem 0;
   }
 
   a {
@@ -485,6 +487,42 @@ svg {
 
 .back-arrow-exit-active {
   transition: all 500ms ease !important;
+}
+
+.image-gallery-slides {
+  height: 50vh;
+  // transition: all 1s ease !important;
+
+  .image-gallery-slide {
+    transition: all 1s ease !important;
+    background: none;
+
+    img {
+      height: 50vh;
+      width: unset !important;
+      border-radius: 1rem;
+      margin: 0 auto;
+      display: block;
+      // box-shadow: inset 30px 30px 10px #000000;
+    }
+
+    &:not(.center) {
+      opacity: 0;
+      filter: blur(20px);
+    }
+  }
+}
+
+.image-gallery-left-nav, .image-gallery-right-nav {
+  text-shadow: none;
+
+  &::before {
+    text-shadow: none !important;
+  }
+
+  &:hover::before {
+    color: rgb(80, 80, 80) !important;
+  }
 }
 
 // .back-arrow-enter {

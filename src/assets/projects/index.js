@@ -11,7 +11,7 @@ export default [
     id: 'bath-dungeon-of-doom',
     title: 'Dungeon of Doom',
     github: true,
-    images: []
+    images: ['cat1.jpg', 'cat2.jpg', 'cat3.jpg', 'cat4.jpg']
   },
   {
     id: 'first-ever-website',

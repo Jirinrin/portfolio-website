@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import ReactMarkdown from 'react-markdown';
 import smoothscroll from 'smoothscroll-polyfill';
+import ImageGallery from 'react-image-gallery';
 // kick off the polyfill!
 
 import * as C from '../constants';
@@ -14,8 +15,8 @@ import {changePage} from '../actions/currentPage';
 import Landscape1 from './Landscape1';
 import Landscape2 from './Landscape2';
 
-
 import './Landscape.scss';
+import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 smoothscroll.polyfill();
 
@@ -32,7 +33,6 @@ function getDocHeight() {
 }
 
 function getBottomScrollPos() {
-  console.log(getDocHeight() - window.innerHeight);
   return getDocHeight() - window.innerHeight;
 }
 
@@ -72,14 +72,12 @@ class LandscapeContainer extends Component {
 
     if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) &&
         !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
-      console.log('hah');
       this.scrollDown(true);
 
       if (!this.state.zoomIn && 
           this.props.currentPage.popup && 
           (!oldProps.currentPage.popup || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id) &&
           this.props.currentPage.popup.type === 'about') {
-        console.log('haah');
         this.zoomInCanvas();
       }
     }
@@ -181,11 +179,11 @@ class LandscapeContainer extends Component {
 
   setPageName = (customName=null) => {
     if (customName)
-    document.title = `${SITE_NAME} | ${customName}`;
+    document.title = `${customName} | ${SITE_NAME}`;
     else if (this.props.currentPage.landscape === 2)
-      document.title = `${SITE_NAME} | Projects`;
+      document.title = `Projects | ${SITE_NAME}`;
     else if (window.pageYOffset / getBottomScrollPos() > 0.6)
-      document.title = `${SITE_NAME} | About`
+      document.title = `About | ${SITE_NAME}`
     else
       document.title = SITE_NAME;
   }
@@ -236,7 +234,17 @@ class LandscapeContainer extends Component {
             
             <br/>
             {popup.project.images[0] &&
-              popup.project.images.map(img => <img src={require(img)} alt="project img"/>)
+              <ImageGallery 
+                items={popup.project.images.map(img => ({
+                  original: require(`../assets/projects/images/${img}`)
+                }))}
+                showFullscreenButton={false}
+                autoplay={false}
+                showPlayButton={false}
+                showThumbnails={false}
+              />
+
+              // popup.project.images.map(img => <img key={img} src={require(`../assets/projects/images/${img}`)} alt="project img"/>)
             }
           </div>
         );

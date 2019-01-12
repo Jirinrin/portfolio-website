@@ -60,7 +60,7 @@ class Navbar extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.yOffset > 0)
+    if (this.state.yOffset > 0 && this.props.currentPage.landscape === 1)
       document.title = SITE_NAME;
   }
   
