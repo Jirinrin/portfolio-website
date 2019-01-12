@@ -56,6 +56,7 @@ class Landscape extends Component {
   }
 
   handleObjectClick = (e) => {
+    e.preventDefault();
     const id = e.currentTarget.id;
     switch (id) {
       case 'awards-cup':

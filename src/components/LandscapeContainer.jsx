@@ -30,6 +30,7 @@ function getDocHeight() {
 }
 
 function getBottomScrollPos() {
+  console.log(getDocHeight() - window.innerHeight);
   return getDocHeight() - window.innerHeight;
 }
 
@@ -66,8 +67,6 @@ class LandscapeContainer extends Component {
   componentDidUpdate(oldProps, oldState) {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
-
-    
 
     if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) &&
         !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
@@ -169,10 +168,16 @@ class LandscapeContainer extends Component {
   }
 
   hidePopup = (e) => {
+    e.preventDefault();
     if (!e.target.className.includes('popup-window-background')) 
     return;
     
     this.zoomOutCanvas();
+  }
+
+  goToProjects = (e) => {
+    e.preventDefault();
+    this.props.changePage({landscape: 1})
   }
 
   renderPopup() {
@@ -281,7 +286,7 @@ class LandscapeContainer extends Component {
             unmountOnExit
             timeout={{enter: 10000, exit: 10000}}
           >
-            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage({landscape: 1})} />
+            <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={this.goToProjects} />
           </CSSTransition>
         
         <div className="text-test" id="text-test"/>
