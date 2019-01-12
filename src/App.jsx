@@ -12,14 +12,15 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-        {/* /// dat showaboutoptions kan via redux evt */}
-          <Navbar showAboutOptions={false} />
-          <div id="main">
-            <GithubCodeContainer />
-            <LandscapeContainer />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+          <div className="App">
+          {/* /// dat showaboutoptions kan via redux evt */}
+            <Navbar showAboutOptions={false} />
+            <div id="main">
+              <GithubCodeContainer />
+              <LandscapeContainer />
+            </div>
           </div>
-        </div>
       </Provider>
     );
   }

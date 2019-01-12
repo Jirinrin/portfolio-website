@@ -6,7 +6,7 @@ import {changePage} from '../actions/currentPage';
 
 import './Navbar.scss';
 
-const BASE_Y_OFFSET = window.innerHeight / 2;
+const BASE_Y_OFFSET = window.innerHeight * 0.4;
 const BASE_SCALE = 2;
 
 const MIDDLE_THREE_ITEMS = ['about', 'center-name', 'projects']
@@ -67,6 +67,7 @@ class Navbar extends Component {
   }
   
   onScroll = (e) => {
+    e.preventDefault();
     this.updateScrollParams(window.pageYOffset);
   }
   
