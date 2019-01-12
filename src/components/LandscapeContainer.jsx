@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import ReactMarkdown from 'react-markdown';
+import smoothscroll from 'smoothscroll-polyfill';
+// kick off the polyfill!
 
 import * as C from '../constants';
 
@@ -12,6 +14,24 @@ import Landscape1 from './Landscape1';
 import Landscape2 from './Landscape2';
 
 import './Landscape.scss';
+
+smoothscroll.polyfill();
+
+function getDocHeight() {
+  const body = document.body;
+  const html = document.documentElement;
+  return Math.max(
+    body.scrollHeight, 
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
+}
+
+function getBottomScrollPos() {
+  return getDocHeight() - window.innerHeight;
+}
 
 class LandscapeContainer extends Component {
   state = { 
@@ -47,15 +67,18 @@ class LandscapeContainer extends Component {
     if (!this.state.animationOngoing && oldState.scaleFactor !== this.state.scaleFactor)
       this.updateAnimations(true);
 
+    
+
     if (JSON.stringify(this.props.currentPage) !== JSON.stringify(oldProps.currentPage) &&
         !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
-      window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
+      console.log('hah');
+      window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: 'smooth'});
 
-      console.log(this.state);
       if (!this.state.zoomIn && 
           this.props.currentPage.popup && 
           (!oldProps.currentPage.popup || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id) &&
           this.props.currentPage.popup.type === 'about') {
+        console.log('haah');
         this.zoomInCanvas();
       }
     }
@@ -105,26 +128,14 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0) => {
-    // console.log(offset);
-    window.scrollTo(0, 100000);
-    window.scrollBy(0, -offset);
+    window.scrollTo(0, getBottomScrollPos() - offset);
   }
 
   scrollDown = (smooth=false, callback) => {
-    // const body = document.body;
-    // const html = document.documentElement;
-    // const docHeight = Math.max(
-    //   body.scrollHeight, 
-    //   body.offsetHeight,
-    //   html.clientHeight,
-    //   html.scrollHeight,
-    //   html.offsetHeight
-    // );
-
     if (smooth)
-      window.scrollTo({top: 100000, left: 0, behavior: 'smooth'});
+      window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: 'smooth'});
     else 
-      window.scrollTo(0, 100000);
+      window.scrollTo(0, getBottomScrollPos());
     setTimeout(callback, 100);
   }
 
@@ -132,18 +143,8 @@ class LandscapeContainer extends Component {
 
   getBottomOffset = (scroll) => {
     if (!scroll) return 0;
-    const body = document.body;
-    const html = document.documentElement;
 
-    const docHeight = Math.max(
-      body.scrollHeight, 
-      body.offsetHeight,
-      html.clientHeight,
-      html.scrollHeight,
-      html.offsetHeight
-    );
-
-    return (docHeight - scroll - window.innerHeight);
+    return (getDocHeight() - scroll - window.innerHeight);
   }
 
   zoomInCanvas = (scroll=undefined) => {
@@ -178,8 +179,6 @@ class LandscapeContainer extends Component {
     const {popup} = this.props.currentPage
     if (!popup)
       return null;
-
-    console.log(popup);
 
     switch (popup.type) {
       case 'text':

@@ -161,7 +161,7 @@ class Navbar extends Component {
           </li>
 
           {this.displayForThreshold2() && this.renderNavItem('projects', () => this.goTo({landscape: 2}))}
-          {this.displayForThreshold1() && this.renderNavItem('awards',   () => this.goToPopup('text', {text: this.props.abouts['awards-cup'].text}))}
+          {this.displayForThreshold1() && this.renderNavItem('awards',   () => this.goToPopup('text', 'awards-cup'))}
         </nav>
 
         <CSSTransition
@@ -187,7 +187,7 @@ class Navbar extends Component {
                 </div>
               }
               {this.renderNavItem('projects', () => this.goTo({landscape: 2}))}
-              {this.renderNavItem('awards',   () => this.goToPopup('text', {text: this.props.abouts['awards-cup'].text}))}
+              {this.renderNavItem('awards',   () => this.goToPopup('text', 'awards-cup'))}
               <li className="nav-item" id="nav-filler-bottom" />
             </div>
           </CSSTransition>

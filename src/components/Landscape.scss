@@ -269,8 +269,8 @@ div.landscape--2-enter.landscape--2-enter-active {
   height: 100vh;
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.267);
-  z-index: 26;
+  background-color: rgba(0, 0, 0, 0.301);
+  z-index: 120;
   cursor: pointer;
 }
 
@@ -280,7 +280,7 @@ div.landscape--2-enter.landscape--2-enter-active {
   border-radius: 1rem;
   opacity: 0.95;
   margin: auto auto;
-  z-index: 30;
+  z-index: 125;
   padding: 2rem;
   overflow-y: scroll;
   cursor: default;

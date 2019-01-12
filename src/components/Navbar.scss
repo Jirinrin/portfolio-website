@@ -118,7 +118,7 @@ li.nav-item {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  opacity: 0.75;
+  opacity: 0.9;
   background-color: rgb(0, 0, 0);
   z-index: 110;
   text-align: center;
@@ -130,7 +130,7 @@ li.nav-item {
   justify-content: center;
 
   &:hover {
-    opacity: 0.85
+    opacity: 0.95
   }
 
   #nav-overlay-x {
