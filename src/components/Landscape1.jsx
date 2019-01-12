@@ -77,6 +77,7 @@ class Landscape extends Component {
       case 'octopus-tree':
       case 'spiral-tower':
       case 'technology-forest':
+      case 'contact-details':
         this.props.scrollDown(true, () => this.zoomPopup(id));
         return;
       case 'book-stack':
@@ -170,6 +171,11 @@ class Landscape extends Component {
     const canvasWidthDiff2 = zoomRegion.left - xOffsetExtra;
     if (canvasWidthDiff2 < 0) {
       xOffsetExtra += canvasWidthDiff2;
+    }
+    const canvasHeightDiff = zoomRegion.top + (window.innerHeight / innerWidth) * zoomRegion.width - C.CANVAS_HEIGHT;
+    if (canvasHeightDiff > 0) {
+      console.log(canvasHeightDiff);
+      yOffsetExtra = 1/0.5 * canvasHeightDiff;
     }
     /// and should probably also add this for y direction
     

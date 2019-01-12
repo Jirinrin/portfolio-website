@@ -102,6 +102,7 @@ h2.landscape-name {
 
 .book--tiny, .book--large {
   position: absolute;
+  user-select: none;
 }
 
 .book--large {

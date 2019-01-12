@@ -76,7 +76,9 @@ class LandscapeContainer extends Component {
 
       if (!this.state.zoomIn && 
           this.props.currentPage.popup && 
-          (!oldProps.currentPage.popup || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id) &&
+          (!oldProps.currentPage.popup 
+            || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id 
+            || (this.props.currentPage.showPopup !== oldProps.currentPage.showPopup && this.props.currentPage.showPopup)) &&
           this.props.currentPage.popup.type === 'about') {
         this.zoomInCanvas();
       }
@@ -197,7 +199,26 @@ class LandscapeContainer extends Component {
       case 'text':
       case 'about':
         return (
-          <ReactMarkdown source={popup.text} linkTarget={'_blank'} />
+          <ReactMarkdown 
+            source={popup.text} 
+            linkTarget={'_blank'}
+            renderers={{
+              image: props =>
+                <img 
+                  src={require(props.src)}
+                  alt={props.src.split('/').reverse()[0]}
+                />,
+             link: props => 
+                <a 
+                  href={props.href} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => window.open(props.href, '_blank')}
+                > 
+                  {props.children}
+                </a>
+            }}
+          />
         );
       case 'project':
         return (

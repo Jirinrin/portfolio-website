@@ -12,13 +12,13 @@ const objects = {
     name: 'Future Fantasy',
     left: 479.5,
     top: 3765,
-    hasText: false
+    hasText: true
   },
   'hobby-heap': {
     name: 'Hobby Heap',
     left: 74, 
     top: 4377,
-    hasText: false
+    hasText: true
   },
   'jiri-soul': {
     name: 'Jiri\'s SOUL',
@@ -30,19 +30,19 @@ const objects = {
     name: 'The Octopus Tree of Life',
     left: 1321, 
     top: 4205,
-    hasText: false
+    hasText: true
   },
   'spiral-tower': {
     name: 'Two Sided Miracle',
     left: 4238, 
     top: 2760,
-    hasText: false
+    hasText: true
   },
   'technology-forest': {
     name: 'Techno Forest',
     left: 0, 
     top: 3919,
-    hasText: false
+    hasText: true
   },
   'book-stack': {
     name: 'Projects',
@@ -53,10 +53,10 @@ const objects = {
     hasText: false
   },
   'contact-details': {
-    name: 'Find me',
-    left: null,
-    top: null,
-    hasText: false
+    name: 'Find me on the interwebs',
+    left: 1247,
+    top: 5225,
+    hasText: true
   }
 };
 
