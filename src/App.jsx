@@ -13,7 +13,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <Navbar />
+        {/* /// dat showaboutoptions kan via redux evt */}
+          <Navbar showAboutOptions={false} />
           <div id="main">
             <GithubCodeContainer />
             <LandscapeContainer />

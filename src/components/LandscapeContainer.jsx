@@ -18,7 +18,7 @@ class LandscapeContainer extends Component {
     scaleFactor: 1,
     landscapeTitle: null,
     zoomIn: false,
-    frameOffset: null,
+    frameOffset: 0,
     animationOngoing: false,
   };
   
@@ -140,7 +140,7 @@ class LandscapeContainer extends Component {
     const bottomOffset = this.getBottomOffset(scroll);
     this.setState({
       zoomIn: true,
-      frameOffset: bottomOffset,
+      frameOffset: bottomOffset
     },
     () => {
       this.scrollTo(bottomOffset);
@@ -152,7 +152,7 @@ class LandscapeContainer extends Component {
     window.removeEventListener('scroll', this.scrollToFrameOffset);
     this.setState({
       zoomIn: false,
-      frameOffset: null
+      frameOffset: 0
     }, () => this.props.changePage({showPopup: false}));
   }
 
@@ -167,6 +167,8 @@ class LandscapeContainer extends Component {
     const {popup} = this.props.currentPage
     if (!popup)
       return null;
+
+    console.log(popup);
 
     switch (popup.type) {
       case 'text':
@@ -267,7 +269,7 @@ class LandscapeContainer extends Component {
             classNames="back-arrow"
             // mountOnEnter
             unmountOnExit
-            timeout={{enter: 10000, exit: 10000}}
+            timeout={{enter: 1200, exit: 500}}
           >
             <img src={require('../assets/back-arrow.png')} alt="back arrow" className="back-arrow" onClick={() => this.props.changePage({landscape: 1})} />
           </CSSTransition>

@@ -7,11 +7,8 @@ export const calculateBookShadow = (bookClassName) => {
   
   const books = document.querySelectorAll(bookClassName);
 
-  console.log(books);
-
   let path = `M ${$(books[0].style.left)}, ${$(books[0].style.top) + $(books[0].style.height)}`;
   books.forEach((b, i) => {
-    console.log(b.style.left, b.style.top);
     if (i !== 0)
       path += ` L ${$(b.style.left)}, ${$(b.style.top) + $(b.style.height)}`;
     path += ` L ${$(b.style.left)}, ${$(b.style.top)}`;
