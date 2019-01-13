@@ -84,8 +84,6 @@ class Landscape extends Component {
     const zoomBook = document.querySelector('#zooming-book');
     const bookStack = zoomBook.parentNode.parentNode;
 
-    console.log(zoomBook);
-
     const small = window.innerWidth <= 1400;
 
     zoomBook.style.left   = `calc(-1 * ${bookStack.style.left} + 2.5vw / ${this.props.scaleFactor})`;

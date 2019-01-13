@@ -39,7 +39,6 @@ class GithubCodeContainer extends Component {
   }
 
   handleScrollChange = () => {
-    console.log(this.state.previousPageYOffset);
     if (window.pageYOffset === 0 && this.state.previousPageYOffset - window.pageYOffset > 300)
       window.scrollTo(0, this.state.previousPageYOffset);
     else
