@@ -64,12 +64,14 @@ class Landscape extends Component {
     const id = e.currentTarget.id;
     switch (id) {
       case 'awards-cup':
-        this.props.changePage({
-          popup: {
-            type: 'text',
-            text: this.props.abouts[id].text
-          }
-        })
+      case 'contact-details':
+        this.props.scrollDown(true, () => this.zoomPopup(id, 'text'));
+        // this.props.changePage({
+        //   popup: {
+          //     type: 'text',
+          //     text: this.props.abouts[id].text
+          //   }
+          // })
         return;
       case 'future-building':
       case 'hobby-heap':
@@ -77,8 +79,7 @@ class Landscape extends Component {
       case 'octopus-tree':
       case 'spiral-tower':
       case 'technology-forest':
-      case 'contact-details':
-        this.props.scrollDown(true, () => this.zoomPopup(id));
+        this.props.scrollDown(true, () => this.zoomPopup(id, 'about'));
         return;
       case 'book-stack':
         this.props.scrollDown(true, () => this.props.changePage({landscape: 2}));
@@ -123,7 +124,7 @@ class Landscape extends Component {
     this.setState({
       showTooltip: true,
       tooltip: {
-        contents: target.name || (target.id === 'book-stack' && 'Projects'),
+        contents: target.name || (target.id === 'book-stack' && 'Stack\'o\'Projects'),
         left,
         top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(C.TOOLTIP_FONT_SIZE+C.TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
         extraStyles
@@ -133,10 +134,10 @@ class Landscape extends Component {
 
   hideTooltip = () => this.setState({showTooltip: false});
 
-  zoomPopup = (id) => {
+  zoomPopup = (id, type) => {
     this.props.changePage({
       popup: {
-        type: 'about',
+        type,
         id,
         text: this.props.abouts[id].text
       }
@@ -208,7 +209,8 @@ class Landscape extends Component {
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
           {this.props.abouts['jiri-soul'] &&
             Object.values(this.props.abouts).map(obj => {
-              if (!obj.left || !obj.top) return null;
+              console.log(obj);
+              if (obj.left === undefined || obj.top === undefined) return null;
               const props = {
                 key: obj.id,
                 id: obj.id,

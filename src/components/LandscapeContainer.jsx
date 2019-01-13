@@ -74,12 +74,14 @@ class LandscapeContainer extends Component {
         !(this.props.currentPage.landscape === 2 && oldProps.currentPage.showPopup === true && this.props.currentPage.showPopup === false)) {
       this.scrollDown(true);
 
-      if (!this.state.zoomIn && 
-          this.props.currentPage.popup && 
-          (!oldProps.currentPage.popup 
-            || this.props.currentPage.popup.id !== oldProps.currentPage.popup.id 
+      const {popup} = this.props.currentPage;
+      const {popup: oldPopup} = oldProps.currentPage;
+
+      if (!this.state.zoomIn && popup && 
+          (!oldPopup 
+            || popup.id !== oldPopup.id 
             || (this.props.currentPage.showPopup !== oldProps.currentPage.showPopup && this.props.currentPage.showPopup)) &&
-          this.props.currentPage.popup.type === 'about') {
+          (popup.type === 'about' || popup.type === 'text')) {
         this.zoomInCanvas();
       }
     }
@@ -205,7 +207,8 @@ class LandscapeContainer extends Component {
             renderers={{
               image: props =>
                 <img 
-                  src={require(props.src)}
+                  src={require(`../assets/objects/images/${props.src}`)}
+                  className={props.alt}
                   alt={props.src.split('/').reverse()[0]}
                 />,
              link: props => 
@@ -232,7 +235,7 @@ class LandscapeContainer extends Component {
                 rel="noopener noreferrer"
                 onClick={() => window.open(`https://github.com/Jirinrin/${popup.project.id}`, '_blank')}
               >
-                <img src={require('../assets/icons/github.png')} alt={'github icon'}/>
+                <img src={require('../assets/objects/images/github.png')} alt={'github icon'}/>
               </a>
             }
             <ReactMarkdown 

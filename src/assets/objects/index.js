@@ -3,13 +3,14 @@ import projects from '../projects';
 
 const objects = {
   'awards-cup': {
-    name: 'Awards',
+    // ook goed: Trophy Tribute
+    name: 'Endowment Shrine (construction中)',
     left: 2811, 
     top: 3594,
     hasText: true
   },
   'future-building': {
-    name: 'Future Fantasy',
+    name: 'あたしの FUTURE HOME',
     left: 479.5,
     top: 3765,
     hasText: true
@@ -27,13 +28,13 @@ const objects = {
     hasText: true
   },
   'octopus-tree': {
-    name: 'The Octopus Tree of Life',
-    left: 1321, 
+    name: 'The OctoTree of Life',
+    left: 1321,
     top: 4205,
     hasText: true
   },
   'spiral-tower': {
-    name: 'Two Sided Miracle',
+    name: 'Pillar of Paradigm',
     left: 4238, 
     top: 2760,
     hasText: true
@@ -45,7 +46,7 @@ const objects = {
     hasText: true
   },
   'book-stack': {
-    name: 'Projects',
+    name: 'Stack\'o\'Projects',
     left: C.TINY_BOOK_BASE_LEFT, 
     top: C.getTinyBookStackTop(projects.length),
     width: C.TINY_BOOK_WIDTH,
@@ -53,7 +54,7 @@ const objects = {
     hasText: false
   },
   'contact-details': {
-    name: 'Find me on the interwebs',
+    name: 'Search Envelope',
     left: 1247,
     top: 5225,
     hasText: true

@@ -21,9 +21,9 @@ const NAV_ITEM_REFERENCE = {
   'soul': '侍鈴のSOUL',
   'life': 'LIFE',
   'technologies': 'TECHNOLOGIES',
-  'passions': 'PASSIONS',
+  'passions': 'PLEASURES',
   'programming': 'CODING STYLE',
-  'future': 'FUTURE'
+  'future': 'THE FUTURE OF 侍鈴'
 }
 
 class Navbar extends Component {
@@ -144,7 +144,7 @@ class Navbar extends Component {
     return ( 
       <div className="rel-container nav-container">
         <nav>
-          {this.displayForThreshold1() && this.renderNavItem('contact', () => this.goToPopup('about', 'contact-details'))}
+          {this.displayForThreshold1() && this.renderNavItem('contact', () => this.goToPopup('text', 'contact-details'))}
           {this.displayForThreshold2() && this.renderNavItem('about',   () => this.goTo({landscape: 1}))}
           
           <li 

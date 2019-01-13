@@ -55,16 +55,16 @@ li.nav-item {
 
       // Animation based on https://www.w3schools.com/howto/howto_css_glowing_text.asp
       @keyframes glow {
-        from {
-          text-shadow:
-            0 0 1rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
-            0 0 2rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
-            0 0 3rem * $text-shadow-spread #d3d3d3 * $text-shadow-opacity,
-            0 0 4rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
-            0 0 5rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
-            0 0 6rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
-            0 0 7rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity;
-        }
+        // from {
+        //   text-shadow:
+        //     0 0 1rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
+        //     0 0 2rem * $text-shadow-spread #ffffff * $text-shadow-opacity,
+        //     0 0 3rem * $text-shadow-spread #d3d3d3 * $text-shadow-opacity,
+        //     0 0 4rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+        //     0 0 5rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+        //     0 0 6rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity,
+        //     0 0 7rem * $text-shadow-spread #cfcfcf * $text-shadow-opacity;
+        // }
         to {
           $new-text-shadow-opacity: $text-shadow-opacity + $text-shadow-plus;
           text-shadow: 

@@ -86,10 +86,12 @@ class Landscape extends Component {
 
     console.log(zoomBook);
 
+    const small = window.innerWidth <= 1400;
+
     zoomBook.style.left   = `calc(-1 * ${bookStack.style.left} + 2.5vw / ${this.props.scaleFactor})`;
-    zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${C.CANVAS_HEIGHT}px - (100vh - 7.5vw) / ${this.props.scaleFactor} - ${this.props.bottom / this.props.scaleFactor}px)`;
+    zoomBook.style.top    = `calc(-1 * ${bookStack.style.top.split('calc')[1]} + ${C.CANVAS_HEIGHT}px - (100vh - ${small ? 7.5 : 2.5}vw) / ${this.props.scaleFactor} - ${this.props.bottom / this.props.scaleFactor}px)`;
     zoomBook.style.width  = `calc(95vw / ${this.props.scaleFactor})`;
-    zoomBook.style.height = `calc((100vh - 15vw) / ${this.props.scaleFactor})`;
+    zoomBook.style.height = `calc((100vh - ${small ? 15 : 5}vw) / ${this.props.scaleFactor})`;
     zoomBook.className += ' book--large__zoomed';
 
     const project = this.props.projects.find(p => p.id === this.state.openedBook.book.id);
