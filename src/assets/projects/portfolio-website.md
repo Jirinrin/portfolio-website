@@ -4,7 +4,7 @@ That's where you're at now! (/^▽^)/
 This website started as some _really_ wild thoughts in my head and gradually came down to most of the form that it is now over the course of an (intense) week.  
 I felt that I needed to complete this project before I could properly apply for jobs, so this was a bit of a race against the clock to create...
 
-But yeah, leaving aside the everpresent scrolling glitching behaviour that I still dunno where it's coming from, I now have a pretty nice ecosystem where if I want to add a project I can just add it to the JSON-like object for that and add a MarkDown file and some images and it sets itself up automatically!
+But yeah, I now have a pretty nice ecosystem where if I want to add a project I can just add it to the JSON-like object for that and add a MarkDown file and some images and it sets itself up automatically!
 
 Let me tell you some things about this site that maybe you didn't know:
 - You can actually click the code in the background of the site to be linked to the corresponding code file in my GitHub! (I tried to make it as obvious as possible but there's no consistent _hover_ for mobile when your finger does touch the scree xD)
