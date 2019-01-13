@@ -130,8 +130,9 @@ class LandscapeContainer extends Component {
     // container.appendChild(style);
   }
 
-  scrollTo = (offset=0) => {
+  scrollTo = (offset=0, callback) => {
     window.scrollTo({top: getBottomScrollPos() - offset, left: 0, behavior: 'auto'});
+    setTimeout(callback, 1000);
   }
 
   scrollDown = (smooth=false, callback) => {
@@ -154,8 +155,8 @@ class LandscapeContainer extends Component {
       frameOffset: bottomOffset
     },
     () => {
-      this.scrollTo(bottomOffset);
-      window.addEventListener('scroll', this.scrollToFrameOffset);
+      this.scrollTo(bottomOffset, () => window.addEventListener('scroll', this.scrollToFrameOffset));
+    //  window.addEventListener('scroll', this.scrollToFrameOffset);
     });
   }
 
