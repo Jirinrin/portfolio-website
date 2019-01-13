@@ -1,6 +1,6 @@
 export const TINY_BOOK_HEIGHT = 40;
 export const TINY_BOOK_WIDTH = 240;
-export const TINY_BOOK_BASE_LEFT = 3690;
+export const TINY_BOOK_BASE_LEFT = 3750;
 export const TINY_BOOK_BASE_BOTTOM = 4300;
 
 export const LARGE_BASE_BOOK_HEIGHT = 22;

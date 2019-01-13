@@ -118,7 +118,7 @@ class Landscape extends Component {
     this.setState({
       showTooltip: true,
       tooltip: {
-        contents: target.name || (target.id === 'book-stack' && 'Stack\'o\'Projects'),
+        contents: target.name || (target.id === 'book-stack' && 'Stack \'o\' Projects'),
         left,
         top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(C.TOOLTIP_FONT_SIZE+C.TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
         extraStyles

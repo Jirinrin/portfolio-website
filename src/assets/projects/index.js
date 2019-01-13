@@ -2,6 +2,12 @@
 
 export default [
   {
+    id: 'architecture-highlights',
+    title: 'Architecture Highlights',
+    github: false,
+    images: []
+  },
+  {
     id: 'bath-srpn',
     title: 'SRPN',
     github: true,

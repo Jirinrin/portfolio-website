@@ -46,7 +46,7 @@ const objects = {
     hasText: true
   },
   'book-stack': {
-    name: 'Stack\'o\'Projects',
+    name: 'Stack \'o\' Projects',
     left: C.TINY_BOOK_BASE_LEFT, 
     top: C.getTinyBookStackTop(projects.length),
     width: C.TINY_BOOK_WIDTH,
