@@ -69,10 +69,6 @@ class Navbar extends Component {
     window.addEventListener('resize', () => this.forceUpdate());
   }
 
-  handleResize = (e) => {
-    console.log(e.target.innerWidth);
-  }
-  
   onScroll = (e) => {
     e.preventDefault();
     this.updateScrollParams(window.pageYOffset);
@@ -98,7 +94,6 @@ class Navbar extends Component {
   }
 
   goToPopup = (type, id) => {
-    console.log(this.props.abouts);
     this.props.changePage({
       landscape: 1,
       popup: {
