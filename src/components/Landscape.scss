@@ -363,6 +363,25 @@ div.landscape--2-enter.landscape--2-enter-active {
     &.icon {
       width: 3rem;
     }
+
+    &.icon.technology-icon {
+      width: 4rem;
+      transition: all 0.4s ease;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+
+      
+    }
+
+    &.icon-middle {
+      opacity: 0.7;
+    }
+
+    &.icon-light {
+      opacity: 0.3;
+    }
   }
 
   a {

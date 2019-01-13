@@ -192,6 +192,17 @@ class LandscapeContainer extends Component {
       document.title = SITE_NAME;
   }
 
+  getExperienceLevel(className) {
+    if (!className)
+      return null;
+    if (className.includes('icon-dark'))
+      return 'Ample';
+    if (className.includes('icon-middle'))
+      return 'Enough';
+    if (className.includes('icon-light'))
+      return 'Little';
+  }
+
   renderPopup() {
     const {popup} = this.props.currentPage
     if (!popup)
@@ -210,6 +221,7 @@ class LandscapeContainer extends Component {
                   src={require(`../assets/objects/images/${props.src}`)}
                   className={props.alt}
                   alt={props.src.split('/').reverse()[0]}
+                  title={`${props.title} | ${this.getExperienceLevel(props.alt)} experience`}
                 />,
              link: props => 
                 <a 
