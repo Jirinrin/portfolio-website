@@ -532,14 +532,24 @@ svg {
   .image-gallery-slide {
     transition: all 1s ease !important;
     background: none;
+    height: 100%;
+    display: flex;
 
-    img {
-      height: 50vh;
-      width: unset !important;
-      border-radius: 1rem;
-      margin: 0 auto;
-      display: block;
-      // box-shadow: inset 30px 30px 10px #000000;
+    .image-gallery-image {
+      // margin: auto auto;
+      // display: flex;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        width: unset !important;
+        border-radius: 1rem;
+        display: flex;
+        margin: auto auto;
+        // box-shadow: inset 30px 30px 10px #000000;
+      }
+  
+      
     }
 
     &:not(.center) {
@@ -554,6 +564,7 @@ svg {
 
   &::before {
     text-shadow: none !important;
+    color: gray !important;
   }
 
   &:hover::before {
