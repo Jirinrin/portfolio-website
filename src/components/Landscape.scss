@@ -292,7 +292,12 @@ div.landscape--2-enter.landscape--2-enter-active {
   font-weight: 300;
   transition: all 0.2s ease;
   font-size: 1rem;
+
   max-width: 80vw;
+  max-height: calc(100vh - 20vw);
+  @media (max-width: 1400px) {
+    max-height: calc(100vh - 30vw);
+  }
 
   &.popup-window-large {
     width: 80vw;//calc(100vw - 18rem);
@@ -302,6 +307,8 @@ div.landscape--2-enter.landscape--2-enter-active {
       height: calc(100vh - 30vw); // 75px + 6px for border + 3px for padding
     }
   }
+
+
 
   h1 {
     font-family: 'Cormorant', serif;
@@ -548,8 +555,6 @@ svg {
         margin: auto auto;
         // box-shadow: inset 30px 30px 10px #000000;
       }
-  
-      
     }
 
     &:not(.center) {
@@ -561,10 +566,11 @@ svg {
 
 .image-gallery-left-nav, .image-gallery-right-nav {
   text-shadow: none;
+  mix-blend-mode: multiply;
 
   &::before {
     text-shadow: none !important;
-    color: gray !important;
+    color: rgb(199, 199, 199) !important;
   }
 
   &:hover::before {

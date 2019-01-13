@@ -19,17 +19,23 @@ class GithubCodeContainer extends Component {
     // window.addEventListener('scroll', this.handleScrollChange);
   }
 
+  shouldComponentUpdate() {
+    if (this.state.code)
+      return false;
+    return true;
+  }
+
   async componentDidUpdate(oldProps) {
-    if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) 
+    if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) {
       this.props.loadGithubCode(true);
+    }
 
     if (oldProps.githubCode.length !== this.props.githubCode.length) {
       if (this.shouldLoadMoreCode())
         this.props.loadGithubCode();
-      else {
+      else if (!this.state.code)
         this.setState({code: this.props.githubCode});
-        // setTimeout(() => window.removeEventListener('scroll', this.handleScrollChange), 10000);
-      }
+      // setTimeout(() => window.removeEventListener('scroll', this.handleScrollChange), 10000);
     }
   }
 

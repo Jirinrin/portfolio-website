@@ -8,7 +8,6 @@ import {changePage} from '../actions/currentPage';
 
 class Landscape extends Component {
   state = {
-    /// zou nog extra factor toe kunnen voegen ofzo zodat het altijd binnen die ene stip op de grond past...?
     bookHeight: C.LARGE_BASE_BOOK_HEIGHT,
     openedBook: null,
     bookShadow: null
@@ -23,11 +22,6 @@ class Landscape extends Component {
   }
 
   componentDidUpdate(oldProps, oldState) {
-    // if (oldProps.scaleFactor !== this.props.scaleFactor)
-    //   this.setState({
-    //     BOOK_HEIGHT: C.LARGE_BASE_BOOK_HEIGHT / this.props.scaleFactor,
-    //   });
-
     if (this.state.openedBook !== oldState.openedBook && this.state.openedBook)
       this.props.zoomInCanvas(window.pageYOffset);
 
