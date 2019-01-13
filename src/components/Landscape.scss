@@ -367,10 +367,10 @@ div.landscape--2-enter.landscape--2-enter-active {
 
   a {
     text-decoration: none;
-    color: rgb(99, 99, 99);
-    filter: sepia(3);
+    color: rgb(59, 59, 59);
+    filter: sepia(5);
     &:hover {
-      color: white;
+      color: rgb(233, 233, 233);
     }
     transition: all 0.2s ease;
 

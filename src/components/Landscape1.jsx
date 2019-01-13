@@ -65,17 +65,11 @@ class Landscape extends Component {
     switch (id) {
       case 'awards-cup':
       case 'contact-details':
+      case 'jiri-soul':
         this.props.scrollDown(true, () => this.zoomPopup(id, 'text'));
-        // this.props.changePage({
-        //   popup: {
-          //     type: 'text',
-          //     text: this.props.abouts[id].text
-          //   }
-          // })
         return;
       case 'future-building':
       case 'hobby-heap':
-      case 'jiri-soul':
       case 'octopus-tree':
       case 'spiral-tower':
       case 'technology-forest':
@@ -175,8 +169,7 @@ class Landscape extends Component {
     }
     const canvasHeightDiff = zoomRegion.top + (window.innerHeight / innerWidth) * zoomRegion.width - C.CANVAS_HEIGHT;
     if (canvasHeightDiff > 0) {
-      console.log(canvasHeightDiff);
-      yOffsetExtra = 1/0.5 * canvasHeightDiff;
+      yOffsetExtra = 1/(1920 / window.innerWidth * 0.2) * canvasHeightDiff;
     }
     /// and should probably also add this for y direction
     
@@ -209,7 +202,6 @@ class Landscape extends Component {
           <img src={require('../assets/landscape/landscape-1.png')} className="landscape" id="landscape-1" alt="landscape 1" />
           {this.props.abouts['jiri-soul'] &&
             Object.values(this.props.abouts).map(obj => {
-              console.log(obj);
               if (obj.left === undefined || obj.top === undefined) return null;
               const props = {
                 key: obj.id,
