@@ -131,7 +131,6 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0, callback) => {
-    console.log(offset)
     window.scrollTo({top: getBottomScrollPos() - offset, left: 0, behavior: 'auto'});
     setTimeout(callback, 1000);
   }
