@@ -54,6 +54,7 @@ class GithubCodeContainer extends Component {
   render() { 
     return ( 
       <div className="GithubCodeContainer">
+        {/* <img src={require('../assets/icons/kanji-logo.png')} id="kanji-background" alt="cool kanji logo"/> */}
         <CSSTransition
             in={!!this.state.code}
             classNames="GithubCodeContainer"

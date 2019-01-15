@@ -159,7 +159,7 @@ class Landscape extends Component {
                
     // Extra compensations for if the image frame is partly outside the canvas
     // const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2); /// still not entirely optimally functional...
-    const canvasWidthDiff = zoomRegion.left + (innerWidth / window.innerHeight) * zoomRegion.height - C.CANVAS_WIDTH;
+    const canvasWidthDiff = zoomRegion.left + (sampleWidth ? zoomRegion.width : (innerWidth / window.innerHeight) * zoomRegion.height) - C.CANVAS_WIDTH;
     if (canvasWidthDiff > 0) {
       xOffsetExtra = 1/0.9 * canvasWidthDiff;
     }
@@ -167,7 +167,7 @@ class Landscape extends Component {
     if (canvasWidthDiff2 < 0) {
       xOffsetExtra += canvasWidthDiff2;
     }
-    const canvasHeightDiff = zoomRegion.top + (window.innerHeight / innerWidth) * zoomRegion.width - C.CANVAS_HEIGHT;
+    const canvasHeightDiff = zoomRegion.top + (sampleWidth ? (window.innerHeight / innerWidth) * zoomRegion.width : zoomRegion.height) - C.CANVAS_HEIGHT;
     if (canvasHeightDiff > 0) {
       yOffsetExtra = 1/(1920 / window.innerWidth * 0.2) * canvasHeightDiff;
     }

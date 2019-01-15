@@ -63,6 +63,7 @@ const objects = {
 
 Object.keys(objects).forEach(id => objects[id].id = id);
 Object.values(objects).forEach(obj => {
+  /// Maybe change this up as it's kinda unprofessional to do it through reference like this
   obj.left = obj.left * C.CANVAS_SCALE;
   obj.top = obj.top * C.CANVAS_SCALE;
 });

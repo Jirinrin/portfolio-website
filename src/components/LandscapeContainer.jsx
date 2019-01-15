@@ -166,6 +166,7 @@ class LandscapeContainer extends Component {
 
   zoomOutCanvas = () => {
     window.removeEventListener('scroll', this.scrollToFrameOffset);
+    setTimeout(() => window.removeEventListener('scroll', this.scrollToFrameOffset), 1000);
 
     this.setState({
       zoomIn: false,
