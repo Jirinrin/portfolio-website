@@ -12,11 +12,13 @@ Ordered by how high my intuition wants them to be on the list; convenient!
 ![icon technology-icon icon-dark](javascript.png "JavaScript")
 ![icon technology-icon icon-dark](nodejs.png "NodeJS")
 ![icon technology-icon icon-dark](react.png "React.js")
+![icon technology-icon icon-dark](redux.png "Redux")
 ![icon technology-icon icon-dark](git.png "git")
 ![icon technology-icon icon-light](graphql.png "GraphQL")
 ![icon technology-icon icon-middle](python.png "Python")
 ![icon technology-icon icon-light](ruby.png "Ruby")
 ![icon technology-icon icon-middle](sql.png "SQL")
+![icon technology-icon icon-middle](sass.png "SCSS")
 ![icon technology-icon icon-dark](css.png "CSS")
 ![icon technology-icon icon-dark](html.png "HTML")
 
