@@ -111,4 +111,12 @@ export default [
       'appjection-4.gif'
     ]
   },
+  {
+    id: 'osu-collection-manipulator',
+    title: 'osu! db manipulator',
+    github: false,
+    images: [
+      'osu-collection-manipulator-1.gif'
+    ]
+  },
 ]
