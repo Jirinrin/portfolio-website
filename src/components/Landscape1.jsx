@@ -245,7 +245,7 @@ class Landscape extends Component {
                 );
               }
               else {
-                return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} /> );
+                return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.${obj.extension}`)} alt={obj.id} /> );
               }
             }
           )}

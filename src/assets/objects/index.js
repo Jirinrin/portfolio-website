@@ -5,45 +5,52 @@ const objects = {
   'awards-cup': {
     // ook goed: Trophy Tribute
     name: 'Endowment Shrine (construction中)',
-    left: 2811, 
-    top: 3594,
-    hasText: true
+    left: 2731, 
+    top: 3542,
+    hasText: true,
+    extension: 'png'
   },
   'future-building': {
     name: 'あたしの FUTURE HOME',
     left: 479.5,
     top: 3765,
-    hasText: true
+    hasText: true,
+    extension: 'gif'
   },
   'hobby-heap': {
     name: 'Hobby Heap',
     left: 74, 
     top: 4377,
-    hasText: true
+    hasText: true,
+    extension: 'png'
   },
   'jiri-soul': {
     name: 'Jiri\'s SOUL',
     left: 2103, 
     top: 4330,
-    hasText: true
+    hasText: true,
+    extension: 'png'
   },
   'octopus-tree': {
     name: 'The OctoTree of Life',
     left: 1321,
     top: 4205,
-    hasText: true
+    hasText: true,
+    extension: 'gif'
   },
   'spiral-tower': {
     name: 'Pillar of Paradigm',
     left: 4238, 
     top: 2760,
-    hasText: true
+    hasText: true,
+    extension: 'gif'
   },
   'technology-forest': {
     name: 'Techno Forest',
     left: 0, 
     top: 3919,
-    hasText: true
+    hasText: true,
+    extension: 'png'
   },
   'book-stack': {
     name: 'Stack \'o\' Projects',
@@ -51,13 +58,15 @@ const objects = {
     top: C.getTinyBookStackTop(projects.length),
     width: C.TINY_BOOK_WIDTH * C.CANVAS_SCALE,
     height: C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE * projects.length,
-    hasText: false
+    hasText: false,
+    extension: 'png'
   },
   'contact-details': {
     name: 'Search Envelope',
     left: 1247,
     top: 5225,
-    hasText: true
+    hasText: true,
+    extension: 'png'
   }
 };
 

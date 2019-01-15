@@ -307,8 +307,25 @@ class LandscapeContainer extends Component {
         }
       >
         <div className="rel-container overflow-hidden">
-          <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" 
-               style={{bottom: -this.state.frameOffset}}/>
+          {/* <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" 
+               style={{bottom: -this.state.frameOffset}}/> */}
+               
+          <img 
+            src={require('../assets/landscape/shine-3.png')} 
+            className="landscape full-width" 
+            id="shining-effect" alt="shining effect" 
+            style={{
+              bottom: -this.state.frameOffset - (C.CANVAS_HEIGHT / C.CANVAS_WIDTH) * window.innerWidth * 0.27
+            }}
+          />
+          <img 
+            src={require('../assets/landscape/sunrays.png')} 
+            className="landscape full-width" 
+            id="sunrays" alt="sunrays" 
+            style={{
+              bottom: -this.state.frameOffset - (C.CANVAS_HEIGHT / C.CANVAS_WIDTH) * window.innerWidth * 0.27
+            }}
+          />
           <img src={require('../assets/landscape/jiri-head.png')} className="landscape full-width" id="jiri-head" alt="floating head" 
                style={{bottom: -this.state.frameOffset}}/>
           
