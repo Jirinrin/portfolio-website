@@ -35,7 +35,8 @@ h2.landscape-name {
   display: block;
   font-family: 'Cormorant', serif;
   position: absolute;
-  font-size: 50rem;
+  /// is eigenlijk ook afhankelijk van grootte van canvas... 
+  font-size: 25rem;
   z-index: 13;
   color: rgba(0, 0, 0, 0.274);
   mix-blend-mode: multiply;
@@ -96,7 +97,8 @@ h2.landscape-name {
 }
 
 .book--tiny {
-  border-radius: 10px;
+  /// afhankelijk van canvas size
+  border-radius: 5px;
   z-index: 15;
   // display: none;
 }
@@ -112,7 +114,8 @@ h2.landscape-name {
 
   &:hover {
     // transform: scale(1.1);
-    transform: translate(2rem, 2rem) scale(1.1);
+    /// afhankelijk van canvas size
+    transform: translate(1rem, 1rem) scale(1.1);
     z-index: 21;
     filter: sepia(3);
     /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
@@ -132,7 +135,8 @@ img.book--large__background {
   height: 100%;
   position: absolute;
   z-index: 14;
-  border-radius: 30px;
+  /// afhankelijk van canvas height
+  border-radius: 15px;
 
   // &:hover {
   // }
@@ -163,18 +167,19 @@ img.book--large__background {
     color: transparent;
     background-clip: text;
     background-color: #2c2c2c;
-    text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.192);
+    /// al deze rems ook afhankelijk van canvas size
+    text-shadow: 0rem 0.5rem 0.5rem rgba(255, 255, 255, 0.192);
     // background-color: #3f3f3f;
     // text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.856);
 
     &.dark-background {
       background-color: rgb(255, 255, 255);
-      text-shadow: 0rem 1rem 0.6rem #3d3d3d63;
+      text-shadow: 0rem 0.5rem 0.3rem #3d3d3d63;
     }
 
     &.white-background {
       background-color: #3d3d3d;
-      text-shadow: 0rem 1rem 1rem rgba(224, 224, 224, 0.26);
+      text-shadow: 0rem 0.5rem 0.5rem rgba(224, 224, 224, 0.26);
     }
   }
 }

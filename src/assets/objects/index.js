@@ -47,10 +47,10 @@ const objects = {
   },
   'book-stack': {
     name: 'Stack \'o\' Projects',
-    left: C.TINY_BOOK_BASE_LEFT, 
+    left: C.TINY_BOOK_BASE_LEFT,
     top: C.getTinyBookStackTop(projects.length),
-    width: C.TINY_BOOK_WIDTH,
-    height: C.TINY_BOOK_HEIGHT * projects.length,
+    width: C.TINY_BOOK_WIDTH * C.CANVAS_SCALE,
+    height: C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE * projects.length,
     hasText: false
   },
   'contact-details': {
@@ -62,5 +62,9 @@ const objects = {
 };
 
 Object.keys(objects).forEach(id => objects[id].id = id);
+Object.values(objects).forEach(obj => {
+  obj.left = obj.left * C.CANVAS_SCALE;
+  obj.top = obj.top * C.CANVAS_SCALE;
+});
 
 export default objects;

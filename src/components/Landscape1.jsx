@@ -229,10 +229,10 @@ class Landscape extends Component {
                           id={`book--tiny-${i}`}
                           alt="book"
                           style={{
-                            height: C.TINY_BOOK_HEIGHT,
-                            width:  C.TINY_BOOK_HEIGHT * p.book.width,
-                            top:    C.TINY_BOOK_HEIGHT * p.book.yOffset,
-                            left:   C.TINY_BOOK_HEIGHT * p.book.xOffset,
+                            height: C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE,
+                            width:  C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE * p.book.width,
+                            top:    C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE * p.book.yOffset,
+                            left:   C.TINY_BOOK_HEIGHT * C.CANVAS_SCALE * p.book.xOffset,
                             filter: `brightness(${p.book.tintDeviation})`
                           }}
                         />})
