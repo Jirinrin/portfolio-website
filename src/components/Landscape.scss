@@ -622,9 +622,97 @@ svg {
   position: absolute;
   pointer-events: none;
   z-index: 14;
-  // transition: all 0.2s ease;
+  transition: all 0.1s ease;
   // display: table-row;
   // transform-origin: center bottom;
+}
+
+.creature {
+  position: absolute;
+  z-index: 12;
+  user-select: none;
+}
+
+.air-creature {
+  animation: fly 20s linear forwards;
+  transform-origin: left top;
+
+  @keyframes fly {
+    0% {
+      opacity: 0;
+      transform: translateX(0) scale(0.8);
+    }
+    10% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(4000px) scale(0.8);
+      opacity: 0;
+    }
+  }
+}
+
+.ground-creature {
+  animation: walk 10s linear forwards;
+  transform-origin: left top;
+
+  @keyframes walk {
+    0% {
+      opacity: 0;
+      transform: translateX(0) scale(0.5);
+    }
+    10% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(500px) scale(0.5);
+      opacity: 0;
+    }
+  }
+}
+
+.tech-cloud-container {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  animation: fly-up 10s linear forwards;
+
+  @keyframes fly-up {
+    0% {
+      opacity: 0;
+      transform: translateY(50px) scale(0);
+    }
+    20% {
+      opacity: 1;
+      transform: translateY(-100px) scale(1);
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-500px);
+      opacity: 0;
+    }
+  }
+}
+
+.tech-cloud__cloud {
+  position: absolute;
+  width: 100%;
+  z-index: 14;
+}
+
+.tech-cloud__icon {
+  position: absolute;
+  width: 100%;
+  z-index: 15;
+  opacity: 0.5;
 }
 
 // .back-arrow-enter {

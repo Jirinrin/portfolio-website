@@ -7,6 +7,8 @@ import {fetchAboutTexts} from '../actions/abouts';
 
 import * as C from '../constants';
 import OBJECTS from '../assets/objects';
+import CREATURES from '../assets/landscape/creatures';
+import TECHNOLOGIES from '../assets/objects/images';
 
 class Landscape extends Component {
   state = {
@@ -20,24 +22,12 @@ class Landscape extends Component {
     cursorPos: {
       x: null,
       y: null
-    }
+    },
+    activeCreatures: [],
+    creatureGeneratorId: null,
+    activeTechClouds: [],
+    techCloudGeneratorId: null
   };
-
-  // componentWillMount() {
-  //   this.setState({
-  //     objects: C.OBJECTS_REFERENCE.map(obj => {
-  //       const bs = obj[0] === 'book-stack';
-  //       return {
-  //         id: obj[0],
-  //         name: obj[3],
-  //         left:   bs ? C.TINY_BOOK_BASE_LEFT                             : obj[1],
-  //         top:    bs ? C.getTinyBookStackTop(this.props.projects.length) : obj[2],
-  //         width:  bs ? C.TINY_BOOK_WIDTH                                 : null,
-  //         height: bs ? C.TINY_BOOK_HEIGHT * this.props.projects.length   : null
-  //       }
-  //     }),
-  //   });
-  // }
 
   componentDidMount() {
     if (!this.props.abouts['jiri-soul'].text)
@@ -46,13 +36,17 @@ class Landscape extends Component {
     this.setBookShadow();
 
     document.addEventListener('mousemove', this.handleMousemove);
+
+    this.setState({
+      creatureGeneratorId: setInterval(this.generateCreature, 6000),
+      techCloudGeneratorId: setInterval(this.generateTechCloud, 5000)
+    });
   }
 
   componentDidUpdate(oldProps, oldState) {
     if (oldProps.zoomIn !== this.props.zoomIn && this.props.zoomIn) {
       const obj = document.querySelector(`#${this.props.currentPage.popup.id}`);
       if (!obj) return;
-      console.log(obj);
 
       this.props.setPageName(obj.name);
       this.updateZoomData({
@@ -69,6 +63,8 @@ class Landscape extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMousemove);
+    clearInterval(this.state.creatureGeneratorId);
+    clearInterval(this.state.techCloudGeneratorId);
   }
 
   handleObjectClick = (e) => {
@@ -188,7 +184,6 @@ class Landscape extends Component {
 
   updateZoomData = (zoomRegion) => {
     // const innerWidth = document.documentElement.clientWidth;
-    console.log(zoomRegion);
     const innerWidth = window.innerWidth;
 
     const sampleWidth = window.innerHeight / innerWidth > zoomRegion.height / zoomRegion.width;
@@ -234,6 +229,66 @@ class Landscape extends Component {
   getBlur = () => this.props.zoomIn ? C.BASE_ZOOM_BLUR / this.state.zoomScale : 0;
 
   setBookShadow = () => this.setState({bookShadow: C.calculateBookShadow('.book--tiny')});
+
+  generateCreature = () => {
+    const creatureId = Math.random();
+    const creatureType = Object.keys(CREATURES)[Math.round(Math.random() * Object.keys(CREATURES).length - 0.5)];
+    const creatureSpecies = CREATURES[creatureType][Math.round(creatureId * CREATURES[creatureType].length - 0.5)];
+    let style, timeout;
+    switch (creatureType) {
+      case 'ground':
+        style = {
+          left: C.mapRange(Math.random(), 0, 1, 915 * C.CANVAS_SCALE, 1150 * C.CANVAS_SCALE),
+          top:  C.mapRange(Math.random(), 0, 1, 4100 * C.CANVAS_SCALE, 4300 * C.CANVAS_SCALE)
+        };
+        timeout = 10000;
+        break;
+      case 'air':
+        style = {
+          left: Math.random() * C.CANVAS_WIDTH * 0.5,
+          top: Math.random() * C.CANVAS_HEIGHT * 0.6
+        };
+        timeout = 20000;
+        break;
+      default:
+        throw new Error('Unknown creature type');
+    }
+
+    this.setState({activeCreatures: [
+      ...this.state.activeCreatures,
+      {
+        id: creatureId,
+        type: creatureType,
+        species: creatureSpecies,
+        style
+      }
+    ]});
+
+    setTimeout(() => 
+      this.setState({activeCreatures: this.state.activeCreatures.filter(creature => creature.id !== creatureId)}), 
+    timeout + 1000);
+  }
+
+  generateTechCloud = () => {
+    const cloudId = Math.random();
+    const cloudNumber = Math.round(Math.random() * 3 - 0.5) + 1;
+    const chimneyCoords = C.TECH_CLOUD_START_POSITIONS[Math.round(Math.random() * 3 - 0.5)];
+    const iconImage = TECHNOLOGIES[Math.round(cloudId * TECHNOLOGIES.length - 0.5)];
+
+    this.setState({activeTechClouds: [
+      ...this.state.activeTechClouds,
+      {
+        id: cloudId,
+        cloudNumber,
+        iconImage,
+        style: chimneyCoords
+      }
+    ]});
+
+    setTimeout(() => 
+      this.setState({activeTechClouds: this.state.activeTechClouds.filter(cloud => cloud.id !== cloudId)}), 
+    11000);
+  }
 
   render() {
     const {tooltip, showTooltip} = this.state;
@@ -329,6 +384,30 @@ class Landscape extends Component {
               {tooltip && tooltip.contents}
             </p>
           </CSSTransition>
+
+          <div>
+            {this.state.activeCreatures.map(cr =>
+                <img 
+                  src={require(`../assets/landscape/creatures/${cr.species}.gif`)} 
+                  className={`creature ${cr.type}-creature ${cr.species}`} alt={cr.species} 
+                  style={cr.style} key={cr.id}
+                />  
+            )}
+          </div>
+          <div>
+            {this.state.activeTechClouds.map(cloud =>
+                <div className="tech-cloud-container" style={cloud.style} key={cloud.id}>
+                  <img 
+                    src={require(`../assets/objects/images/${cloud.iconImage}`)} 
+                    className="tech-cloud__icon" alt="technology icon" 
+                 />
+                 <img 
+                    src={require(`../assets/objects/images/circle-cloud-${cloud.cloudNumber}.png`)} 
+                    className="tech-cloud__cloud" alt="tech cloud cloud" 
+                 />
+                </div>
+            )}
+          </div>
         </div>
       </div>
     );
