@@ -1,7 +1,7 @@
 export const BASE_CANVAS_WIDTH  = 4961;
 export const BASE_CANVAS_HEIGHT = 5662;
 
-export const CANVAS_SCALE = 0.5;
+export const CANVAS_SCALE = 1;
 export const CANVAS_WIDTH  = BASE_CANVAS_WIDTH * CANVAS_SCALE;
 export const CANVAS_HEIGHT = BASE_CANVAS_HEIGHT * CANVAS_SCALE;
 // export const CANVAS_WIDTH  = 2480;
