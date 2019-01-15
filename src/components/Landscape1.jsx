@@ -223,7 +223,7 @@ class Landscape extends Component {
                     {
                       this.props.projects.map((p, i) => {
                         return <img
-                          src={require('../assets/box-dark.png')} 
+                          src={require('../assets/box-dark-small.png')} 
                           className="book--tiny" 
                           key={`book--tiny-${i}`}
                           id={`book--tiny-${i}`}
@@ -246,7 +246,6 @@ class Landscape extends Component {
               }
               else {
                 return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.png`)} alt={obj.id} /> );
-                // return null;
               }
             }
           )}
