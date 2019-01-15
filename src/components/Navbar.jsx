@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import {changePage} from '../actions/currentPage';
 
 import {SITE_NAME} from '../assets/SITE_NAME';
+import * as C from '../constants';
 
 import './Navbar.scss';
 
@@ -89,7 +90,7 @@ class Navbar extends Component {
   }
 
   calculateTransform = (yOffset) => {
-    const scale = mapRange(BASE_Y_OFFSET - yOffset, 0, 500, BASE_SCALE, 1);
+    const scale = C.mapRange(BASE_Y_OFFSET - yOffset, 0, 500, BASE_SCALE, 1);
     return scale <= 1 ? 1 : scale;
   }
 
@@ -205,7 +206,3 @@ class Navbar extends Component {
 const mapStateToProps = ({currentPage, abouts}) => ({currentPage, abouts});
 
 export default connect(mapStateToProps, {changePage})(Navbar);
-
-function mapRange(num, inMin, inMax, outMin, outMax) {
-  return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-}

@@ -28,6 +28,8 @@ const objects = {
     name: 'Jiri\'s SOUL',
     left: 2103, 
     top: 4330,
+    width: 207 * C.CANVAS_SCALE,
+    height: 232 * C.CANVAS_SCALE,
     hasText: true,
     extension: 'png'
   },

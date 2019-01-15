@@ -23,3 +23,23 @@ export const calculateBookShadow = (bookClassName) => {
 
   return path;
 }
+
+export function mapRange(num, inMin, inMax, outMin, outMax) {
+  return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
+export function getDocHeight() {
+  const body = document.body;
+  const html = document.documentElement;
+  return Math.max(
+    body.scrollHeight, 
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
+}
+
+export function getBottomScrollPos() {
+  return getDocHeight() - window.innerHeight;
+}

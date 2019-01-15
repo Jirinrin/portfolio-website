@@ -20,22 +20,6 @@ import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 smoothscroll.polyfill();
 
-function getDocHeight() {
-  const body = document.body;
-  const html = document.documentElement;
-  return Math.max(
-    body.scrollHeight, 
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
-}
-
-function getBottomScrollPos() {
-  return getDocHeight() - window.innerHeight;
-}
-
 class LandscapeContainer extends Component {
   state = { 
     scaleFactor: 1,
@@ -131,12 +115,12 @@ class LandscapeContainer extends Component {
   }
 
   scrollTo = (offset=0, callback) => {
-    window.scrollTo({top: getBottomScrollPos() - offset, left: 0, behavior: 'auto'});
+    window.scrollTo({top: C.getBottomScrollPos() - offset, left: 0, behavior: 'auto'});
     setTimeout(callback, 1000);
   }
 
   scrollDown = (smooth=false, callback) => {
-    window.scrollTo({top: getBottomScrollPos(), left: 0, behavior: smooth ? 'smooth' : 'auto'});
+    window.scrollTo({top: C.getBottomScrollPos(), left: 0, behavior: smooth ? 'smooth' : 'auto'});
     setTimeout(callback, 100);
   }
 
@@ -145,7 +129,7 @@ class LandscapeContainer extends Component {
   getBottomOffset = (scroll) => {
     if (!scroll) return 0;
 
-    return (getDocHeight() - scroll - window.innerHeight);
+    return (C.getDocHeight() - scroll - window.innerHeight);
   }
 
   zoomInCanvas = (scroll=undefined) => {
@@ -192,7 +176,7 @@ class LandscapeContainer extends Component {
     document.title = `${customName} | ${SITE_NAME}`;
     else if (this.props.currentPage.landscape === 2)
       document.title = `Projects | ${SITE_NAME}`;
-    else if (window.pageYOffset / getBottomScrollPos() > 0.6)
+    else if (window.pageYOffset / C.getBottomScrollPos() > 0.6)
       document.title = `About | ${SITE_NAME}`
     else
       document.title = SITE_NAME;

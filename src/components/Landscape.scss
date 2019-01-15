@@ -601,6 +601,32 @@ svg {
   }
 }
 
+#jiri-soul {
+  // display: table;
+  // overflow: overlay;
+  // display: inline-block;
+  height: max-content;
+}
+
+#jiri-soul__container {
+  // width: 100%;
+  position: absolute;
+  z-index: 13;
+
+  // display: table-row;
+  // transform-origin: center bottom;
+}
+
+#jiri-soul__pupils {
+  // width: 100%;
+  position: absolute;
+  pointer-events: none;
+  z-index: 14;
+  // transition: all 0.2s ease;
+  // display: table-row;
+  // transform-origin: center bottom;
+}
+
 // .back-arrow-enter {
 //   opacity: 0 !important;
 //   filter: blur(200px);

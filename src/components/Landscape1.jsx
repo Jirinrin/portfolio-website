@@ -6,6 +6,7 @@ import {changePage} from '../actions/currentPage';
 import {fetchAboutTexts} from '../actions/abouts';
 
 import * as C from '../constants';
+import OBJECTS from '../assets/objects';
 
 class Landscape extends Component {
   state = {
@@ -15,7 +16,11 @@ class Landscape extends Component {
     zoomRegion: null,
     zoomScale: 1,
     zoomTranslation: '',
-    bookShadow: null
+    bookShadow: null,
+    cursorPos: {
+      x: null,
+      y: null
+    }
   };
 
   // componentWillMount() {
@@ -39,24 +44,31 @@ class Landscape extends Component {
       this.props.fetchAboutTexts();
 
     this.setBookShadow();
+
+    document.addEventListener('mousemove', this.handleMousemove);
   }
 
   componentDidUpdate(oldProps, oldState) {
     if (oldProps.zoomIn !== this.props.zoomIn && this.props.zoomIn) {
       const obj = document.querySelector(`#${this.props.currentPage.popup.id}`);
       if (!obj) return;
+      console.log(obj);
 
       this.props.setPageName(obj.name);
       this.updateZoomData({
         left: parseFloat(obj.style.left),
         top: parseFloat(obj.style.top),
-        width: obj.naturalWidth,
-        height: obj.naturalHeight
+        width:  obj.naturalWidth  || parseFloat(obj.style.width),
+        height: obj.naturalHeight || parseFloat(obj.style.width)
       });
     }
 
     if (this.state.tooltip !== oldState.tooltip)
       this.props.setPageName();
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.handleMousemove);
   }
 
   handleObjectClick = (e) => {
@@ -89,7 +101,7 @@ class Landscape extends Component {
 
   showTooltip = (e) => {
     let target = e.currentTarget;
-    
+
     if (target.id === 'book-stack')
     return;
     if (target.id === 'book-stack-svg')
@@ -118,7 +130,7 @@ class Landscape extends Component {
     this.setState({
       showTooltip: true,
       tooltip: {
-        contents: target.name || (target.id === 'book-stack' && 'Stack \'o\' Projects'),
+        contents: target.name || (target.id === 'book-stack' && OBJECTS['book-stack'].name) || (target.id === 'jiri-soul' && OBJECTS['jiri-soul'].name),
         left,
         top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(C.TOOLTIP_FONT_SIZE+C.TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
         extraStyles
@@ -127,6 +139,41 @@ class Landscape extends Component {
   }
 
   hideTooltip = () => this.setState({showTooltip: false});
+
+  handleMousemove = (e) => {
+    // Could also use offsetX & offsetY
+    this.setState({
+      cursorPos: {
+        x: e.pageX,
+        y: e.pageY
+      }
+    });
+  }
+
+  getPupilTranslation = () => {
+    if (!this.state.cursorPos)
+      return {};
+    
+    const {x, y} = this.state.cursorPos;
+    const soul = OBJECTS['jiri-soul'];
+
+    const soulClientX = ((soul.left + soul.width / 2) / C.CANVAS_WIDTH) * document.documentElement.clientWidth;
+    const soulClientY = C.getDocHeight() - ((C.CANVAS_HEIGHT - soul.top + soul.height * 0.8) / C.CANVAS_HEIGHT) * C.getDocHeight();
+
+    let left, top;
+    
+    if (x < soulClientX)
+      left = C.mapRange(x, 0, soulClientX, -15, 0);
+    else
+      left = C.mapRange(x, soulClientX, document.documentElement.clientWidth, 0, 5);
+    
+    if (y < soulClientY)
+      top = C.mapRange(y, 0, soulClientY, -15, 0);
+    else
+      top = C.mapRange(y, soulClientY, C.getDocHeight(), 0, 15);
+
+    return {left, top};
+  }
 
   zoomPopup = (id, type) => {
     this.props.changePage({
@@ -141,6 +188,7 @@ class Landscape extends Component {
 
   updateZoomData = (zoomRegion) => {
     // const innerWidth = document.documentElement.clientWidth;
+    console.log(zoomRegion);
     const innerWidth = window.innerWidth;
 
     const sampleWidth = window.innerHeight / innerWidth > zoomRegion.height / zoomRegion.width;
@@ -243,6 +291,18 @@ class Landscape extends Component {
                     </svg>
                   </div>
                 );
+              }
+              else if (obj.id === 'jiri-soul') {
+                return (
+                  <div {...props} style={{...props.style, width: obj.width, height: obj.height}}>
+                    {/* <div className="rel-container"> */}
+                      <img id="jiri-soul__container" src={require(`../assets/landscape/objects/${obj.id}.${obj.extension}`)} alt="jiri soul container" />
+                      <img id="jiri-soul__pupils"    src={require(`../assets/landscape/objects/${obj.id}-pupils.png`)}       alt="jiri soul pupils"
+                           style={this.getPupilTranslation()}
+                      />
+                    {/* </div> */}
+                  </div>
+                ) 
               }
               else {
                 return ( <img {...props} src={require(`../assets/landscape/objects/${obj.id}.${obj.extension}`)} alt={obj.id} /> );
