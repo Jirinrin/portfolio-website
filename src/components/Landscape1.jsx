@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import {isMobileOnly} from 'react-device-detect';
+import { withCookies} from 'react-cookie';
 
 import {changePage} from '../actions/currentPage';
 import {fetchAboutTexts} from '../actions/abouts';
@@ -29,19 +31,24 @@ class Landscape extends Component {
     techCloudGeneratorId: null
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.abouts['jiri-soul'].text)
       this.props.fetchAboutTexts();
+  }
 
+  componentDidMount() {
     this.setBookShadow();
 
-    document.addEventListener('mousemove', this.handleMousemove);
-    window.addEventListener('scroll', this.handleScroll);
-
-    this.setState({
-      creatureGeneratorId: setInterval(this.generateCreature, 6000),
-      techCloudGeneratorId: setInterval(this.generateTechCloud, 5000)
-    });
+    if (!this.props.cookies.get('hasVisited'))
+      window.addEventListener('scroll', this.handleScroll);
+    
+    if (!isMobileOnly) {
+      document.addEventListener('mousemove', this.handleMousemove);
+      this.setState({
+        creatureGeneratorId: setInterval(this.generateCreature, 6000),
+        techCloudGeneratorId: setInterval(this.generateTechCloud, 5000)
+      });
+    }
   }
 
   componentDidUpdate(oldProps, oldState) {
@@ -154,18 +161,20 @@ class Landscape extends Component {
   }
 
   displayWelcomeMessage = () => {
+    window.removeEventListener('scroll', this.handleScroll);
+    
+    this.props.cookies.set('hasVisited', true, {path: '/'});
+    
     const jiriSoul = document.getElementById('jiri-soul');
     if (!jiriSoul)
       return;
 
     this.showTooltip({
       currentTarget: jiriSoul,
-      message: 'Welcome, I\'m Jiri\'s SOUL! Click on the stuffs to get cool info about Jiri!'
+      message: 'Welcome to Jiri\'s Domain! Click on the stuffs to get cool info!'
     });
 
-    setTimeout(this.hideTooltip, 10000);
-
-    window.removeEventListener('scroll', this.handleScroll);
+    setTimeout(this.hideTooltip, 5000);
   }
 
   getPupilTranslation = () => {
@@ -438,4 +447,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects, abouts, currentPage}) => ({projects, abouts, currentPage});
 
-export default connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape);
+export default withCookies(connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape));

@@ -220,6 +220,7 @@ img.book--large__background {
 
 .tooltip__white {
   background-image: url("../assets/box-light-small.png");
+  opacity: 0.8;
   color: rgb(44, 44, 44);
 }
 
@@ -690,6 +691,7 @@ svg {
   width: 100px;
   height: 100px;
   animation: fly-up 10s linear forwards;
+  pointer-events: none;
 
   @keyframes fly-up {
     0% {
