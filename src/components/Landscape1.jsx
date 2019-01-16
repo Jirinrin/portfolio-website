@@ -36,6 +36,7 @@ class Landscape extends Component {
     this.setBookShadow();
 
     document.addEventListener('mousemove', this.handleMousemove);
+    window.addEventListener('scroll', this.handleScroll);
 
     this.setState({
       creatureGeneratorId: setInterval(this.generateCreature, 6000),
@@ -106,7 +107,7 @@ class Landscape extends Component {
     const test = document.getElementById("text-test-2");
     test.style.fontSize = this.getTooltipFontSize();
     test.style.padding = this.getTooltipPaddingX();
-    test.innerHTML = target.name;
+    test.innerHTML = e.message || target.name;
     const width = test.clientWidth + 1;
     let extraStyles = {};
     let left = parseInt(target.style.left) + (target.clientWidth - width) / 2 + 'px';
@@ -126,10 +127,11 @@ class Landscape extends Component {
     this.setState({
       showTooltip: true,
       tooltip: {
-        contents: target.name || (target.id === 'book-stack' && OBJECTS['book-stack'].name) || (target.id === 'jiri-soul' && OBJECTS['jiri-soul'].name),
+        contents: e.message || target.name || (target.id === 'book-stack' && OBJECTS['book-stack'].name) || (target.id === 'jiri-soul' && OBJECTS['jiri-soul'].name),
         left,
         top: `calc(${parseInt(target.style.top) - target.clientHeight * 0.1}px - ${(C.TOOLTIP_FONT_SIZE+C.TOOLTIP_PADDING*2.5) / this.props.scaleFactor}rem)`,
-        extraStyles
+        extraStyles,
+        white: !!e.message
       }
     });
   }
@@ -146,8 +148,28 @@ class Landscape extends Component {
     });
   }
 
+  handleScroll = () => {
+    if (window.pageYOffset > C.getBottomScrollPos() * 0.9)
+      setTimeout(this.displayWelcomeMessage, 2000);
+  }
+
+  displayWelcomeMessage = () => {
+    const jiriSoul = document.getElementById('jiri-soul');
+    if (!jiriSoul)
+      return;
+
+    this.showTooltip({
+      currentTarget: jiriSoul,
+      message: 'Welcome, I\'m Jiri\'s SOUL! Click on the stuffs to get cool info about Jiri!'
+    });
+
+    setTimeout(this.hideTooltip, 10000);
+
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
   getPupilTranslation = () => {
-    if (!this.state.cursorPos)
+    if (!this.state.cursorPos.x || !this.state.cursorPos.y)
       return {};
     
     const {x, y} = this.state.cursorPos;
@@ -372,7 +394,7 @@ class Landscape extends Component {
             timeout={500}
           >
             <p
-              className="tooltip"
+              className={`tooltip ${tooltip && tooltip.white ? 'tooltip__white' : 'tooltip__black'}`}
               style={{
                 left: tooltip && tooltip.left,
                 top: tooltip && tooltip.top,

@@ -213,16 +213,24 @@ img.book--large__background {
   transition: transform 1s ease;
 }
 
+.tooltip__black {
+  background-image: url("../assets/box-dark-small.png");
+  color: rgb(223, 223, 223);
+}
+
+.tooltip__white {
+  background-image: url("../assets/box-light-small.png");
+  color: rgb(44, 44, 44);
+}
+
 .tooltip {
   font-family: 'Cormorant', serif;
   font-weight: 400;
   position: absolute;
-  color: rgb(223, 223, 223);
   z-index: 14;
   // background-color: rgb(29, 29, 29);
   border-radius: 10px;
   line-height: 0;
-  background-image: url("../assets/box-dark.png");
   background-size: 100% 100%;
   white-space: nowrap;
   user-select: none;
