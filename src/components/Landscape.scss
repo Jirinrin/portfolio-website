@@ -71,7 +71,8 @@ h2.landscape-name {
   z-index: 2;
   animation: sunray-spin 120s infinite linear;
   opacity: 0.4;
-  filter: blur(0.2rem);
+  // filter: blur(0.2rem);
+  filter: blur(0.2vw);
 
   @keyframes sunray-spin {
     0%{
@@ -692,7 +693,8 @@ svg {
   height: 100px;
   animation: fly-up 10s linear forwards;
   pointer-events: none;
-
+  
+  /// This animation destroys something: if there's a moving cloud in existance (/display?) (opacity doesn't seem to matter) the background clips away on zooms for smaller objects
   @keyframes fly-up {
     0% {
       opacity: 0;
