@@ -41,4 +41,12 @@ Ohkay, I thought I might as well include it in this list, as I do spend a lot of
 It's not really as if I'm in the art community or anything, so this one is a big vague, but Idunno, I just _like_ art-related things or sth...  
 I also draw some digital art from time to time with my Wacom tablet that I also use to place [osu!](https://osu.ppy.sh) (excellent segway: go play the game it's great, you're _definitely_ not going to get WAY to addicted to it I _promise_.... not.).
 
+**`カラオケ`**  
+No, not karaoke, only カラオケ.
+
+**`Rhythm games`**  
+This probably falls under things that are 'nerdy', but whatever, so does coding.  
+Rhythm games are a thing that I'm somewhere between passionate (about) and addicted to.  
+The two games I feel sort of confident in my skill in are osu! and DDR, but I do also want to learn games like JuBeat, Taiko no Tatsujin, Sound Voltex, Dancerush Stardom, Beatmania IIDX, etc.etc. Too bad that I don't have the peripherals for those, hahah.
+
 **_Aside_**: For a more ~cutely styled~ approach to describing these things that are supposed to be my passions in life, I would recommend looking at my [First Evarr Website](https://modest-ritchie-26c33d.netlify.com/) (also find it in the Projects stack)
