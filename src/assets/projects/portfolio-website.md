@@ -8,5 +8,7 @@ But yeah, I now have a pretty nice ecosystem where if I want to add a project I 
 
 Let me tell you some things about this site that maybe you didn't know:
 - You can actually click the code in the background of the site to be linked to the corresponding code file in my GitHub! (I tried to make it as obvious as possible but there's no consistent _hover_ for mobile when your finger does touch the scree xD)
+- My SOUL always stares deep into the soul of your cursor.
+- Those long-necked creatures are giraffe. Robots.
 - Github's GraphQL API is annoying because it can't recursively index all my repos (while their REST API _can_)). Hmpf, guess I'll go the old and trusted way then.
 - In making this, I got my rhythm to the point where I went to bed at 8:30 in the morning and woke up at 15:30...
