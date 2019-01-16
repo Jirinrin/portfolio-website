@@ -12,3 +12,4 @@ Let me tell you some things about this site that maybe you didn't know:
 - Those long-necked creatures are giraffe. Robots.
 - Github's GraphQL API is annoying because it can't recursively index all my repos (while their REST API _can_)). Hmpf, guess I'll go the old and trusted way then.
 - In making this, I got my rhythm to the point where I went to bed at 8:30 in the morning and woke up at 15:30...
+- Because of all the intervals and event listeners delivering all these special effects the website makes my laptop take off like an airplane... -.- Welp worth it though.

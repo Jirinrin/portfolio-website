@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import ReactMarkdown from 'react-markdown';
-import smoothscroll from 'smoothscroll-polyfill';
 import ImageGallery from 'react-image-gallery';
-// kick off the polyfill!
 
 import * as C from '../constants';
 import {SITE_NAME} from '../assets/SITE_NAME';
@@ -17,8 +15,6 @@ import Landscape2 from './Landscape2';
 
 import './Landscape.scss';
 import 'react-image-gallery/styles/scss/image-gallery.scss';
-
-smoothscroll.polyfill();
 
 class LandscapeContainer extends Component {
   state = { 
