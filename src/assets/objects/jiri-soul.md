@@ -9,4 +9,4 @@ I like to think that my SOUL's neverending wonder at what life can be like and w
 _(© Tomorrow Corporation™, 1809 for the image I traced this character from)_
 
 _Oh, and here is a disclaimer about this site because I don't know where else to put it:_  
-I am using Google Analytics cookies for investigating the demographics that visit this site and e.g. what browsers they use. Even though I have a data processing agreement, no data is shared with Google, Google has no permission to do anything with the data and your IP address is anonymised. So yeey, nothing to worry about! And because of this I don't have to ask for your permission~ (/^▽^)/
+_I am using Google Analytics cookies for investigating the demographics that visit this site and e.g. what browsers they use. Even though I have a data processing agreement, no data is shared with Google, Google has no permission to do anything with the data and your IP address is anonymised. So yeey, nothing to worry about! And because of this I don't have to ask for your permission~ (/^▽^)/_
