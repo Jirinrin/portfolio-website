@@ -313,7 +313,7 @@ div.landscape--2-enter.landscape--2-enter-active {
 }
 
 .popup-window {
-  background-image: url("../assets/box-light.png");
+  background-image: url("../assets/box-light-small.png");
   background-size: 100% 100%;
   border-radius: 1rem;
   opacity: 0.8;
@@ -699,17 +699,17 @@ svg {
   @keyframes fly-up {
     0% {
       opacity: 0;
-      transform: translateY(50px) scale(0);
+      transform: translateY(50px * $canvas-scale) scale(0);
     }
     20% {
       opacity: 1;
-      transform: translateY(-100px) scale(1);
+      transform: translateY(-100px * $canvas-scale) scale(1);
     }
     80% {
       opacity: 1;
     }
     100% {
-      transform: translateY(-500px);
+      transform: translateY(-500px * $canvas-scale);
       opacity: 0;
     }
   }

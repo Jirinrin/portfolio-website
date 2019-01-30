@@ -142,7 +142,7 @@ class Landscape extends Component {
                 >
                   <div className="rel-container">
                     <img
-                      src={require('../assets/box-dark.png')}
+                      src={require('../assets/box-dark-small.png')}
                       alt="book"
                       className="book--large__background"
                       style={{filter: `brightness(${p.book.tintDeviation})`}}
@@ -172,7 +172,7 @@ class Landscape extends Component {
                 >
                   <div className="rel-container">
                     <img
-                      src={require('../assets/box-dark.png')}
+                      src={require('../assets/box-dark-small.png')}
                       alt="book"
                       className="book--large__background"
                       style={{filter: this.state.openedBook.imageFilter}}

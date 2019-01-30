@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
-import {isMobileOnly} from 'react-device-detect';
+import {isMobile} from 'react-device-detect';
 import { withCookies} from 'react-cookie';
 
 import {changePage} from '../actions/currentPage';
@@ -41,7 +41,7 @@ class Landscape extends Component {
     if (!this.props.cookies.get('hasVisited'))
       window.addEventListener('scroll', this.handleScroll);
     
-    if (!isMobileOnly) {
+    if (!isMobile) {
       document.addEventListener('mousemove', this.handleMousemove);
       this.setState({
         creatureGeneratorId: setInterval(this.generateCreature, 6000),
