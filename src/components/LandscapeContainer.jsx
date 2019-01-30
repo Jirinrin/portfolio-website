@@ -287,9 +287,6 @@ class LandscapeContainer extends Component {
         }
       >
         <div className="rel-container overflow-hidden">
-          {/* <img src={require('../assets/landscape/jiri-shine.png')} className="landscape full-width" id="shining-effect" alt="shining effect" 
-               style={{bottom: -this.state.frameOffset}}/> */}
-               
           <img 
             src={require('../assets/landscape/shine-3.png')} 
             className="landscape full-width" 

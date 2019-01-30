@@ -14,7 +14,6 @@ import TECHNOLOGIES from '../assets/objects/images';
 
 class Landscape extends Component {
   state = {
-    // objects: [],
     tooltip: null,
     showTooltip: false,
     zoomRegion: null,
@@ -190,14 +189,14 @@ class Landscape extends Component {
     let left, top;
     
     if (x < soulClientX)
-      left = C.mapRange(x, 0, soulClientX, -15, 0);
+      left = C.mapRange(x, 0, soulClientX, -15 * C.CANVAS_SCALE, 0);
     else
-      left = C.mapRange(x, soulClientX, document.documentElement.clientWidth, 0, 5);
+      left = C.mapRange(x, soulClientX, document.documentElement.clientWidth, 0, 5 * C.CANVAS_SCALE);
     
     if (y < soulClientY)
-      top = C.mapRange(y, 0, soulClientY, -15, 0);
+      top = C.mapRange(y, 0, soulClientY, -15 * C.CANVAS_SCALE, 0);
     else
-      top = C.mapRange(y, soulClientY, C.getDocHeight(), 0, 15);
+      top = C.mapRange(y, soulClientY, C.getDocHeight(), 0, 15 * C.CANVAS_SCALE);
 
     return {left, top};
   }

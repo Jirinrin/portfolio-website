@@ -1,6 +1,7 @@
 // Cinzel could also be 700, also used to have Old Standard TT
 @import url('https://fonts.googleapis.com/css?family=Cinzel:400|Cormorant:300,400,400i,600|Ovo');
 // @import url('https://fonts.googleapis.com/css?family=Noto+Serif+SC:100,400&subset=japanese');
+$canvas-scale: 0.5;
 
 landscape-container {
   user-select: none;
@@ -36,7 +37,7 @@ h2.landscape-name {
   font-family: 'Cormorant', serif;
   position: absolute;
   /// is eigenlijk ook afhankelijk van grootte van canvas... 
-  font-size: 50rem;
+  font-size: 50rem * $canvas-scale;
   z-index: 13;
   color: rgba(0, 0, 0, 0.274);
   mix-blend-mode: multiply;
@@ -117,7 +118,7 @@ h2.landscape-name {
 
 .book--tiny {
   /// afhankelijk van canvas size
-  border-radius: 10px;
+  border-radius: 10px * $canvas-scale;
   z-index: 15;
   // display: none;
 }
@@ -134,7 +135,7 @@ h2.landscape-name {
   &:hover {
     // transform: scale(1.1);
     /// afhankelijk van canvas size
-    transform: translate(2rem, 2rem) scale(1.1);
+    transform: translate(2rem * $canvas-scale, 2rem * $canvas-scale) scale(1.1);
     z-index: 21;
     filter: sepia(3);
     /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
@@ -155,7 +156,7 @@ img.book--large__background {
   position: absolute;
   z-index: 14;
   /// afhankelijk van canvas height
-  border-radius: 30px;
+  border-radius: 30px * $canvas-scale;
 
   // &:hover {
   // }
@@ -187,7 +188,7 @@ img.book--large__background {
     background-clip: text;
     background-color: #2c2c2c;
     /// al deze rems ook afhankelijk van canvas size
-    text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.192);
+    text-shadow: 0rem 1rem * $canvas-scale 1rem * $canvas-scale rgba(255, 255, 255, 0.192);
     // background-color: #3f3f3f;
     // text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.856);
 
@@ -650,7 +651,7 @@ svg {
   @keyframes fly {
     0% {
       opacity: 0;
-      transform: translateX(0) scale(0.8);
+      transform: translateX(0) scale(0.8 * $canvas-scale);
     }
     10% {
       opacity: 1;
@@ -659,7 +660,7 @@ svg {
       opacity: 1;
     }
     100% {
-      transform: translateX(4000px) scale(0.8);
+      transform: translateX(4000px * $canvas-scale) scale(0.8 * $canvas-scale);
       opacity: 0;
     }
   }
@@ -672,7 +673,7 @@ svg {
   @keyframes walk {
     0% {
       opacity: 0;
-      transform: translateX(0) scale(0.5);
+      transform: translateX(0) scale(0.5 * $canvas-scale);
     }
     10% {
       opacity: 1;
@@ -681,7 +682,7 @@ svg {
       opacity: 1;
     }
     100% {
-      transform: translateX(500px) scale(0.5);
+      transform: translateX(500px * $canvas-scale) scale(0.5 * $canvas-scale);
       opacity: 0;
     }
   }
@@ -689,8 +690,8 @@ svg {
 
 .tech-cloud-container {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width:  100px * $canvas-scale;
+  height: 100px * $canvas-scale;
   animation: fly-up 10s linear forwards;
   pointer-events: none;
   

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import store from './store';
 import {Provider} from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
+
+import store from './store';
 
 import Navbar from './components/Navbar';
 import GithubCodeContainer from './components/GithubCodeContainer';
