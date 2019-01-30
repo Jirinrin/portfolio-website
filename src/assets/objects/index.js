@@ -1,5 +1,6 @@
 import * as C from '../../constants';
 import projects from '../projects';
+import {isMobile} from 'react-device-detect';
 
 const objects = {
   'awards-cup': {
@@ -15,7 +16,7 @@ const objects = {
     left: 479.5,
     top: 3765,
     hasText: true,
-    extension: 'gif'
+    extension: isMobile ? 'png' : 'gif'
   },
   'hobby-heap': {
     name: 'Hobby Heap',
@@ -38,14 +39,14 @@ const objects = {
     left: 1321,
     top: 4205,
     hasText: true,
-    extension: 'gif'
+    extension: isMobile ? 'png' : 'gif'
   },
   'spiral-tower': {
     name: 'Pillar of Paradigm',
     left: 4238, 
     top: 2760,
     hasText: true,
-    extension: 'gif'
+    extension: isMobile ? 'png' : 'gif'
   },
   'technology-forest': {
     name: 'Techno Forest',

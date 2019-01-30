@@ -37,11 +37,10 @@ class Landscape extends Component {
 
   componentDidMount() {
     this.setBookShadow();
-
-    if (!this.props.cookies.get('hasVisited'))
-      window.addEventListener('scroll', this.handleScroll);
     
     if (!isMobile) {
+      if (!this.props.cookies.get('hasVisited'))
+        window.addEventListener('scroll', this.handleScroll);
       document.addEventListener('mousemove', this.handleMousemove);
       this.setState({
         creatureGeneratorId: setInterval(this.generateCreature, 6000),

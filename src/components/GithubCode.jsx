@@ -10,21 +10,21 @@ import './GithubCode.scss';
 
 // https://github.com/conorhastings/react-syntax-highlighter/blob/HEAD/AVAILABLE_LANGUAGES_PRISM.MD
 const LANGUAGE_REFERENCE = {
-  js: 'javascript',
-  jsx: 'jsx',
-  ts: 'typescript',
-  tsx: 'tsx',
-  css: 'css',
+  js:   'javascript',
+  jsx:  'jsx',
+  ts:   'typescript',
+  tsx:  'tsx',
+  css:  'css',
   scss: 'scss',
   html: 'markup',
   java: 'java',
-  c: 'c',
-  cpp: 'cpp',
-  h: 'cpp',
-  cs: 'csharp',
-  py: 'python',
-  lua: 'lua',
-  md: 'markdown'
+  c:    'c',
+  cpp:  'cpp',
+  h:    'cpp',
+  cs:   'csharp',
+  py:   'python',
+  lua:  'lua',
+  md:   'markdown'
 };
 
 const GithubCode = ({code}) => {
