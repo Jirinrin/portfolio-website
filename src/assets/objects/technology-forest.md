@@ -18,6 +18,7 @@ Ordered by how high my intuition wants them to be on the list; convenient!
 ![icon technology-icon icon-middle](python.png "Python")
 ![icon technology-icon icon-light](ruby.png "Ruby")
 ![icon technology-icon icon-middle](sql.png "SQL")
+![icon technology-icon icon-dark](postgres.png "PostgreSQL")
 ![icon technology-icon icon-middle](sass.png "SCSS")
 ![icon technology-icon icon-dark](css.png "CSS")
 ![icon technology-icon icon-dark](html.png "HTML")

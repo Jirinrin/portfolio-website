@@ -13,7 +13,7 @@ import './App.scss';
 
 class App extends Component {
   componentDidMount() {
-    ReactGA.initialize('UA-133506146-1');
+    ReactGA.initialize('UA-133506146-1', { anonymizeIp: true });
     ReactGA.set({ anonymizeIp: true });
     ReactGA.pageview(window.location.pathname);
   }
@@ -23,14 +23,14 @@ class App extends Component {
       <CookiesProvider>
         <Provider store={store}>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-            <div className="App">
-              {/* /// dat showaboutoptions kan via redux evt */}
-              <Navbar showAboutOptions={false} />
-              <div id="main">
-                <GithubCodeContainer />
-                <LandscapeContainer />
-              </div>
+          <div className="App">
+            {/* /// dat showaboutoptions kan via redux evt */}
+            <Navbar showAboutOptions={false} />
+            <div id="main">
+              <GithubCodeContainer />
+              <LandscapeContainer />
             </div>
+          </div>
         </Provider>
       </CookiesProvider>
     );
