@@ -107,7 +107,7 @@ class Landscape extends Component {
       <div id="landscape-variant-container--2" 
            className="bottom-container landscape-variant-container landscape--2"
            style={{ 
-             transform: `scale(${scaleFactor}, ${scaleFactor})`, /// al deze scales kunnen best gwn 1x scalefactor hebben, wordt toch gwn uniform
+             transform: `scale(${scaleFactor}, ${scaleFactor})`,
              height: C.CANVAS_HEIGHT, width: C.CANVAS_WIDTH,
              bottom: -this.props.bottom
            }}
@@ -116,7 +116,7 @@ class Landscape extends Component {
           <h2 className="landscape-name"> PROJECTS </h2>
           <img src={require('../assets/landscape/landscape-2.png')} className="landscape" id="landscape-2" alt="landscape 2" />
 
-          {/* and yes, the width of the bookstack is inaccurate due to the deviations and stuff */}
+          {/* /// Maybe want to make the book hitbox fit to the bookstack, because now the hover label often appears too much to the right */}
           <div 
             id="book-stack--large" 
             style={{

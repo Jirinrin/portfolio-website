@@ -151,9 +151,6 @@ img.book--large__background {
   position: absolute;
   z-index: 14;
   border-radius: 30px * $canvas-scale;
-
-  // &:hover {
-  // }
 }
 
 .book--large__title {
@@ -170,7 +167,6 @@ img.book--large__background {
   margin: 0;
   vertical-align: middle;
   pointer-events: none;
-  // color: rgb(26, 26, 26);  
 
   span {
     line-height: normal;
@@ -181,10 +177,7 @@ img.book--large__background {
     color: transparent;
     background-clip: text;
     background-color: #2c2c2c;
-    /// al deze rems ook afhankelijk van canvas size
     text-shadow: 0rem 1rem * $canvas-scale 1rem * $canvas-scale rgba(255, 255, 255, 0.192);
-    // background-color: #3f3f3f;
-    // text-shadow: 0rem 1rem 1rem rgba(255, 255, 255, 0.856);
 
     &.dark-background {
       background-color: rgb(255, 255, 255);

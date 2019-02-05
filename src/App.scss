@@ -5,6 +5,12 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'JMH Typewriter mono';
+  src: url('./assets/fonts/JMH Typewriter mono Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
 // @font-face {
 //   font-family: 'JMH Typewriter mono';
 //   src: url('./assets/fonts/JMH Typewriter mono Italic.ttf');
@@ -17,12 +23,6 @@
 //   font-weight: lighter;
 //   font-style: normal;
 // }
-@font-face {
-  font-family: 'JMH Typewriter mono';
-  src: url('./assets/fonts/JMH Typewriter mono Bold.ttf');
-  font-weight: bold;
-  font-style: normal;
-}
 
 $background-url: url("./assets/background-darkgray.jpg");
 
@@ -37,7 +37,6 @@ html {
 }
 
 ::-webkit-scrollbar {
-  // display: none;
   width: 0.7rem;
 }
 

@@ -208,7 +208,6 @@ class Landscape extends Component {
         text: this.props.abouts[id].text
       }
     });
-    // this.props.zoomInCanvas();
   }
 
   updateZoomData = (zoomRegion) => {
@@ -230,7 +229,6 @@ class Landscape extends Component {
                                      : zoomRegion.width * 0.05;
                
     // Extra compensations for if the image frame is partly outside the canvas
-    // const canvasWidthDiff = CANVAS_WIDTH - (zoomRegion.left + xOffsetExtra * 2); /// still not entirely optimally functional...
     const canvasWidthDiff = zoomRegion.left + (sampleWidth ? zoomRegion.width : (innerWidth / window.innerHeight) * zoomRegion.height) - C.CANVAS_WIDTH;
     if (canvasWidthDiff > 0) {
       xOffsetExtra = 1/0.9 * canvasWidthDiff;
@@ -243,7 +241,6 @@ class Landscape extends Component {
     if (canvasHeightDiff > 0) {
       yOffsetExtra = 1/(1920 / window.innerWidth * 0.2) * canvasHeightDiff;
     }
-    /// and should probably also add this for y direction
     
     this.setState({
       zoomRegion,

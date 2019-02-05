@@ -207,7 +207,7 @@ class LandscapeContainer extends Component {
                   src={require(`../assets/objects/images/${props.src}`)}
                   className={props.alt}
                   alt={props.src.split('/').reverse()[0]}
-                  title={`${props.title} | ${this.getExperienceLevel(props.alt)} experience`}
+                  title={popup.id === 'technology-forest' ? `${props.title} | ${this.getExperienceLevel(props.alt)} experience` : null}
                 />,
              link: props => 
                 <a 
@@ -227,7 +227,7 @@ class LandscapeContainer extends Component {
             {popup.project.github && 
               <a 
                 className="github-icon" 
-                /// something seems to be wrong with the hrefs for this...
+                /// Something seems to be wrong with the hrefs for this...
                 href={`https://github.com/Jirinrin/${popup.project.id}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
