@@ -1,4 +1,5 @@
 import request from 'superagent';
+import _ from 'lodash';
 
 const USER_NAME    = 'Jirinrin';
 const BASE_URL     = `https://api.github.com/repos/${USER_NAME}`;
@@ -48,7 +49,7 @@ const codeFetched = (code=[]) => ({
   code
 });
 
-export const loadGithubCode = (allProjects=false) => async (dispatch, getState) => {
+export const loadGithubCode = (allProjects=false, numberOfProjects=1) => async (dispatch, getState) => {
   const projects = getState().projects;
   const indexing = getState().githubCode.indexing;
   if (!projects || !indexing)
@@ -56,8 +57,10 @@ export const loadGithubCode = (allProjects=false) => async (dispatch, getState) 
   
   if (allProjects) {
     Promise.all(
-      projects
-      .filter(p => p.github)
+      _.shuffle(
+        projects.filter(p => p.github)
+      )
+      .filter((_, i) => i < numberOfProjects)
       .map(async p => {
         const filePath = indexing[p.id][Math.round(Math.random() * (indexing[p.id].length) - 0.5)];
         return request

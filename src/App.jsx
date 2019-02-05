@@ -24,7 +24,7 @@ class App extends Component {
         <Provider store={store}>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
           <div className="App">
-            {/* /// dat showaboutoptions kan via redux evt */}
+            {/* /// Could do the showAboutOptions thing via redux */}
             <Navbar showAboutOptions={false} />
             <div id="main">
               <GithubCodeContainer />

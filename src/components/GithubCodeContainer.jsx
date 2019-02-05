@@ -16,7 +16,6 @@ class GithubCodeContainer extends Component {
 
   componentWillMount() {
     this.props.indexGithub();
-    // window.addEventListener('scroll', this.handleScrollChange);
   }
 
   shouldComponentUpdate() {
@@ -27,7 +26,8 @@ class GithubCodeContainer extends Component {
 
   async componentDidUpdate(oldProps) {
     if (oldProps.githubIndexing === null && oldProps.githubIndexing !== this.props.githubIndexing) {
-      this.props.loadGithubCode(true);
+      // Recently changed this to accommodate for a growing GitHub / for smaller screens
+      this.props.loadGithubCode(true, 7);
     }
 
     if (oldProps.githubCode.length !== this.props.githubCode.length) {
@@ -35,7 +35,6 @@ class GithubCodeContainer extends Component {
         this.props.loadGithubCode();
       else if (!this.state.code)
         this.setState({code: this.props.githubCode});
-      // setTimeout(() => window.removeEventListener('scroll', this.handleScrollChange), 10000);
     }
   }
 
@@ -54,7 +53,6 @@ class GithubCodeContainer extends Component {
   render() { 
     return ( 
       <div className="GithubCodeContainer">
-        {/* <img src={require('../assets/icons/kanji-logo.png')} id="kanji-background" alt="cool kanji logo"/> */}
         <CSSTransition
             in={!!this.state.code}
             classNames="GithubCodeContainer"
@@ -64,7 +62,6 @@ class GithubCodeContainer extends Component {
           >
             <GithubCode code={this.state.code} />
           </CSSTransition>
-        {/* <code className="text-test" id="text-test-3"/> */}
       </div>
      );
   }

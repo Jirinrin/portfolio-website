@@ -36,7 +36,6 @@ h2.landscape-name {
   display: block;
   font-family: 'Cormorant', serif;
   position: absolute;
-  /// is eigenlijk ook afhankelijk van grootte van canvas... 
   font-size: 50rem * $canvas-scale;
   z-index: 13;
   color: rgba(0, 0, 0, 0.274);
@@ -117,10 +116,8 @@ h2.landscape-name {
 }
 
 .book--tiny {
-  /// afhankelijk van canvas size
   border-radius: 10px * $canvas-scale;
   z-index: 15;
-  // display: none;
 }
 
 .book--tiny, .book--large {
@@ -134,11 +131,9 @@ h2.landscape-name {
 
   &:hover {
     // transform: scale(1.1);
-    /// afhankelijk van canvas size
     transform: translate(2rem * $canvas-scale, 2rem * $canvas-scale) scale(1.1);
     z-index: 21;
     filter: sepia(3);
-    /// dus liefst dynamisch op basis van de huidige kleur die aan de beurt is op website ofzo
     cursor: pointer;
   }
 
@@ -155,7 +150,6 @@ img.book--large__background {
   height: 100%;
   position: absolute;
   z-index: 14;
-  /// afhankelijk van canvas height
   border-radius: 30px * $canvas-scale;
 
   // &:hover {
