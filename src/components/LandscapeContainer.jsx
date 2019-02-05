@@ -75,13 +75,6 @@ class LandscapeContainer extends Component {
 
   calculateScaleFactor = (windowSize = window.innerWidth) => windowSize / C.CANVAS_WIDTH;
 
-  // changeLandscape = (num, title=null) => {
-  //   if (!this.state.animationOngoing)
-  //     this.setState({
-  //       landscapeNum: num,
-  //     });
-  // }
-
   updateAnimations(firstDelelete=false) {
     const style = document.createElement('style');
     const container = document.querySelector('#Landscape-container');
@@ -209,7 +202,7 @@ class LandscapeContainer extends Component {
                   alt={props.src.split('/').reverse()[0]}
                   title={popup.id === 'technology-forest' ? `${props.title} | ${this.getExperienceLevel(props.alt)} experience` : null}
                 />,
-             link: props => 
+             link: props =>
                 <a 
                   href={props.href} 
                   target="_blank"
@@ -265,8 +258,6 @@ class LandscapeContainer extends Component {
                 showPlayButton={false}
                 showThumbnails={false}
               />
-
-              // popup.project.images.map(img => <img key={img} src={require(`../assets/projects/images/${img}`)} alt="project img"/>)
             }
           </div>
         );
@@ -283,7 +274,7 @@ class LandscapeContainer extends Component {
         className="bottom-container full-width"
         style={this.state.zoomIn ?
           {height: '100%', width: '100vw', bottom: this.state.frameOffset} :
-          {height: '100%'/*this.state.scaleFactor * C.CANVAS_HEIGHT * 1.5*/, width: this.state.scaleFactor * C.CANVAS_WIDTH}
+          {height: '100%', width: this.state.scaleFactor * C.CANVAS_WIDTH}
         }
       >
         <div className="rel-container overflow-hidden">

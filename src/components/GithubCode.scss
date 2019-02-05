@@ -11,14 +11,12 @@
   height: 100%;
   position: absolute;
   overflow: hidden;
-  // filter: hue-rotate(80deg);
   filter: sepia(3);
   mix-blend-mode: multiply;
   
 
   a {
     text-decoration: none;
-    // transition: all 0.1s;
     filter: brightness(0.5) contrast(2);
     opacity: 0.3;
 
@@ -65,18 +63,18 @@
   transition: all 1000ms ease;
 }
 
-#kanji-background {
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  // left: 10vw;
-  // right: 10vw;
-  // top: 5vw;
-  mix-blend-mode: overlay;
-  filter: brightness(0) blur(0.3rem);
-  opacity: 0.15;
-  z-index: 0;
-}
+// #kanji-background {
+//   position: absolute;
+//   height: 100vh;
+//   width: 100vw;
+//   // left: 10vw;
+//   // right: 10vw;
+//   // top: 5vw;
+//   mix-blend-mode: overlay;
+//   filter: brightness(0) blur(0.3rem);
+//   opacity: 0.15;
+//   z-index: 0;
+// }
 
 // .GithubCodeContainer-exit {
 //   opacity: 1 !important;

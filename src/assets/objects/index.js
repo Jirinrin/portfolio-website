@@ -4,7 +4,7 @@ import {isMobile} from 'react-device-detect';
 
 const objects = {
   'awards-cup': {
-    // ook goed: Trophy Tribute
+    // Also possible: Trophy Tribute
     name: 'Endowment Shrine (construction中)',
     left: 2731, 
     top: 3542,

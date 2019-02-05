@@ -1,6 +1,5 @@
 // Cinzel could also be 700, also used to have Old Standard TT
 @import url('https://fonts.googleapis.com/css?family=Cinzel:400|Cormorant:300,400,400i,600|Ovo');
-// @import url('https://fonts.googleapis.com/css?family=Noto+Serif+SC:100,400&subset=japanese');
 $canvas-scale: 0.5;
 
 landscape-container {
@@ -71,7 +70,6 @@ h2.landscape-name {
   z-index: 2;
   animation: sunray-spin 120s infinite linear;
   opacity: 0.4;
-  // filter: blur(0.2rem);
   filter: blur(0.2vw);
 
   @keyframes sunray-spin {
@@ -130,7 +128,6 @@ h2.landscape-name {
   z-index: 20;
 
   &:hover {
-    // transform: scale(1.1);
     transform: translate(2rem * $canvas-scale, 2rem * $canvas-scale) scale(1.1);
     z-index: 21;
     filter: sepia(3);
@@ -218,7 +215,6 @@ img.book--large__background {
   font-weight: 400;
   position: absolute;
   z-index: 14;
-  // background-color: rgb(29, 29, 29);
   border-radius: 10px;
   line-height: 0;
   background-size: 100% 100%;
@@ -265,10 +261,6 @@ img.book--large__background {
 div.landscape--1-exit.landscape--1-exit-active {
   transition: all 1000ms ease-in-out 200ms;
 }
-
-// .landscape--2-enter {
-//   pointer-events
-// }
 
 .landscape--1-exit, .landscape--2-exit {
   filter: blur(0) !important;
@@ -321,15 +313,13 @@ div.landscape--2-enter.landscape--2-enter-active {
   }
 
   &.popup-window-large {
-    width: 80vw;//calc(100vw - 18rem);
-    height: calc(100vh - 20vw);//calc(100vh - 14rem);
+    width: 80vw;
+    height: calc(100vh - 20vw);
 
     @media (max-width: 1400px) {
-      height: calc(100vh - 30vw); // 75px + 6px for border + 3px for padding
+      height: calc(100vh - 30vw);
     }
   }
-
-
 
   h1 {
     font-family: 'Cormorant', serif;
@@ -354,17 +344,9 @@ div.landscape--2-enter.landscape--2-enter-active {
 
   p {
     font-size: 1.3rem;
-
-    strong {
-
-    }
-
-    em {
-
-    }
+    // strong {}
+    // em {}
   }
-
-  
 
   a.github-icon {
     float: right;
@@ -384,8 +366,6 @@ div.landscape--2-enter.landscape--2-enter-active {
   img {
     width: 100%;
     border-radius: 1rem;
-    // height: 30px;
-    // margin: 2rem 0;
     &.icon {
       width: 3rem;
     }
@@ -397,8 +377,6 @@ div.landscape--2-enter.landscape--2-enter-active {
       &:hover {
         transform: scale(1.2);
       }
-
-      
     }
 
     &.icon-middle {
@@ -425,28 +403,20 @@ div.landscape--2-enter.landscape--2-enter-active {
       &:hover {
         filter: brightness(0.1);
         transform: scale(1.3);
-        // opacity: 0.6;
       }
     }
   }
   
-
-  ul {
-    li {
-
-    }
-  }
-
   code {
     font-size: 1rem;
   }
-  // pre {
-    
+
+  // ul {
+  //   li {}
   // }
 
-  // blockquote {
-
-  // }
+  // pre {}
+  // blockquote {}
 }
 
 .popup-window-background-enter {
@@ -555,7 +525,6 @@ svg {
 
 .image-gallery-slides {
   height: 50vh;
-  // transition: all 1s ease !important;
 
   .image-gallery-slide {
     transition: all 1s ease !important;
@@ -600,29 +569,19 @@ svg {
 }
 
 #jiri-soul {
-  // display: table;
-  // overflow: overlay;
-  // display: inline-block;
   height: max-content;
 }
 
 #jiri-soul__container {
-  // width: 100%;
   position: absolute;
   z-index: 13;
-
-  // display: table-row;
-  // transform-origin: center bottom;
 }
 
 #jiri-soul__pupils {
-  // width: 100%;
   position: absolute;
   pointer-events: none;
   z-index: 14;
   transition: all 0.1s ease;
-  // display: table-row;
-  // transform-origin: center bottom;
 }
 
 .creature {
@@ -714,25 +673,3 @@ svg {
   z-index: 15;
   opacity: 0.5;
 }
-
-// .back-arrow-enter {
-//   opacity: 0 !important;
-//   filter: blur(200px);
-// }
-
-// .back-arrow-enter-active {
-//   opacity: 1 !important;
-//   filter: blur(0);
-//   transition: all 400ms ease;
-// }
-
-// .back-arrow-exit {
-//   opacity: 1 !important;
-//   filter: blur(0);
-// }
-
-// .back-arrow-exit-active {
-//   opacity: 0 !important;
-//   filter: blur(200px);
-//   transition: all 400ms ease;
-// }

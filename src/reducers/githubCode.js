@@ -10,8 +10,6 @@ export default function reducer(state={indexing: null, code: []}, action={}) {
       };
     case CODE_FETCHED:
       const newIndexing = _.cloneDeep(state.indexing);
-      // console.log(action.code);
-      // console.log(newIndexing);
       action.code.forEach(c => {
         newIndexing[c.repo] = newIndexing[c.repo].filter(file => file !== c.filePath);
         if (newIndexing[c.repo].length === 0) 
