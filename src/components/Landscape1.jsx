@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import {isMobile} from 'react-device-detect';
-import { withCookies} from 'react-cookie';
+import { withCookies } from 'react-cookie';
 
 import {changePage} from '../actions/currentPage';
 import {fetchAboutTexts} from '../actions/abouts';
@@ -12,7 +12,7 @@ import OBJECTS from '../assets/objects';
 import CREATURES from '../assets/landscape/creatures';
 import TECHNOLOGIES from '../assets/objects/images';
 
-class Landscape extends Component {
+class Landscape1 extends Component {
   state = {
     tooltip: null,
     showTooltip: false,
@@ -43,7 +43,7 @@ class Landscape extends Component {
         window.addEventListener('scroll', this.handleScroll);
       document.addEventListener('mousemove', this.handleMousemove);
       this.setState({
-        creatureGeneratorId: setInterval(this.generateCreature, 6000),
+        creatureGeneratorId:  setInterval(this.generateCreature,  6000),
         techCloudGeneratorId: setInterval(this.generateTechCloud, 5000)
       });
     }
@@ -68,9 +68,16 @@ class Landscape extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleMousemove);
-    clearInterval(this.state.creatureGeneratorId);
-    clearInterval(this.state.techCloudGeneratorId);
+    if (!isMobile) {
+      if (!this.props.cookies.get('hasVisited'))
+        window.removeEventListener('scroll', this.handleScroll);
+      document.removeEventListener('mousemove', this.handleMousemove);
+      clearInterval(this.state.creatureGeneratorId);
+      clearInterval(this.state.techCloudGeneratorId);
+    }
+
+    this.state.activeCreatures.forEach(c => clearTimeout(c.timeoutId));
+    this.state.activeTechClouds.forEach(t => clearTimeout(t.timeoutId));
   }
 
   handleObjectClick = (e) => {
@@ -280,19 +287,20 @@ class Landscape extends Component {
         throw new Error('Unknown creature type');
     }
 
+    const creatureTimeoutId = setTimeout(() => 
+      this.setState({activeCreatures: this.state.activeCreatures.filter(creature => creature.id !== creatureId)}), 
+    timeout + 1000);
+
     this.setState({activeCreatures: [
       ...this.state.activeCreatures,
       {
         id: creatureId,
         type: creatureType,
         species: creatureSpecies,
-        style
+        style,
+        timeoutId: creatureTimeoutId
       }
     ]});
-
-    setTimeout(() => 
-      this.setState({activeCreatures: this.state.activeCreatures.filter(creature => creature.id !== creatureId)}), 
-    timeout + 1000);
   }
 
   generateTechCloud = () => {
@@ -301,19 +309,20 @@ class Landscape extends Component {
     const chimneyCoords = C.TECH_CLOUD_START_POSITIONS[Math.round(Math.random() * 3 - 0.5)];
     const iconImage = TECHNOLOGIES[Math.round(cloudId * TECHNOLOGIES.length - 0.5)];
 
+    const techCloudTimeoutId = setTimeout(() => 
+      this.setState({activeTechClouds: this.state.activeTechClouds.filter(cloud => cloud.id !== cloudId)}), 
+    11000);
+
     this.setState({activeTechClouds: [
       ...this.state.activeTechClouds,
       {
         id: cloudId,
         cloudNumber,
         iconImage,
-        style: chimneyCoords
+        style: chimneyCoords,
+        timeoutId: techCloudTimeoutId
       }
     ]});
-
-    setTimeout(() => 
-      this.setState({activeTechClouds: this.state.activeTechClouds.filter(cloud => cloud.id !== cloudId)}), 
-    11000);
   }
 
   render() {
@@ -442,4 +451,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects, abouts, currentPage}) => ({projects, abouts, currentPage});
 
-export default withCookies(connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape));
+export default withCookies(connect(mapStateToProps, {changePage, fetchAboutTexts})(Landscape1));

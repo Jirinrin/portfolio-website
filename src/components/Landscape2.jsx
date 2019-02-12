@@ -6,7 +6,7 @@ import * as C from '../constants';
 import {fetchProjectDescriptions} from '../actions/projects';
 import {changePage} from '../actions/currentPage';
 
-class Landscape extends Component {
+class Landscape2 extends Component {
   state = {
     bookHeight: C.LARGE_BASE_BOOK_HEIGHT,
     openedBook: null,
@@ -199,4 +199,4 @@ class Landscape extends Component {
 
 const mapStateToProps = ({projects}) => ({projects});
 
-export default connect(mapStateToProps, {fetchProjectDescriptions, changePage})(Landscape);
+export default connect(mapStateToProps, {fetchProjectDescriptions, changePage})(Landscape2);
