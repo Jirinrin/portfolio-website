@@ -1,6 +1,6 @@
 # The future of JIRI
 
-Right, so remember that I want to get a job? No? Well anyway, I have various ambitious in life, which means that I'm probably not going to stay at the same job forever.  
+Right, so remember that I currently have a job? No? Not even from throwing a can (blik) at my LinkedIn? Well anyway, I have various ambitious in life, which means that I'm probably not going to stay at the same job forever.  
 These are some things I endaveour to realise in the future:
 
 ### Go deeper into CS

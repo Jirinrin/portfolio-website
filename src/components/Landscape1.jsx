@@ -72,6 +72,7 @@ class Landscape1 extends Component {
       if (!this.props.cookies.get('hasVisited'))
         window.removeEventListener('scroll', this.handleScroll);
       document.removeEventListener('mousemove', this.handleMousemove);
+
       clearInterval(this.state.creatureGeneratorId);
       clearInterval(this.state.techCloudGeneratorId);
     }
