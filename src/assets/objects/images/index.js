@@ -1,4 +1,4 @@
-export default [
+const images = [
   'java.png',
   'c.png',
   'csharp.png',
@@ -25,3 +25,5 @@ export default [
   'sketchup.png',
   'unreal.png'
 ];
+
+export default images;

@@ -1,4 +1,4 @@
-export default {
+const creatures = {
   air: [
     'fly',
     'bat',
@@ -12,3 +12,5 @@ export default {
     'wazeba-black'
   ]
 };
+
+export default creatures;
