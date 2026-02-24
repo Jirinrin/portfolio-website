@@ -1,0 +1,80 @@
+.ServiceBubbles {
+  height: 170vh;
+  width: 100vw;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 80vh;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.service-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.service-bubble {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 2.2rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  min-width: 200px;
+  max-width: 200px;
+  text-align: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .bubble-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .bubble-sub {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin-top: 0.5rem;
+    font-family: 'Cincel', serif;
+    letter-spacing: 0.1em;
+  }
+}
+
+@keyframes float-a {
+  0%   { transform: translateY(0px) rotate(-0.5deg); }
+  100% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes float-b {
+  0%   { transform: translateY(-6px) rotate(0.3deg); }
+  100% { transform: translateY(4px) rotate(-0.8deg); }
+}
+
+.float-a {
+  animation: float-a 4.5s ease-in-out infinite alternate;
+}
+
+.float-b {
+  animation: float-b 5.8s ease-in-out infinite alternate;
+}

@@ -1,6 +1,4 @@
 # TODO
-Weghalen
-- [ ] github code snippets
 Toevoegen
 - [ ] Services sectie: 'zwevende bubbels' met wat websites van me waar je op kan klikken
 - [ ] Projecten indelen in categorieen ofzo, beetje behapbaar. Archief bevat 'oude' dingen, main 'bubbels' in begin bevatten insta en fukaku enzo
@@ -10,6 +8,7 @@ Aanpassen
 - [ ] Door alle copy heen gaan
 - [ ] techno forest: spuugt muzieknoot-wolkjes uit en wordt de muziekfabriek!
 - [ ] telefoonnummer nog wat minder makkelijk scrapebaar maken
+- [ ] kleuren! het hele landschap over-verven met iedere keer weer een ander kleurenschema die ge-color-grade is op de grayscale, bijv groengeel->groen, of cyaan->purple.
 
 Projecten toe te voegen
 - [ ] karaoke.jirinrin.com / USDX / https://engineering.q42.nl/karaoke-machine/

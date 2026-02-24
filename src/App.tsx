@@ -6,7 +6,7 @@ import ReactGA from 'react-ga4';
 import store from './store';
 
 import Navbar from './components/Navbar';
-import GithubCodeContainer from './components/GithubCodeContainer';
+import ServiceBubbles from './components/ServiceBubbles';
 import LandscapeContainer from './components/LandscapeContainer';
 
 import './App.scss';
@@ -27,7 +27,7 @@ function App() {
         <div className="App">
           <Navbar showAboutOptions={false} />
           <div id="main">
-            <GithubCodeContainer />
+            <ServiceBubbles />
             <LandscapeContainer />
           </div>
         </div>
