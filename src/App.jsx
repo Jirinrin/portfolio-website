@@ -27,6 +27,7 @@ class App extends Component {
             {/* /// Could do the showAboutOptions thing via redux */}
             <Navbar showAboutOptions={false} />
             <div id="main">
+              {/* todo: weg hiermee */}
               <GithubCodeContainer />
               <LandscapeContainer />
             </div>
