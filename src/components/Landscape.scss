@@ -634,7 +634,7 @@ svg {
   }
 }
 
-.tech-cloud-container {
+.music-cloud-container {
   position: absolute;
   width:  100px * $canvas-scale;
   height: 100px * $canvas-scale;
@@ -661,13 +661,15 @@ svg {
   }
 }
 
-.tech-cloud__cloud {
+.music-cloud__cloud {
   position: absolute;
   width: 100%;
   z-index: 14;
 }
 
-.tech-cloud__icon {
+.music-cloud__icon {
+  transform: scale(.7);
+  transform-origin: center;
   position: absolute;
   width: 100%;
   z-index: 15;

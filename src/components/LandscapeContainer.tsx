@@ -233,7 +233,7 @@ function LandscapeContainer() {
                   src={getObjectDetailImage(src ?? '')}
                   className={alt}
                   alt={(src ?? '').split('/').reverse()[0]}
-                  title={popup.id === 'technology-forest' ? `${title} | ${getExperienceLevel(alt)} experience` : undefined}
+                  title={popup.id === 'groove-grove' ? `${title} | ${getExperienceLevel(alt)} experience` : undefined}
                 />
               ),
               a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (

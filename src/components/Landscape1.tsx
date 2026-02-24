@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../store';
 import * as C from '../constants';
 import OBJECTS from '../assets/objects';
 import CREATURES from '../assets/landscape/creatures';
-import TECHNOLOGIES from '../assets/objects/images';
+import MUSIC_NOTES from '../assets/objects/images';
 
 import boxDarkSmall from '../assets/box-dark-small.png';
 import landscape1Img from '../assets/landscape/landscape-1.png';
@@ -70,7 +70,7 @@ interface Creature {
   timeoutId: ReturnType<typeof setTimeout>;
 }
 
-interface TechCloud {
+interface MusicCloud {
   id: number;
   cloudNumber: number;
   iconImage: string;
@@ -93,7 +93,7 @@ const Landscape1 = forwardRef<HTMLDivElement, Landscape1Props>(function Landscap
   const [bookShadow, setBookShadow] = useState<string | null>(null);
   const [cursorPos, setCursorPos] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
   const [activeCreatures, setActiveCreatures] = useState<Creature[]>([]);
-  const [activeTechClouds, setActiveTechClouds] = useState<TechCloud[]>([]);
+  const [activeMusicClouds, setActiveMusicClouds] = useState<MusicCloud[]>([]);
 
   const tooltipNodeRef = useRef<HTMLParagraphElement>(null);
   const prevZoomIn = useRef(zoomIn);
@@ -174,7 +174,7 @@ const Landscape1 = forwardRef<HTMLDivElement, Landscape1Props>(function Landscap
       document.addEventListener('mousemove', handleMousemove);
 
       const creatureId = setInterval(generateCreature, 6000);
-      const cloudId = setInterval(generateTechCloud, 5000);
+      const cloudId = setInterval(generateMusicCloud, 5000);
 
       return () => {
         if (!cookies.hasVisited) window.removeEventListener('scroll', handleScroll);
@@ -282,7 +282,7 @@ const Landscape1 = forwardRef<HTMLDivElement, Landscape1Props>(function Landscap
       case 'hobby-heap':
       case 'octopus-tree':
       case 'spiral-tower':
-      case 'technology-forest':
+      case 'groove-grove':
         scrollDown(true, () => zoomPopup(id, 'about'));
         return;
       case 'book-stack':
@@ -332,23 +332,23 @@ const Landscape1 = forwardRef<HTMLDivElement, Landscape1Props>(function Landscap
     }]);
   };
 
-  const generateTechCloud = () => {
+  const generateMusicCloud = () => {
     const cloudId = Math.random();
     const cloudNumber = Math.round(Math.random() * 3 - 0.5) + 1;
     const chimneyCoords = C.TECH_CLOUD_START_POSITIONS[Math.round(Math.random() * 3 - 0.5)];
-    const iconImage = TECHNOLOGIES[Math.round(cloudId * TECHNOLOGIES.length - 0.5)];
+    const iconImage = MUSIC_NOTES[Math.round(Math.random() * MUSIC_NOTES.length - 0.5)];
 
-    const techCloudTimeoutId = setTimeout(() =>
-      setActiveTechClouds(prev => prev.filter(c => c.id !== cloudId)),
+    const musicCloudTimeoutId = setTimeout(() =>
+      setActiveMusicClouds(prev => prev.filter(c => c.id !== cloudId)),
       11000
     );
 
-    setActiveTechClouds(prev => [...prev, {
+    setActiveMusicClouds(prev => [...prev, {
       id: cloudId,
       cloudNumber,
       iconImage,
       style: chimneyCoords,
-      timeoutId: techCloudTimeoutId
+      timeoutId: musicCloudTimeoutId
     }]);
   };
 
@@ -461,10 +461,10 @@ const Landscape1 = forwardRef<HTMLDivElement, Landscape1Props>(function Landscap
           )}
         </div>
         <div>
-          {activeTechClouds.map(cloud =>
-            <div className="tech-cloud-container" style={cloud.style} key={cloud.id}>
-              <img src={getTechImage(cloud.iconImage)} className="tech-cloud__icon" alt="technology icon" />
-              <img src={getCloudImage(cloud.cloudNumber)} className="tech-cloud__cloud" alt="tech cloud" />
+          {activeMusicClouds.map(cloud =>
+            <div className="music-cloud-container" style={cloud.style} key={cloud.id}>
+              <img src={getTechImage(cloud.iconImage)} className="music-cloud__icon" alt="technology icon" />
+              <img src={getCloudImage(cloud.cloudNumber)} className="music-cloud__cloud" alt="tech cloud" />
             </div>
           )}
         </div>

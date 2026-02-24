@@ -1,29 +1,7 @@
-const images: string[] = [
-  'java.png',
-  'c.png',
-  'csharp.png',
-  'net.png',
-  'typescript.png',
-  'javascript.png',
-  'nodejs.png',
-  'react.png',
-  'redux.png',
-  'git.png',
-  'graphql.png',
-  'python.png',
-  'ruby.png',
-  'sql.png',
-  'sass.png',
-  'css.png',
-  'html.png',
-  'photoshop.png',
-  'figma.png',
-  'illustrator.png',
-  'indesign.png',
-  'grasshopper.png',
-  'rhino.png',
-  'sketchup.png',
-  'unreal.png'
+const musicNotes: string[] = [
+  'music-note-1.png',
+  'music-note-2.png',
+  'music-note-3.png',
 ];
 
-export default images;
+export default musicNotes;

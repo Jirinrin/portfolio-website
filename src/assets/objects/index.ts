@@ -56,9 +56,9 @@ const objects: ObjectsMap = {
     hasText: true,
     extension: isMobile ? 'png' : 'gif'
   },
-  'technology-forest': {
-    id: 'technology-forest',
-    name: 'Techno Forest',
+  'groove-grove': {
+    id: 'groove-grove',
+    name: 'Groove Grove',
     left: 0,
     top: 3919,
     hasText: true,
