@@ -8,9 +8,6 @@ Toevoegen
 - [ ] wat kunst-dingetjes die ik heb getekend op ipad toevoegen in een soort 'art gallery'
 Aanpassen
 - [ ] Door alle copy heen gaan
-- [ ] Fonts fixen in nav/menu
-- [ ] "a coding individual" -> "transdimensional tree elf"
-- [ ] nieuwe kakikata 時鈴々
 - [ ] techno forest: spuugt muzieknoot-wolkjes uit en wordt de muziekfabriek!
 - [ ] telefoonnummer nog wat minder makkelijk scrapebaar maken
 

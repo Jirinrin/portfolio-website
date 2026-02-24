@@ -139,13 +139,13 @@ function Navbar({ showAboutOptions: initialShowAboutOptions = false }: NavbarPro
             transform: `translateY(${yOffset}px) scale(${scale})`
           }}
         >
-          <p>侍鈴々</p>
+          <p>時鈴々</p>
           <p
             className="subtitle"
             style={{ opacity: yOffset / BASE_Y_OFFSET }}
           >
             Jiri Swen <br/>
-            a coding individual
+            transdimensional tree elf
           </p>
         </li>
 
