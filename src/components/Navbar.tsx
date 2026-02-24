@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { changePage } from '../store/currentPageSlice';
@@ -48,8 +48,9 @@ function Navbar({ showAboutOptions: initialShowAboutOptions = false }: NavbarPro
 
   const [yOffset, setYOffset] = useState(() => calculateY());
   const [scale, setScale] = useState(() => calculateTransform(calculateY()));
-  const [threshold1, setThreshold1] = useState<number | null>(null);
-  const [threshold2, setThreshold2] = useState<number | null>(null);
+  const [threshold1, setThreshold1] = useState(0);
+  const [threshold2, setThreshold2] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [overlayMode, setOverlayMode] = useState(false);
   const [showAboutOptions, setShowAboutOptions] = useState(initialShowAboutOptions);
 
@@ -61,7 +62,7 @@ function Navbar({ showAboutOptions: initialShowAboutOptions = false }: NavbarPro
     setScale(calculateTransform(newYOffset));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const navBar = document.querySelector('nav') as HTMLElement;
     navBar.style.width = '10%';
     const navItems = document.querySelectorAll('.nav-item');
@@ -80,7 +81,7 @@ function Navbar({ showAboutOptions: initialShowAboutOptions = false }: NavbarPro
       e.preventDefault();
       updateScrollParams(window.pageYOffset);
     };
-    const onResize = () => updateScrollParams();
+    const onResize = () => { setWindowWidth(window.innerWidth); updateScrollParams(); };
 
     window.addEventListener('scroll', onScroll);
     window.addEventListener('resize', onResize);
@@ -111,8 +112,8 @@ function Navbar({ showAboutOptions: initialShowAboutOptions = false }: NavbarPro
     setOverlayMode(false);
   };
 
-  const displayForThreshold1 = () => threshold1 !== null && window.innerWidth > threshold1;
-  const displayForThreshold2 = () => threshold2 !== null && window.innerWidth > threshold2;
+  const displayForThreshold1 = () => windowWidth > threshold1;
+  const displayForThreshold2 = () => windowWidth > threshold2;
 
   const hideOverlay = (e: React.MouseEvent) => {
     if (!(e.target as HTMLElement).className.includes('nav-overlay')) return;
