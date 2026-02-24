@@ -1,6 +1,6 @@
 // Max permitted title length: ~20 chars?
 
-export default [
+const projects = [
   {
     id: 'architecture-highlights',
     title: 'Architecture Highlights',
@@ -119,4 +119,6 @@ export default [
       'osu-collection-manipulator-1.gif'
     ]
   },
-]
+];
+
+export default projects;
