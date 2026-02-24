@@ -191,28 +191,26 @@ class LandscapeContainer extends Component {
       case 'text':
       case 'about':
         return (
-          <ReactMarkdown 
-            source={popup.text} 
-            linkTarget={'_blank'}
-            renderers={{
-              image: props =>
-                <img 
-                  src={require(`../assets/objects/images/${props.src}`)}
-                  className={props.alt}
-                  alt={props.src.split('/').reverse()[0]}
-                  title={popup.id === 'technology-forest' ? `${props.title} | ${this.getExperienceLevel(props.alt)} experience` : null}
+          <ReactMarkdown
+            components={{
+              img: ({src, alt, title}) =>
+                <img
+                  src={require(`../assets/objects/images/${src}`)}
+                  className={alt}
+                  alt={src.split('/').reverse()[0]}
+                  title={popup.id === 'technology-forest' ? `${title} | ${this.getExperienceLevel(alt)} experience` : null}
                 />,
-             link: props =>
-                <a 
-                  href={props.href} 
+              a: ({href, children}) =>
+                <a
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => window.open(props.href, '_blank')}
-                > 
-                  {props.children}
+                  onClick={() => window.open(href, '_blank')}
+                >
+                  {children}
                 </a>
             }}
-          />
+          >{popup.text}</ReactMarkdown>
         );
       case 'project':
         return (
@@ -229,21 +227,19 @@ class LandscapeContainer extends Component {
                 <img src={require('../assets/objects/images/github.png')} alt={'github icon'}/>
               </a>
             }
-            <ReactMarkdown 
-              source={popup.project.description}
-              linkTarget={'_blank'}
-              renderers={{
-                link: props => 
-                  <a 
-                    href={props.href} 
+            <ReactMarkdown
+              components={{
+                a: ({href, children}) =>
+                  <a
+                    href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => window.open(props.href, '_blank')}
-                  > 
-                    {props.children}
+                    onClick={() => window.open(href, '_blank')}
+                  >
+                    {children}
                   </a>
               }}
-            />
+            >{popup.project.description}</ReactMarkdown>
             
             <br/>
             

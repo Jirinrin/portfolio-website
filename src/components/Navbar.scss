@@ -50,14 +50,14 @@ li.nav-item {
       @keyframes glow {
         to {
           $new-text-shadow-opacity: $text-shadow-opacity + $text-shadow-plus;
-          text-shadow: 
-            0 0 2rem * $text-shadow-spread #ffffff * ($new-text-shadow-opacity),
-            0 0 3rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
-            0 0 4rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
-            0 0 5rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
-            0 0 6rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
-            0 0 7rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity),
-            0 0 8rem * $text-shadow-spread #cfcfcf * ($new-text-shadow-opacity);
+          text-shadow:
+            0 0 2rem * $text-shadow-spread rgba(255, 255, 255, $new-text-shadow-opacity),
+            0 0 3rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity),
+            0 0 4rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity),
+            0 0 5rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity),
+            0 0 6rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity),
+            0 0 7rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity),
+            0 0 8rem * $text-shadow-spread rgba(207, 207, 207, $new-text-shadow-opacity);
         }
       }
     }
